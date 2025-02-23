@@ -1,6 +1,7 @@
 package net.nfgbros.stickyresources.event;
 
 import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.entity.client.JellyModel;
 import net.nfgbros.stickyresources.entity.client.ModModelLayers;
 import net.nfgbros.stickyresources.entity.client.RhinoModel;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,5 +14,6 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.RHINO_LAYER, RhinoModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.JELLY_LAYER, JellyModel::createBodyLayer);
     }
 }

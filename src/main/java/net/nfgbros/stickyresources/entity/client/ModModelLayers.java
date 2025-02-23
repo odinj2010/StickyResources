@@ -7,5 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 public class ModModelLayers {
     public static final ModelLayerLocation RHINO_LAYER = new ModelLayerLocation(
             new ResourceLocation(StickyResources.MOD_ID, "rhino_layer"), "main");
+    public static final ModelLayerLocation JELLY_LAYER = new ModelLayerLocation(
+            new ResourceLocation(StickyResources.MOD_ID, "jelly_layer"), "main");
 
 }

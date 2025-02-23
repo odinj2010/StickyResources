@@ -1,59 +1,62 @@
 {
-  "item.StickyResources.sapphire": "Sapphire",
-  "item.StickyResources.raw_sapphire": "Raw Sapphire",
+  "item.sticky_resources.sapphire": "Sapphire",
+  "item.sticky_resources.raw_sapphire": "Raw Sapphire",
 
-  "item.StickyResources.metal_detector": "Metal Detector",
-  "item.StickyResources.strawberry": "Strawberry",
-  "item.StickyResources.pine_cone": "Pine Cone",
-  "item.StickyResources.sapphire_staff": "Sapphire Staff",
+  "item.sticky_resources.metal_detector": "Metal Detector",
+  "item.sticky_resources.strawberry": "Strawberry",
+  "item.sticky_resources.pine_cone": "Pine Cone",
+  "item.sticky_resources.sapphire_staff": "Sapphire Staff",
 
-  "item.StickyResources.sapphire_sword": "Sapphire Sword",
-  "item.StickyResources.sapphire_pickaxe": "Sapphire Pickaxe",
-  "item.StickyResources.sapphire_axe": "Sapphire Axe",
-  "item.StickyResources.sapphire_shovel": "Sapphire Shovel",
-  "item.StickyResources.sapphire_hoe": "Sapphire Hoe",
+  "item.sticky_resources.sapphire_sword": "Sapphire Sword",
+  "item.sticky_resources.sapphire_pickaxe": "Sapphire Pickaxe",
+  "item.sticky_resources.sapphire_axe": "Sapphire Axe",
+  "item.sticky_resources.sapphire_shovel": "Sapphire Shovel",
+  "item.sticky_resources.sapphire_hoe": "Sapphire Hoe",
 
-  "item.StickyResources.sapphire_helmet": "Sapphire Helmet",
-  "item.StickyResources.sapphire_chestplate": "Sapphire Chestplate",
-  "item.StickyResources.sapphire_leggings": "Sapphire Leggings",
-  "item.StickyResources.sapphire_boots": "Sapphire Boots",
+  "item.sticky_resources.sapphire_helmet": "Sapphire Helmet",
+  "item.sticky_resources.sapphire_chestplate": "Sapphire Chestplate",
+  "item.sticky_resources.sapphire_leggings": "Sapphire Leggings",
+  "item.sticky_resources.sapphire_boots": "Sapphire Boots",
 
-  "item.StickyResources.strawberry_seeds": "Strawberry Seeds",
+  "item.sticky_resources.strawberry_seeds": "Strawberry Seeds",
 
-  "item.StickyResources.corn": "Corn",
-  "item.StickyResources.corn_seeds": "Corn Seeds",
+  "item.sticky_resources.corn": "Corn",
+  "item.sticky_resources.corn_seeds": "Corn Seeds",
 
-  "item.StickyResources.bar_brawl_music_disc": "Bar Brawl Music Disc",
-  "item.StickyResources.bar_brawl_music_disc.desc": "Bryan Tech - Bar Brawl (CC0)",
+  "item.sticky_resources.bar_brawl_music_disc": "Bar Brawl Music Disc",
+  "item.sticky_resources.bar_brawl_music_disc.desc": "Bryan Tech - Bar Brawl (CC0)",
 
-  "block.StickyResources.sapphire_block": "Block of Sapphire",
-  "block.StickyResources.raw_sapphire_block": "Block of Raw Sapphire",
+  "block.sticky_resources.sapphire_block": "Block of Sapphire",
+  "block.sticky_resources.raw_sapphire_block": "Block of Raw Sapphire",
 
-  "block.StickyResources.sapphire_ore": "Sapphire Ore",
-  "block.StickyResources.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
-  "block.StickyResources.end_stone_sapphire_ore": "Endstone Sapphire Ore",
-  "block.StickyResources.nether_sapphire_ore": "Nether Sapphire Ore",
+  "block.sticky_resources.sapphire_ore": "Sapphire Ore",
+  "block.sticky_resources.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
+  "block.sticky_resources.end_stone_sapphire_ore": "Endstone Sapphire Ore",
+  "block.sticky_resources.nether_sapphire_ore": "Nether Sapphire Ore",
 
-  "block.StickyResources.sound_block": "Sound Block",
+  "block.sticky_resources.sound_block": "Sound Block",
 
-  "block.StickyResources.sapphire_stairs": "Sapphire Stairs",
-  "block.StickyResources.sapphire_slab": "Sapphire Slab",
-  "block.StickyResources.sapphire_button": "Sapphire Button",
-  "block.StickyResources.sapphire_pressure_plate": "Sapphire Pressure Plate",
-  "block.StickyResources.sapphire_fence": "Sapphire Fence",
-  "block.StickyResources.sapphire_fence_gate": "Sapphire Fence Gate",
-  "block.StickyResources.sapphire_wall": "Sapphire Wall",
-  "block.StickyResources.sapphire_door": "Sapphire Door",
-  "block.StickyResources.sapphire_trapdoor": "Sapphire Trapdoor",
+  "block.sticky_resources.sapphire_stairs": "Sapphire Stairs",
+  "block.sticky_resources.sapphire_slab": "Sapphire Slab",
+  "block.sticky_resources.sapphire_button": "Sapphire Button",
+  "block.sticky_resources.sapphire_pressure_plate": "Sapphire Pressure Plate",
+  "block.sticky_resources.sapphire_fence": "Sapphire Fence",
+  "block.sticky_resources.sapphire_fence_gate": "Sapphire Fence Gate",
+  "block.sticky_resources.sapphire_wall": "Sapphire Wall",
+  "block.sticky_resources.sapphire_door": "Sapphire Door",
+  "block.sticky_resources.sapphire_trapdoor": "Sapphire Trapdoor",
   
-  "block.StickyResources.catmint": "Catmint",
+  "block.sticky_resources.catmint": "Catmint",
 
-  "tooltip.StickyResources.metal_detector.tooltip": "Finds valuables underground!",
+  "tooltip.sticky_resources.metal_detector.tooltip": "Finds valuables underground!",
 
-  "entity.minecraft.villager.StickyResources.soundmaster": "Sound Master",
+  "entity.minecraft.villager.sticky_resources.soundmaster": "Sound Master",
 
-  "sounds.StickyResources.metal_detector_found_ore": "Metal Detector Jingle",
+  "sounds.sticky_resources.metal_detector_found_ore": "Metal Detector Jingle",
 
-
-  "creativetab.tutorial_tab": "Sapphire Tutorial Tab"
+  "creativetab.sticky_resources_sapphire_tab": "Sticky Resources Sapphire",
+  "creativetab.sticky_resources_devices_tab": "Sticky Resources Devices",
+  "creativetab.sticky_resources_food_tab": "Sticky Resources Food",
+  "creativetab.sticky_resources_spawn_egg_tab": "Sticky Resources Spawn Egg",
+  "creativetab.sticky_resources_misc_tab": "Sticky Resources Misc."
 }

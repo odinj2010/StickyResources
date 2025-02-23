@@ -2,17 +2,17 @@
   "parent": "minecraft:item/handheld",
   "loader": "forge:separate_transforms",
   "base": {
-    "parent": "StickyResources:item/sapphire_staff_3d"
+    "parent": "sticky_resources:item/sapphire_staff_3d"
   },
   "perspectives": {
     "gui": {
-      "parent": "StickyResources:item/sapphire_staff_2d"
+      "parent": "sticky_resources:item/sapphire_staff_2d"
     },
     "ground": {
-      "parent": "StickyResources:item/sapphire_staff_2d"
+      "parent": "sticky_resources:item/sapphire_staff_2d"
     },
     "fixed": {
-      "parent": "StickyResources:item/sapphire_staff_2d"
+      "parent": "sticky_resources:item/sapphire_staff_2d"
     }
   }
 }

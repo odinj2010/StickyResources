@@ -3,6 +3,7 @@ package net.nfgbros.stickyresources;
 import com.mojang.logging.LogUtils;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.entity.client.JellyRenderer;
 import net.nfgbros.stickyresources.entity.client.RhinoRenderer;
 import net.nfgbros.stickyresources.item.ModCreativeModeTabs;
 import net.nfgbros.stickyresources.item.ModItems;
@@ -76,6 +77,7 @@ public class StickyResources {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.RHINO.get(), RhinoRenderer::new);
+            EntityRenderers.register(ModEntities.JELLY.get(), JellyRenderer::new);
         }
     }
 }

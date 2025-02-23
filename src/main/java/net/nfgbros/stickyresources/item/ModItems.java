@@ -67,8 +67,14 @@ public class ModItems {
     public static final RegistryObject<Item> BAR_BRAWL_MUSIC_DISC = ITEMS.register("bar_brawl_music_disc",
             () -> new RecordItem(6, ModSounds.BAR_BRAWL, new Item.Properties().stacksTo(1), 2440));
 
+    //
+    //Spawn Eggs//
+    //
+
     public static final RegistryObject<Item> RHINO_SPANW_EGG = ITEMS.register("rhino_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.RHINO, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_SPANW_EGG = ITEMS.register("jelly_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY, 0x7e9680, 0xc5d1c5, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

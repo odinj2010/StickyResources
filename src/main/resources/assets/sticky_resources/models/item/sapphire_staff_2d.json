@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "StickyResources:item/sapphire_staff"
+    "layer0": "sticky_resources:item/sapphire_staff"
   }
 }

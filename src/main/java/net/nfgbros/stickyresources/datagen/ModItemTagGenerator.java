@@ -31,5 +31,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
         this.tag(ItemTags.CREEPER_DROP_MUSIC_DISCS)
                 .add(ModItems.BAR_BRAWL_MUSIC_DISC.get());
+
     }
 }
