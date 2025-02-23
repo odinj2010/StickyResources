@@ -19,7 +19,6 @@
   "item.sticky_resources.sapphire_boots": "Sapphire Boots",
 
   "item.sticky_resources.strawberry_seeds": "Strawberry Seeds",
-
   "item.sticky_resources.corn": "Corn",
   "item.sticky_resources.corn_seeds": "Corn Seeds",
 
@@ -28,14 +27,10 @@
 
   "block.sticky_resources.sapphire_block": "Block of Sapphire",
   "block.sticky_resources.raw_sapphire_block": "Block of Raw Sapphire",
-
   "block.sticky_resources.sapphire_ore": "Sapphire Ore",
   "block.sticky_resources.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
   "block.sticky_resources.end_stone_sapphire_ore": "Endstone Sapphire Ore",
   "block.sticky_resources.nether_sapphire_ore": "Nether Sapphire Ore",
-
-  "block.sticky_resources.sound_block": "Sound Block",
-
   "block.sticky_resources.sapphire_stairs": "Sapphire Stairs",
   "block.sticky_resources.sapphire_slab": "Sapphire Slab",
   "block.sticky_resources.sapphire_button": "Sapphire Button",
@@ -45,14 +40,24 @@
   "block.sticky_resources.sapphire_wall": "Sapphire Wall",
   "block.sticky_resources.sapphire_door": "Sapphire Door",
   "block.sticky_resources.sapphire_trapdoor": "Sapphire Trapdoor",
-  
+
+  "block.sticky_resources.sound_block": "Sound Block",
+
+
   "block.sticky_resources.catmint": "Catmint",
+
+
 
   "tooltip.sticky_resources.metal_detector.tooltip": "Finds valuables underground!",
 
+
   "entity.minecraft.villager.sticky_resources.soundmaster": "Sound Master",
 
+
+
   "sounds.sticky_resources.metal_detector_found_ore": "Metal Detector Jingle",
+
+
 
   "creativetab.sticky_resources_sapphire_tab": "Sticky Resources Sapphire",
   "creativetab.sticky_resources_devices_tab": "Sticky Resources Devices",

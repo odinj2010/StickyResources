@@ -71,10 +71,59 @@ public class ModItems {
     //Spawn Eggs//
     //
 
-    public static final RegistryObject<Item> RHINO_SPANW_EGG = ITEMS.register("rhino_spawn_egg",
+    public static final RegistryObject<Item> RHINO_SPAWN_EGG = ITEMS.register("rhino_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.RHINO, 0x7e9680, 0xc5d1c5, new Item.Properties()));
-    public static final RegistryObject<Item> JELLY_SPANW_EGG = ITEMS.register("jelly_spawn_egg",
+    public static final RegistryObject<Item> JELLY_SPAWN_EGG = ITEMS.register("jelly_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.JELLY, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    /// ///
+    /// ///
+    /// ///
+    /// ///
+    public static final RegistryObject<Item> JELLY_BONE_SPAWN_EGG = ITEMS.register("jelly_bone_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_BONE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_COAL_SPAWN_EGG = ITEMS.register("jelly_coal_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_COAL, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_COBBLESTONE_SPAWN_EGG = ITEMS.register("jelly_cobblestone_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_COBBLESTONE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_COPPER_SPAWN_EGG = ITEMS.register("jelly_copper_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_COPPER, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_DIAMOND_SPAWN_EGG = ITEMS.register("jelly_diamond_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_DIAMOND, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_DIRT_SPAWN_EGG = ITEMS.register("jelly_dirt_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_DIRT, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_ELECTRIC_SPAWN_EGG = ITEMS.register("jelly_electric_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_ELECTRIC, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_EMERALD_SPAWN_EGG = ITEMS.register("jelly_emerald_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_EMERALD, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_ENDER_PEARL_SPAWN_EGG = ITEMS.register("jelly_ender_pearl_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_ENDER_PEARL, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_GLASS_SPAWN_EGG = ITEMS.register("jelly_glass_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_GLASS, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_GOLD_SPAWN_EGG = ITEMS.register("jelly_gold_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_GOLD, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_GRAVEL_SPAWN_EGG = ITEMS.register("jelly_gravel_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_GRAVEL, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_IRON_SPAWN_EGG = ITEMS.register("jelly_iron_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_IRON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_LAPIS_SPAWN_EGG = ITEMS.register("jelly_lapis_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_LAPIS, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_LAVA_SPAWN_EGG = ITEMS.register("jelly_lava_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_LAVA, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_OAK_LOG_SPAWN_EGG = ITEMS.register("jelly_oak_log_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_OAK_LOG, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_OBSIDIAN_SPAWN_EGG = ITEMS.register("jelly_obsidian_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_OBSIDIAN, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_PRISMERINE_SPAWN_EGG = ITEMS.register("jelly_prismerine_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_PRISMERINE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_REDSTONE_SPAWN_EGG = ITEMS.register("jelly_redstone_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_REDSTONE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_SAND_SPAWN_EGG = ITEMS.register("jelly_sand_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_SAND, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_SAPPHIRE_SPAWN_EGG = ITEMS.register("jelly_sapphire_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_SAPPHIRE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_WATER_SPAWN_EGG = ITEMS.register("jelly_water_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_WATER, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

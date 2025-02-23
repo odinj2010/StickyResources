@@ -1,15 +1,11 @@
 package net.nfgbros.stickyresources.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.entity.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -19,22 +15,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
+import static net.nfgbros.stickyresources.entity.ModEntities.JELLY_LAVA;
 
 
-public class JellyEntity extends Animal {
+public class JellySandEntity extends JellyEntity {
 
     public int dropTime;
 
-    public JellyEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
+    public JellySandEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(200) + 200;
+        this.dropTime = this.random.nextInt(20) + 20;
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
+
 
     @Override
     public void tick() {
@@ -90,31 +89,22 @@ public class JellyEntity extends Animal {
     public void aiStep(){
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Items.SLIME_BALL);
+            this.spawnAtLocation(Items.SAND);
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(20) + 20;
         }
     }
-    @Override
-    public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal instanceof JellyOakLogEntity && this.isInLove() && otherAnimal.isInLove()) {
-            return true;
-        }
-        return super.canMate(otherAnimal);
-    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get()) {
-            // Breeding two default JellyEntities
-            return ModEntities.JELLY.get().create(pLevel);
-        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_OAK_LOG.get()) {
-            // Breeding two JellyOakWoodEntities
-            return ModEntities.JELLY_OAK_LOG.get().create(pLevel);
+        if (pOtherParent.isInWater()){
+            return JELLY_LAVA.get().create(pLevel);
         }
-        return null; // Handle cases where neither condition is met
+        return ModEntities.JELLY_SAND.get().create(pLevel);
+
     }
     @Override
     public boolean isFood(ItemStack pStack) {
