@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "sticky_resources:sapphire_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "sticky_resources:sapphire"
+  }
+}

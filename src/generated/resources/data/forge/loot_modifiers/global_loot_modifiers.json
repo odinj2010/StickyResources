@@ -1,0 +1,9 @@
+{
+  "entries": [
+    "sticky_resources:pine_cone_from_grass",
+    "sticky_resources:pine_cone_from_creeper",
+    "sticky_resources:metal_detector_from_suspicious_sand",
+    "sticky_resources:metal_detector_from_jungle_temples"
+  ],
+  "replace": false
+}

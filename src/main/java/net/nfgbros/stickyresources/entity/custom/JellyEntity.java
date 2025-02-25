@@ -1,15 +1,11 @@
 package net.nfgbros.stickyresources.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.entity.ModEntities;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -19,10 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.EnumSet;
-
 
 public class JellyEntity extends Animal {
 
@@ -40,13 +35,13 @@ public class JellyEntity extends Animal {
     public void tick() {
         super.tick();
 
-        if(this.level().isClientSide()) {
+        if (this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
     private void setupAnimationStates() {
-        if(this.idleAnimationTimeout <= 0) {
+        if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -57,7 +52,7 @@ public class JellyEntity extends Animal {
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if(this.getPose() == Pose.STANDING) {
+        if (this.getPose() == Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;
@@ -73,7 +68,6 @@ public class JellyEntity extends Animal {
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -87,16 +81,17 @@ public class JellyEntity extends Animal {
     }
 
     @Override
-    public void aiStep(){
+    public void aiStep() {
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.SLIME_BALL);
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + 200;
         }
     }
+
     @Override
     public boolean canMate(Animal otherAnimal) {
         if (otherAnimal instanceof JellyOakLogEntity && this.isInLove() && otherAnimal.isInLove()) {
@@ -104,43 +99,28 @@ public class JellyEntity extends Animal {
         }
         return super.canMate(otherAnimal);
     }
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get()) {
-            // Breeding two default JellyEntities
-            return ModEntities.JELLY.get().create(pLevel);
-        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_OAK_LOG.get()) {
-            // Breeding two JellyOakWoodEntities
-            return ModEntities.JELLY_OAK_LOG.get().create(pLevel);
-        }
-        return null; // Handle cases where neither condition is met
-    }
+
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.SLIME_BALL);
     }
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.SLIME_HURT;
-    }
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.SLIME_DEATH_SMALL;
-    }
 
-    public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("ItemLayTime")) {
-            this.dropTime = pCompound.getInt("ItemLayTime");
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        boolean thisInWater = this.isInWater();
+        boolean otherInWater = pOtherParent.isInWater();
+
+        if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get()) {
+            return ModEntities.JELLY.get().create(pLevel);
+        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get() && thisInWater && otherInWater) {
+            return ModEntities.JELLY_WATER.get().create(pLevel);
+        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_WATER.get() && thisInWater){
+            return ModEntities.JELLY_WATER.get().create(pLevel);
+        }else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_OAK_LOG.get()) {
+            return ModEntities.JELLY_OAK_LOG.get().create(pLevel);
+        }else {
+            return ModEntities.JELLY.get().create(pLevel);
         }
-
-    }
-
-    public void addAdditionalSaveData(CompoundTag pCompound) {
-        super.addAdditionalSaveData(pCompound);
-        pCompound.putInt("ItemLayTime", this.dropTime);
     }
 }

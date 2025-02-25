@@ -29,7 +29,7 @@ public class JellyLavaEntity extends JellyEntity {
 
     public JellyLavaEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(20) + 20;
+        this.dropTime = this.random.nextInt(200) + 200;
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
@@ -94,7 +94,7 @@ public class JellyLavaEntity extends JellyEntity {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.LAVA_BUCKET);
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(20) + 20;
+            this.dropTime = this.random.nextInt(200) + 200;
         }
     }
 

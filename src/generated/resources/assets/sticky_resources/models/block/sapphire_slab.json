@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "sticky_resources:block/sapphire_block",
+    "side": "sticky_resources:block/sapphire_block",
+    "top": "sticky_resources:block/sapphire_block"
+  }
+}

@@ -18,6 +18,7 @@ public class ModEventBusEvents {
 
         event.put(ModEntities.JELLY_BONE.get(), JellyEntity.createAttributes().build());
         event.put(ModEntities.JELLY_COAL.get(), JellyEntity.createAttributes().build());
+        event.put(ModEntities.JELLY_CHARCOAL.get(), JellyEntity.createAttributes().build());
         event.put(ModEntities.JELLY_COBBLESTONE.get(), JellyEntity.createAttributes().build());
         event.put(ModEntities.JELLY_COPPER.get(), JellyEntity.createAttributes().build());
         event.put(ModEntities.JELLY_DIAMOND.get(), JellyEntity.createAttributes().build());

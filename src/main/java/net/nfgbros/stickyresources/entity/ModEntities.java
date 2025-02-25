@@ -35,6 +35,9 @@ public class ModEntities {
     public static final RegistryObject<EntityType<JellyCoalEntity>> JELLY_COAL =
             ENTITY_TYPES.register("jelly_coal", () -> EntityType.Builder.of(JellyCoalEntity::new, MobCategory.CREATURE)
                     .sized(0.5f, 0.5f).build("jelly_coal"));
+    public static final RegistryObject<EntityType<JellyCharCoalEntity>> JELLY_CHARCOAL =
+            ENTITY_TYPES.register("jelly_charcoal", () -> EntityType.Builder.of(JellyCharCoalEntity::new, MobCategory.CREATURE)
+                    .sized(0.5f, 0.5f).build("jelly_charcoal"));
     public static final RegistryObject<EntityType<JellyCobblestoneEntity>> JELLY_COBBLESTONE =
             ENTITY_TYPES.register("jelly_cobblestone", () -> EntityType.Builder.of(JellyCobblestoneEntity::new, MobCategory.CREATURE)
                     .sized(0.5f, 0.5f).build("jelly_cobblestone"));

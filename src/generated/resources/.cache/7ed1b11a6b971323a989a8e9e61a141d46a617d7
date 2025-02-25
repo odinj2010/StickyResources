@@ -1,0 +1,11 @@
+// 1.20.1	2025-02-20T13:59:53.6233741	Tags for minecraft:block mod id sticky_resources
+ad70a019fde319239ccc917ad9141391c197ecc1 data/forge/tags/blocks/needs_netherite_tool.json
+26271f66a8e539e606843cdd8806285223d25329 data/minecraft/tags/blocks/fences.json
+031a5340217584aa3f46b1d3c1f6e404e83e2aa1 data/minecraft/tags/blocks/fence_gates.json
+27f006d31b7606686250593999cd03f7e4df7d93 data/minecraft/tags/blocks/mineable/pickaxe.json
+7290931582ab1d546af09b23d50b43c5063cd021 data/minecraft/tags/blocks/needs_diamond_tool.json
+cdfbc8aa1ab7108eda96b8287a316d9beb2e693c data/minecraft/tags/blocks/needs_iron_tool.json
+dee4d92a0cf92f14c163caf068e9537cc2dc3e13 data/minecraft/tags/blocks/needs_stone_tool.json
+11c1d1be573aa4729df24d34f08ee4acdb1022a8 data/minecraft/tags/blocks/walls.json
+0b3597309c5b256c641347ad4ec9c4107f244f66 data/sticky_resources/tags/blocks/metal_detector_valuables.json
+a088214572bb8d4c1d4271d4170ffade111e16f3 data/sticky_resources/tags/blocks/needs_sapphire_tool.json

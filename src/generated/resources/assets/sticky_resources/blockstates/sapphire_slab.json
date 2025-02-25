@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "sticky_resources:block/sapphire_slab"
+    },
+    "type=double": {
+      "model": "sticky_resources:block/sapphire_block"
+    },
+    "type=top": {
+      "model": "sticky_resources:block/sapphire_slab_top"
+    }
+  }
+}

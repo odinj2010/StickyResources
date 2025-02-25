@@ -1,0 +1,6 @@
+// 1.20.1	2025-02-20T13:59:53.6283743	Global Loot Modifiers : sticky_resources
+88aa8847cb78fe9915e2a4dc077171d7e16c584e data/forge/loot_modifiers/global_loot_modifiers.json
+9d68ab52969d81f0879e629c9fabc7e66f4ccd27 data/sticky_resources/loot_modifiers/metal_detector_from_jungle_temples.json
+a5b276eb1ce47e81d05adbf7d3811cb3521eacc7 data/sticky_resources/loot_modifiers/metal_detector_from_suspicious_sand.json
+29686821f26ebe5663c94e76274f0379ccd900a1 data/sticky_resources/loot_modifiers/pine_cone_from_creeper.json
+7d1bbee2a6b702e2162b1a24dd5cd7a18b0a6d1e data/sticky_resources/loot_modifiers/pine_cone_from_grass.json

@@ -1,0 +1,10 @@
+{
+  "type": "sticky_resources:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/creeper"
+    }
+  ],
+  "item": "sticky_resources:pine_cone"
+}

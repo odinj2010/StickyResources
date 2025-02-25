@@ -83,6 +83,8 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.JELLY_BONE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
     public static final RegistryObject<Item> JELLY_COAL_SPAWN_EGG = ITEMS.register("jelly_coal_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.JELLY_COAL, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_CHARCOAL_SPAWN_EGG = ITEMS.register("jelly_charcoal_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.JELLY_CHARCOAL, 0x7e9680, 0xc5d1c5, new Item.Properties()));
     public static final RegistryObject<Item> JELLY_COBBLESTONE_SPAWN_EGG = ITEMS.register("jelly_cobblestone_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.JELLY_COBBLESTONE, 0x7e9680, 0xc5d1c5, new Item.Properties()));
     public static final RegistryObject<Item> JELLY_COPPER_SPAWN_EGG = ITEMS.register("jelly_copper_spawn_egg",

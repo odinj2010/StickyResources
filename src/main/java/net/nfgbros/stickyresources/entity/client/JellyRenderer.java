@@ -12,6 +12,7 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     private final ResourceLocation defaultTexture;
     private final ResourceLocation boneTexture;
     private final ResourceLocation coalTexture;
+    private final ResourceLocation charcoalTexture;
     private final ResourceLocation cobblestoneTexture;
     private final ResourceLocation copperTexture;
     private final ResourceLocation diamondTexture;
@@ -34,7 +35,7 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     private final ResourceLocation waterTexture;
 
     public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
-                         ResourceLocation coalTexture,ResourceLocation cobblestoneTexture,ResourceLocation copperTexture,
+                         ResourceLocation coalTexture,ResourceLocation charcoalTexture,ResourceLocation cobblestoneTexture,ResourceLocation copperTexture,
                          ResourceLocation diamondTexture,ResourceLocation dirtTexture,ResourceLocation electricTexture,
                          ResourceLocation emeraldTexture,ResourceLocation enderpearlTexture,ResourceLocation glassTexture,
                          ResourceLocation goldTexture,ResourceLocation gravelTexture,ResourceLocation ironTexture,
@@ -45,6 +46,7 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
         this.defaultTexture = defaultTexture;
         this.boneTexture = boneTexture;
         this.coalTexture = coalTexture;
+        this.charcoalTexture = charcoalTexture;
         this.cobblestoneTexture = cobblestoneTexture;
         this.copperTexture = copperTexture;
         this.diamondTexture = diamondTexture;
@@ -73,6 +75,8 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
             return boneTexture;
         } else if(pEntity instanceof JellyCoalEntity){
             return coalTexture;
+        }else if(pEntity instanceof JellyCharCoalEntity){
+            return charcoalTexture;
         }else if(pEntity instanceof JellyCobblestoneEntity){
             return cobblestoneTexture;
         }else if(pEntity instanceof JellyCopperEntity){

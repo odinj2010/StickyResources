@@ -4,11 +4,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -18,11 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
-
 
 public class JellyObsidianEntity extends JellyEntity {
 
@@ -30,24 +27,23 @@ public class JellyObsidianEntity extends JellyEntity {
 
     public JellyObsidianEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(20) + 20;
+        this.dropTime = this.random.nextInt(200) + 200;
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
-
     @Override
     public void tick() {
         super.tick();
 
-        if(this.level().isClientSide()) {
+        if (this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
     private void setupAnimationStates() {
-        if(this.idleAnimationTimeout <= 0) {
+        if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -58,7 +54,7 @@ public class JellyObsidianEntity extends JellyEntity {
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if(this.getPose() == Pose.STANDING) {
+        if (this.getPose() == Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;
@@ -74,7 +70,6 @@ public class JellyObsidianEntity extends JellyEntity {
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -88,14 +83,14 @@ public class JellyObsidianEntity extends JellyEntity {
     }
 
     @Override
-    public void aiStep(){
+    public void aiStep() {
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() &&!this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.OBSIDIAN);
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(20) + 20;
+            this.dropTime = this.random.nextInt(200) + 200;
         }
     }
 
@@ -104,15 +99,18 @@ public class JellyObsidianEntity extends JellyEntity {
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.JELLY_OBSIDIAN.get().create(pLevel);
     }
+
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.SLIME_BALL);
     }
+
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return SoundEvents.SLIME_HURT;
     }
+
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
@@ -124,11 +122,24 @@ public class JellyObsidianEntity extends JellyEntity {
         if (pCompound.contains("ItemLayTime")) {
             this.dropTime = pCompound.getInt("ItemLayTime");
         }
-
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("ItemLayTime", this.dropTime);
+    }
+
+    @Override
+    public void travel(Vec3 pTravelVector) {
+        if (this.isInLava()) {
+            this.moveRelative(0.01F, pTravelVector);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(pTravelVector);
+        }
     }
 }
