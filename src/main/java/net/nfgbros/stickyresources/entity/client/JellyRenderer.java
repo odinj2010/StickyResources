@@ -1,11 +1,16 @@
 package net.nfgbros.stickyresources.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.nfgbros.stickyresources.entity.custom.*;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.entity.custom.*;
 
 public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyModel<T>> {
 
@@ -34,13 +39,18 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     private final ResourceLocation sapphireTexture;
     private final ResourceLocation waterTexture;
 
+    // Define a new RenderType with alpha blending
+    private static final RenderType ALPHA_RENDER_TYPE = RenderType.entityTranslucent(new ResourceLocation(StickyResources.MOD_ID, "textures/entity/jelly_obsidian.png"));
+
     public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
-                         ResourceLocation coalTexture,ResourceLocation charcoalTexture,ResourceLocation cobblestoneTexture,ResourceLocation copperTexture,
-                         ResourceLocation diamondTexture,ResourceLocation dirtTexture,ResourceLocation electricTexture,
-                         ResourceLocation emeraldTexture,ResourceLocation enderpearlTexture,ResourceLocation glassTexture,
-                         ResourceLocation goldTexture,ResourceLocation gravelTexture,ResourceLocation ironTexture,
-                         ResourceLocation lapisTexture,ResourceLocation obsidianTexture, ResourceLocation prismerineTexture,
-                         ResourceLocation redstoneTexture,ResourceLocation sandTexture,ResourceLocation sapphireTexture,
+
+                         public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
+                         ResourceLocation coalTexture, ResourceLocation charcoalTexture, ResourceLocation cobblestoneTexture, ResourceLocation copperTexture,
+                         ResourceLocation diamondTexture, ResourceLocation dirtTexture, ResourceLocation electricTexture,
+                         ResourceLocation emeraldTexture, ResourceLocation enderpearlTexture, ResourceLocation glassTexture,
+                         ResourceLocation goldTexture, ResourceLocation gravelTexture, ResourceLocation ironTexture,
+                         ResourceLocation lapisTexture, ResourceLocation obsidianTexture, ResourceLocation prismerineTexture,
+                         ResourceLocation redstoneTexture, ResourceLocation sandTexture, ResourceLocation sapphireTexture,
                          ResourceLocation waterTexture, ResourceLocation lavaTexture, ResourceLocation oakTexture) {
         super(pContext, new JellyModel<>(pContext.bakeLayer(ModModelLayers.JELLY_LAYER)), 0.5f);
         this.defaultTexture = defaultTexture;
@@ -73,51 +83,51 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     public ResourceLocation getTextureLocation(T pEntity) {
         if (pEntity instanceof JellyBoneEntity) {
             return boneTexture;
-        } else if(pEntity instanceof JellyCoalEntity){
+        } else if (pEntity instanceof JellyCoalEntity) {
             return coalTexture;
-        }else if(pEntity instanceof JellyCharCoalEntity){
+        } else if (pEntity instanceof JellyCharCoalEntity) {
             return charcoalTexture;
-        }else if(pEntity instanceof JellyCobblestoneEntity){
+        } else if (pEntity instanceof JellyCobblestoneEntity) {
             return cobblestoneTexture;
-        }else if(pEntity instanceof JellyCopperEntity){
+        } else if (pEntity instanceof JellyCopperEntity) {
             return copperTexture;
-        }else if(pEntity instanceof JellyDiamondEntity){
+        } else if (pEntity instanceof JellyDiamondEntity) {
             return diamondTexture;
-        }else if(pEntity instanceof JellyDirtEntity){
+        } else if (pEntity instanceof JellyDirtEntity) {
             return dirtTexture;
-        }else if(pEntity instanceof JellyElectricEntity){
+        } else if (pEntity instanceof JellyElectricEntity) {
             return electricTexture;
-        }else if(pEntity instanceof JellyEmeraldEntity){
+        } else if (pEntity instanceof JellyEmeraldEntity) {
             return emeraldTexture;
-        }else if(pEntity instanceof JellyEnderPearlEntity){
+        } else if (pEntity instanceof JellyEnderPearlEntity) {
             return enderpearlTexture;
-        }else if(pEntity instanceof JellyGlassEntity){
+        } else if (pEntity instanceof JellyGlassEntity) {
             return glassTexture;
-        }else if(pEntity instanceof JellyGoldEntity){
+        } else if (pEntity instanceof JellyGoldEntity) {
             return goldTexture;
-        }else if(pEntity instanceof JellyGravelEntity){
+        } else if (pEntity instanceof JellyGravelEntity) {
             return gravelTexture;
-        }else if(pEntity instanceof JellyIronEntity){
+        } else if (pEntity instanceof JellyIronEntity) {
             return ironTexture;
-        }else if(pEntity instanceof JellyLapisEntity){
+        } else if (pEntity instanceof JellyLapisEntity) {
             return lapisTexture;
-        }else if(pEntity instanceof JellyLavaEntity){
+        } else if (pEntity instanceof JellyLavaEntity) {
             return lavaTexture;
-        }else if(pEntity instanceof JellyOakLogEntity){
+        } else if (pEntity instanceof JellyOakLogEntity) {
             return oakTexture;
-        }else if(pEntity instanceof JellyObsidianEntity){
+        } else if (pEntity instanceof JellyObsidianEntity) {
             return obsidianTexture;
-        }else if(pEntity instanceof JellyPrismerineEntity){
+        } else if (pEntity instanceof JellyPrismerineEntity) {
             return prismerineTexture;
-        }else if(pEntity instanceof JellyRedstoneEntity){
+        } else if (pEntity instanceof JellyRedstoneEntity) {
             return redstoneTexture;
-        }else if(pEntity instanceof JellySandEntity){
+        } else if (pEntity instanceof JellySandEntity) {
             return sandTexture;
-        }else if(pEntity instanceof JellySapphireEntity){
+        } else if (pEntity instanceof JellySapphireEntity) {
             return sapphireTexture;
-        }else if(pEntity instanceof JellyWaterEntity){
+        } else if (pEntity instanceof JellyWaterEntity) {
             return waterTexture;
-        }else{
+        } else {
             return defaultTexture;
         }
 
@@ -126,10 +136,20 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     @Override
     public void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
                        MultiBufferSource pBuffer, int pPackedLight) {
+
         if (pEntity.isBaby()) {
-            pMatrixStack.scale(0.5f, 0.5f, 0.5f);
+            pMatrixStack.scale(0.5f, 0.5f, 0.5f); // Apply scaling for baby entities first
         }
 
-        super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
+        if (pEntity instanceof JellyObsidianEntity) {
+            VertexConsumer vertexConsumer = pBuffer.getBuffer(ALPHA_RENDER_TYPE);
+            int packedOverlay = getOverlay(pEntity, pPartialTicks);
+            this.model.renderToBuffer(pMatrixStack, vertexConsumer, pPackedLight, packedOverlay, 1f, 1f, 1f, 0.5f);
+        } else {
+            super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
+        }
+        protected int getOverlay(T pEntity, float pPartialTicks) {
+            return LivingEntityRenderer.getOverlayCoords(pEntity, 0); // Adjust 0 as needed
+        }
     }
 }

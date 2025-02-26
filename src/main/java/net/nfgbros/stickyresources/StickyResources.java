@@ -91,30 +91,30 @@ public class StickyResources {
             //
             //Jellies
             //
-            ResourceLocation jellyTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly.png");
-            ResourceLocation jellyBoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_bone.png");
-            ResourceLocation jellyCoalTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_coal.png");
-            ResourceLocation jellyCharCoalTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_charcoal.png");
-            ResourceLocation jellyCobblestoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_cobblestone.png");
-            ResourceLocation jellyCopperTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_copper.png");
-            ResourceLocation jellyDiamondTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_diamond.png");
-            ResourceLocation jellyDirtTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_dirt.png");
-            ResourceLocation jellyElectricTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_electric.png");
-            ResourceLocation jellyEmeraldTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_emerald.png");
-            ResourceLocation jellyEnderPearlTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_enderpearl.png");
-            ResourceLocation jellyGlassTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_glass.png");
-            ResourceLocation jellyGoldTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_gold.png");
-            ResourceLocation jellyGravelTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_gravel.png");
-            ResourceLocation jellyIronTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_iron.png");
-            ResourceLocation jellyLapisTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_lapis.png");
-            ResourceLocation jellyLavaTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_lava.png");
-            ResourceLocation jellyOakLogTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_oak.png");
-            ResourceLocation jellyObsidianTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_obsidian.png");
-            ResourceLocation jellyPrismerineTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_prismerine.png");
-            ResourceLocation jellyRedstoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_redstone.png");
-            ResourceLocation jellySandTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_sand.png");
-            ResourceLocation jellySapphireTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_sapphire.png");
-            ResourceLocation jellyWaterTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly_water.png");
+            ResourceLocation jellyTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly.png");
+            ResourceLocation jellyBoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_bone.png");
+            ResourceLocation jellyCoalTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_coal.png");
+            ResourceLocation jellyCharCoalTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_charcoal.png");
+            ResourceLocation jellyCobblestoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_cobblestone.png");
+            ResourceLocation jellyCopperTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_copper.png");
+            ResourceLocation jellyDiamondTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_diamond.png");
+            ResourceLocation jellyDirtTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_dirt.png");
+            ResourceLocation jellyElectricTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_electric.png");
+            ResourceLocation jellyEmeraldTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_emerald.png");
+            ResourceLocation jellyEnderPearlTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_enderpearl.png");
+            ResourceLocation jellyGlassTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_glass.png");
+            ResourceLocation jellyGoldTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_gold.png");
+            ResourceLocation jellyGravelTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_gravel.png");
+            ResourceLocation jellyIronTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_iron.png");
+            ResourceLocation jellyLapisTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_lapis.png");
+            ResourceLocation jellyLavaTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_lava.png");
+            ResourceLocation jellyOakLogTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_oak.png");
+            ResourceLocation jellyObsidianTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_obsidian.png");
+            ResourceLocation jellyPrismerineTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_prismerine.png");
+            ResourceLocation jellyRedstoneTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_redstone.png");
+            ResourceLocation jellySandTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_sand.png");
+            ResourceLocation jellySapphireTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_sapphire.png");
+            ResourceLocation jellyWaterTexture = new ResourceLocation(MOD_ID, "textures/entity/jelly/jelly_water.png");
 
             EntityRenderers.register(ModEntities.JELLY.get(), (context) -> new JellyRenderer<>(context, jellyTexture, jellyBoneTexture, jellyCoalTexture, jellyCharCoalTexture, jellyCobblestoneTexture,jellyCopperTexture,jellyDiamondTexture,jellyDirtTexture,jellyElectricTexture,jellyEmeraldTexture,jellyEnderPearlTexture,jellyGlassTexture,jellyGoldTexture,jellyGravelTexture,jellyIronTexture,jellyLapisTexture,jellyObsidianTexture,jellyPrismerineTexture,jellyRedstoneTexture,jellySandTexture, jellySapphireTexture, jellyWaterTexture, jellyLavaTexture, jellyOakLogTexture));
             EntityRenderers.register(ModEntities.JELLY_BONE.get(), (context) -> new JellyRenderer<>(context, jellyTexture, jellyBoneTexture, jellyCoalTexture, jellyCharCoalTexture, jellyCobblestoneTexture,jellyCopperTexture,jellyDiamondTexture,jellyDirtTexture,jellyElectricTexture,jellyEmeraldTexture,jellyEnderPearlTexture,jellyGlassTexture,jellyGoldTexture,jellyGravelTexture,jellyIronTexture,jellyLapisTexture,jellyObsidianTexture,jellyPrismerineTexture,jellyRedstoneTexture,jellySandTexture, jellySapphireTexture, jellyWaterTexture, jellyLavaTexture, jellyOakLogTexture));
