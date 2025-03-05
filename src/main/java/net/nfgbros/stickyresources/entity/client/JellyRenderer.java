@@ -3,14 +3,15 @@ package net.nfgbros.stickyresources.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.entity.custom.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyModel<T>> {
 
@@ -39,12 +40,10 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     private final ResourceLocation sapphireTexture;
     private final ResourceLocation waterTexture;
 
-    // Define a new RenderType with alpha blending
-    private static final RenderType ALPHA_RENDER_TYPE = RenderType.entityTranslucent(new ResourceLocation(StickyResources.MOD_ID, "textures/entity/jelly_obsidian.png"));
+    // Map to store cached RenderTypes
+    private final Map<ResourceLocation, RenderType> renderTypeCache = new HashMap<>();
 
     public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
-
-                         public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
                          ResourceLocation coalTexture, ResourceLocation charcoalTexture, ResourceLocation cobblestoneTexture, ResourceLocation copperTexture,
                          ResourceLocation diamondTexture, ResourceLocation dirtTexture, ResourceLocation electricTexture,
                          ResourceLocation emeraldTexture, ResourceLocation enderpearlTexture, ResourceLocation glassTexture,
@@ -130,7 +129,6 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
         } else {
             return defaultTexture;
         }
-
     }
 
     @Override
@@ -138,18 +136,24 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
                        MultiBufferSource pBuffer, int pPackedLight) {
 
         if (pEntity.isBaby()) {
-            pMatrixStack.scale(0.5f, 0.5f, 0.5f); // Apply scaling for baby entities first
+            pMatrixStack.scale(0.5f, 0.5f, 0.5f);
         }
 
-        if (pEntity instanceof JellyObsidianEntity) {
-            VertexConsumer vertexConsumer = pBuffer.getBuffer(ALPHA_RENDER_TYPE);
+        if (pEntity instanceof JellyEntity) {
+            ResourceLocation texture = getTextureLocation(pEntity);
+
+            // Get RenderType from cache, or create and cache it if not present
+            RenderType renderType = renderTypeCache.computeIfAbsent(texture, RenderType::entityTranslucent);
+
+            VertexConsumer vertexConsumer = pBuffer.getBuffer(renderType);
             int packedOverlay = getOverlay(pEntity, pPartialTicks);
-            this.model.renderToBuffer(pMatrixStack, vertexConsumer, pPackedLight, packedOverlay, 1f, 1f, 1f, 0.5f);
+            this.model.renderToBuffer(pMatrixStack, vertexConsumer, pPackedLight, packedOverlay, 1f, 1f, 1f, 0.9f); // Adjust alpha as needed
         } else {
             super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
         }
-        protected int getOverlay(T pEntity, float pPartialTicks) {
-            return LivingEntityRenderer.getOverlayCoords(pEntity, 0); // Adjust 0 as needed
-        }
+    }
+
+    protected int getOverlay(T pEntity, float pPartialTicks) {
+        return LivingEntityRenderer.getOverlayCoords(pEntity, 0);
     }
 }
