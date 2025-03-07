@@ -95,7 +95,7 @@ public class JellySapphireEntity extends JellyEntity {
 
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.SAPPHIRE.get());
+            this.spawnAtLocation(ModItems.RAW_SAPPHIRE.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + 200;
         }
