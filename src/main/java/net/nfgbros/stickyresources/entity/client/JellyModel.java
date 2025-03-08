@@ -8,63 +8,64 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.nfgbros.stickyresources.entity.custom.LookableEntity;
 
 public class JellyModel<T extends Entity> extends HierarchicalModel<T> {
 
-    // Define the layer location for this model
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "jellyentity"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("sticky_resources", "jellyentity"), "main");
+    private final ModelPart root;
+    private final ModelPart jelly_inner;
+    private final ModelPart jelly_outer;
 
-    // Model parts
-    private final ModelPart root; // The root part of the model
-    private final ModelPart jelly_inner; // Inner part of the jelly entity
-    private final ModelPart jelly_outer; // Outer part of the jelly entity
-
-    // Constructor to initialize model parts
     public JellyModel(ModelPart root) {
         this.root = root;
         this.jelly_inner = root.getChild("jelly_inner");
         this.jelly_outer = root.getChild("jelly_outer");
     }
 
-    // Create the layer definition for the model
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition(); // Create the mesh definition
-        PartDefinition partdefinition = meshdefinition.getRoot(); // Get the root part definition
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
 
-        // Define the inner part of the jelly
         partdefinition.addOrReplaceChild("jelly_inner", CubeListBuilder.create()
-                        .texOffs(0, 16).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)) // Main cube
-                        .texOffs(32, 0).addBox(-3.3F, 4.0F, -3.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)) // Detail cube 1
-                        .texOffs(32, 4).addBox(1.3F, 4.0F, -3.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)) // Detail cube 2
-                        .texOffs(32, 8).addBox(0.0F, 2.0F, -3.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), // Detail cube 3
-                PartPose.offset(0.0F, 1.0F, 0.0F)); // No offset
+                        .texOffs(0, 16).addBox(-3.0F, 1.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F))
+                        .texOffs(32, 0).addBox(-3.3F, 4.0F, -3.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                        .texOffs(32, 4).addBox(1.3F, 4.0F, -3.5F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                        .texOffs(32, 8).addBox(0.0F, 2.0F, -3.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 1.0F, 0.0F));
 
-        // Define the outer part of the jelly (only the main cube)
         partdefinition.addOrReplaceChild("jelly_outer", CubeListBuilder.create()
-                        .texOffs(0, 0).addBox(-4.0F, 1.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), // Main cube
-                PartPose.offset(0.0F, 0.0F, 0.0F)); // No offset
+                        .texOffs(0, 0).addBox(-4.0F, 1.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        return LayerDefinition.create(meshdefinition, 64, 32); // Create the layer definition with texture size 64x32
+        return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
-    // Set up animations for the model (currently empty)
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose); // Reset all poses
-        // Add animation logic here if needed
+        this.root().getAllParts().forEach(ModelPart::resetPose);
+
+        float scaleFactor = 1.1f + 0.2f * Mth.sin(ageInTicks * 0.6f);
+
+        this.jelly_inner.xScale = scaleFactor;
+        this.jelly_inner.yScale = 1.0f / scaleFactor;
+        this.jelly_outer.xScale = scaleFactor;
+        this.jelly_outer.yScale = 1.0f / scaleFactor;
+
+        if (entity instanceof LookableEntity) {
+            this.root.yRot = ((LookableEntity) entity).getLookingYRot() * ((float) Math.PI / 180F);
+        }
     }
 
-    // Render the model to the buffer
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        jelly_inner.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha); // Render inner part
-        jelly_outer.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha); // Render outer part
+        root().render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 
-    // Get the root part of the model
     @Override
     public ModelPart root() {
-        return this.root;
+        return root;
     }
 }

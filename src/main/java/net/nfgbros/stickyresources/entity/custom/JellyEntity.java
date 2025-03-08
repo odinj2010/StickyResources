@@ -1,10 +1,7 @@
 package net.nfgbros.stickyresources.entity.custom;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,9 +16,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
-public class JellyEntity extends Animal {
+public class JellyEntity extends Animal implements net.nfgbros.stickyresources.entity.custom.LookableEntity {
 
     public int dropTime;
+    private float lookingYRot;
 
     public JellyEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -35,7 +33,17 @@ public class JellyEntity extends Animal {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
+        if (!this.level().isClientSide) {
+            // ... (your existing code) ...
+
+            // Calculate the angle towards the nearest player
+            Player nearestPlayer = this.level().getNearestPlayer(this, 24.0D);
+            if (nearestPlayer != null) {
+                double dx = nearestPlayer.getX() - this.getX();
+                double dz = nearestPlayer.getZ() - this.getZ();
+                this.lookingYRot = (float) (Math.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+            }
+        } else {
             setupAnimationStates();
         }
     }
@@ -66,7 +74,18 @@ public class JellyEntity extends Animal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
+
+        // Modified LookAtPlayerGoal with null check
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f) {
+            @Override
+            public boolean canUse() {
+                // Check if a player to look at has been found
+                if (this.lookAt != null) {
+                    return this.lookAt.isAlive();
+                }
+                return false; // Skip if no player is found
+            }
+        });
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
     }
 
@@ -122,5 +141,10 @@ public class JellyEntity extends Animal {
         }else {
             return ModEntities.JELLY.get().create(pLevel);
         }
+    }
+
+    @Override
+    public float getLookingYRot() {
+        return lookingYRot;
     }
 }

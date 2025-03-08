@@ -23,9 +23,10 @@ public class ModEntities {
     //
     //Original Jelly
     //
-    public static final RegistryObject<EntityType<JellyEntity>> JELLY =
-            ENTITY_TYPES.register("jelly", () -> EntityType.Builder.of(JellyEntity::new, MobCategory.CREATURE)
-                    .sized(0.5f, 0.5f).build("jelly"));
+    public static final RegistryObject<EntityType<JellyEntity>> JELLY = ENTITY_TYPES.register("jelly",
+            () -> EntityType.Builder.<JellyEntity>of(JellyEntity::new, MobCategory.CREATURE) // Specify <JellyEntity>
+                    // ... other builder methods ...
+                    .build("jelly"));
     //
     //Breedable Jellies
     //

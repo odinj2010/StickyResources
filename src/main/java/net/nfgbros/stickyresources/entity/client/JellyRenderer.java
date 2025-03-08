@@ -8,7 +8,12 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.nfgbros.stickyresources.entity.custom.*;
+import net.nfgbros.stickyresources.entity.custom.LookableEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -132,28 +137,27 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     }
 
     @Override
-    public void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
-                       MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack,
+                       MultiBufferSource buffer, int packedLight) {
 
-        if (pEntity.isBaby()) {
-            pMatrixStack.scale(0.5f, 0.5f, 0.5f);
+        if (entity.isBaby()) {
+            poseStack.scale(0.5f, 0.5f, 0.5f);
         }
 
-        if (pEntity instanceof JellyEntity) {
-            ResourceLocation texture = getTextureLocation(pEntity);
+        // Update animation state
+        entity.walkAnimation.update(entity.getPose() == Pose.STANDING ? Math.min(partialTicks * 6F, 1f) : 0f, 0.2f);
 
-            // Get RenderType from cache, or create and cache it if not present
-            RenderType renderType = renderTypeCache.computeIfAbsent(texture, RenderType::entityTranslucent);
+        // Apply animation state to the model
+        this.model.setupAnim(entity, entity.walkAnimation.position(), entity.walkAnimation.position(),
+                entity.tickCount + partialTicks, 0, entity.getXRot());
 
-            VertexConsumer vertexConsumer = pBuffer.getBuffer(renderType);
-            int packedOverlay = getOverlay(pEntity, pPartialTicks);
-            this.model.renderToBuffer(pMatrixStack, vertexConsumer, pPackedLight, packedOverlay, 1f, 1f, 1f, 0.9f); // Adjust alpha as needed
-        } else {
-            super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
-        }
+        // Render the model
+        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity)));
+        int packedOverlay = getOverlay(entity, partialTicks);
+        this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, 1f, 1f, 1f, 0.9f);
     }
 
     protected int getOverlay(T pEntity, float pPartialTicks) {
-        return LivingEntityRenderer.getOverlayCoords(pEntity, 0);
+        return LivingEntityRenderer.getOverlayCoords((LivingEntity) pEntity, 0);
     }
 }

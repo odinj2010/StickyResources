@@ -1,9 +1,10 @@
-// 1.20.1	2025-02-23T06:07:49.7246644	Item Models: sticky_resources
+// 1.20.1	2025-03-07T18:09:42.0425485	Item Models: sticky_resources
 015c0498489555b705fb73f716a3b08a943403d5 assets/sticky_resources/models/item/bar_brawl_music_disc.json
 28d058cfaab441e68e3b7da92477c584b20a0eb1 assets/sticky_resources/models/item/catmint.json
 1ea7c748a3d0eea78f2c4b76a4dc89d641c23afb assets/sticky_resources/models/item/corn.json
 8be577ab457f05ef016f07bbd0fb220327152ba0 assets/sticky_resources/models/item/corn_seeds.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_bone_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_charcoal_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_coal_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_cobblestone_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_copper_spawn_egg.json
