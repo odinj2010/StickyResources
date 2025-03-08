@@ -34,14 +34,21 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
         super.tick();
 
         if (!this.level().isClientSide) {
-            // ... (your existing code) ...
-
             // Calculate the angle towards the nearest player
             Player nearestPlayer = this.level().getNearestPlayer(this, 24.0D);
             if (nearestPlayer != null) {
                 double dx = nearestPlayer.getX() - this.getX();
                 double dz = nearestPlayer.getZ() - this.getZ();
-                this.lookingYRot = (float) (Math.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+                float targetYRot = (float) (Math.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+
+                // Calculate the relative rotation needed
+                float deltaYRot = targetYRot - this.lookingYRot;
+
+                // Ensure deltaYRot is within -180 to 180 degrees
+                deltaYRot = (deltaYRot + 540) % 360 - 180;
+
+                // Update lookingYRot with the relative rotation
+                this.lookingYRot += deltaYRot * 0.15F; // Adjust the multiplier for smoother turning
             }
         } else {
             setupAnimationStates();
@@ -97,6 +104,10 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
                 .add(Attributes.ARMOR_TOUGHNESS, 0f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0f)
                 .add(Attributes.ATTACK_DAMAGE, 1f);
+    }
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return super.getDimensions(pose).scale(1.0f, 0.5f); // Adjust the 0.5f for desired height
     }
 
     @Override

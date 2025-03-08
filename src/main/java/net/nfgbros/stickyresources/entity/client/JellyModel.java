@@ -10,9 +10,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.nfgbros.stickyresources.entity.custom.LookableEntity;
 
-public class JellyModel<T extends Entity> extends HierarchicalModel<T> {
+public class JellyModel<T extends LivingEntity> extends HierarchicalModel<T> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("sticky_resources", "jellyentity"), "main");
     private final ModelPart root;
@@ -47,15 +48,16 @@ public class JellyModel<T extends Entity> extends HierarchicalModel<T> {
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
 
-        float scaleFactor = 1.1f + 0.2f * Mth.sin(ageInTicks * 0.6f);
+        float scaleFactor = 1.1f + 0.04f * Mth.sin(ageInTicks * 0.2f);
 
         this.jelly_inner.xScale = scaleFactor;
         this.jelly_inner.yScale = 1.0f / scaleFactor;
         this.jelly_outer.xScale = scaleFactor;
         this.jelly_outer.yScale = 1.0f / scaleFactor;
 
-        if (entity instanceof LookableEntity) {
-            this.root.yRot = ((LookableEntity) entity).getLookingYRot() * ((float) Math.PI / 180F);
+        // Apply yBodyRot to the root ModelPart
+        if (entity instanceof LivingEntity) {
+            this.root.yRot = ((LivingEntity) entity).yBodyRot * ((float) Math.PI / 180F);
         }
     }
 

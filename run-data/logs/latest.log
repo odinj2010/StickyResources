@@ -1,33 +1,33 @@
-[07Mar2025 22:55:54.890] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\jonat\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.33, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, sticky_resources, --all, --output, D:\Minecraft 1.20.1 forge repository\src\generated\resources, --existing, D:\Minecraft 1.20.1 forge repository\src\main\resources]
-[07Mar2025 22:55:55.199] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[07Mar2025 22:55:55.314] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[07Mar2025 22:55:55.353] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/jonat/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[07Mar2025 22:55:55.618] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.33\29591758414c084b41bbd6808bf30309b149da4d\javafmllanguage-1.20.1-47.3.33.jar is missing mods.toml file
-[07Mar2025 22:55:55.620] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.33\31f826407e5bab62abe1130d8d369d7d45e7ce3\lowcodelanguage-1.20.1-47.3.33.jar is missing mods.toml file
-[07Mar2025 22:55:55.622] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.33\fb2db487fa47ae1cdcad118267d714f75569ffc7\mclanguage-1.20.1-47.3.33.jar is missing mods.toml file
-[07Mar2025 22:55:55.623] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.33\2b6f448126f68c8bbc04b942b3fe7aafb12e22c0\fmlcore-1.20.1-47.3.33.jar is missing mods.toml file
-[07Mar2025 22:55:55.743] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[07Mar2025 22:55:57.000] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\jonat\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, sticky_resources, --all, --output, D:\Minecraft 1.20.1 forge repository\src\generated\resources, --existing, D:\Minecraft 1.20.1 forge repository\src\main\resources]
-[07Mar2025 22:55:57.490] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [sticky_resources]
-[07Mar2025 22:56:01.184] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.33, for MC 1.20.1 with MCP 20230612.114412
-[07Mar2025 22:56:01.187] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.33 Initialized
-[07Mar2025 22:56:01.709] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/jonat/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[07Mar2025 22:56:01.709] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/jonat/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[07Mar2025 22:56:02.019] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[07Mar2025 22:56:02.053] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 32 ms
-[07Mar2025 22:56:02.053] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[07Mar2025 22:56:02.082] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 28 ms
-[07Mar2025 22:56:02.083] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: sticky_resources
-[07Mar2025 22:56:02.191] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: sticky_resources finished after 107 ms
-[07Mar2025 22:56:02.191] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: sticky_resources
-[07Mar2025 22:56:02.205] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: sticky_resources finished after 13 ms
-[07Mar2025 22:56:02.205] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id sticky_resources
-[07Mar2025 22:56:02.233] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id sticky_resources finished after 28 ms
-[07Mar2025 22:56:02.233] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id sticky_resources
-[07Mar2025 22:56:02.235] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id sticky_resources finished after 1 ms
-[07Mar2025 22:56:02.235] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : sticky_resources
-[07Mar2025 22:56:02.244] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : sticky_resources finished after 8 ms
-[07Mar2025 22:56:02.244] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:point_of_interest_type mod id sticky_resources
-[07Mar2025 22:56:02.245] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:point_of_interest_type mod id sticky_resources finished after 0 ms
-[07Mar2025 22:56:02.245] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 226 ms
-[07Mar2025 22:56:02.253] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 240, old count: 241, new count: 241, removed stale: 0, written: 0
+[07Mar2025 23:24:11.060] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\jonat\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.33, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, sticky_resources, --all, --output, D:\Minecraft 1.20.1 forge repository\src\generated\resources, --existing, D:\Minecraft 1.20.1 forge repository\src\main\resources]
+[07Mar2025 23:24:11.064] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[07Mar2025 23:24:11.216] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[07Mar2025 23:24:11.258] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/jonat/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[07Mar2025 23:24:11.537] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.33\29591758414c084b41bbd6808bf30309b149da4d\javafmllanguage-1.20.1-47.3.33.jar is missing mods.toml file
+[07Mar2025 23:24:11.539] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.33\31f826407e5bab62abe1130d8d369d7d45e7ce3\lowcodelanguage-1.20.1-47.3.33.jar is missing mods.toml file
+[07Mar2025 23:24:11.540] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.33\fb2db487fa47ae1cdcad118267d714f75569ffc7\mclanguage-1.20.1-47.3.33.jar is missing mods.toml file
+[07Mar2025 23:24:11.542] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\jonat\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.33\2b6f448126f68c8bbc04b942b3fe7aafb12e22c0\fmlcore-1.20.1-47.3.33.jar is missing mods.toml file
+[07Mar2025 23:24:11.616] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[07Mar2025 23:24:12.751] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\jonat\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, sticky_resources, --all, --output, D:\Minecraft 1.20.1 forge repository\src\generated\resources, --existing, D:\Minecraft 1.20.1 forge repository\src\main\resources]
+[07Mar2025 23:24:13.224] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [sticky_resources]
+[07Mar2025 23:24:17.103] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.33, for MC 1.20.1 with MCP 20230612.114412
+[07Mar2025 23:24:17.106] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.33 Initialized
+[07Mar2025 23:24:17.609] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/jonat/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[07Mar2025 23:24:17.609] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/jonat/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.3.33_mapped_parchment_2023.09.03-1.20.1.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[07Mar2025 23:24:17.917] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[07Mar2025 23:24:17.966] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 48 ms
+[07Mar2025 23:24:17.966] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[07Mar2025 23:24:17.997] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 30 ms
+[07Mar2025 23:24:17.997] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: sticky_resources
+[07Mar2025 23:24:18.090] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: sticky_resources finished after 92 ms
+[07Mar2025 23:24:18.091] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: sticky_resources
+[07Mar2025 23:24:18.103] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: sticky_resources finished after 12 ms
+[07Mar2025 23:24:18.103] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id sticky_resources
+[07Mar2025 23:24:18.119] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id sticky_resources finished after 15 ms
+[07Mar2025 23:24:18.120] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id sticky_resources
+[07Mar2025 23:24:18.121] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id sticky_resources finished after 1 ms
+[07Mar2025 23:24:18.121] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : sticky_resources
+[07Mar2025 23:24:18.125] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : sticky_resources finished after 4 ms
+[07Mar2025 23:24:18.125] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:point_of_interest_type mod id sticky_resources
+[07Mar2025 23:24:18.126] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:point_of_interest_type mod id sticky_resources finished after 0 ms
+[07Mar2025 23:24:18.126] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 210 ms
+[07Mar2025 23:24:18.132] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 240, old count: 241, new count: 241, removed stale: 0, written: 0

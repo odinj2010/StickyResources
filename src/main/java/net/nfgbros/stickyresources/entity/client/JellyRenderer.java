@@ -145,7 +145,7 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
         }
 
         // Update animation state
-        entity.walkAnimation.update(entity.getPose() == Pose.STANDING ? Math.min(partialTicks * 6F, 1f) : 0f, 0.2f);
+        entity.walkAnimation.update(entity.getPose() == Pose.STANDING ? Math.min(partialTicks * 6F, 1f) : 0f, 0.1f);
 
         // Apply animation state to the model
         this.model.setupAnim(entity, entity.walkAnimation.position(), entity.walkAnimation.position(),
