@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
@@ -87,11 +88,13 @@ public class JellyObsidianEntity extends JellyEntity {
     public void aiStep() {
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() &&!this.isBaby() && --this.dropTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModBlocks.STICKY_OBSIDIAN.get());
+
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModBlocks.STICKY_OBSIDIAN.get(), StickyResourcesConfig.STICKY_OBSIDIAN_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_OBSIDIAN_DROP_TIME.get();
         }
     }
 

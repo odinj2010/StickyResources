@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.registries.RegistryObject;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -93,11 +94,12 @@ public class JellySapphireEntity extends JellyEntity {
     public void aiStep(){
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.STICKY_RAW_SAPPHIRE.get());
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_RAW_SAPPHIRE.get(), StickyResourcesConfig.STICKY_RAW_SAPPHIRE_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_RAW_SAPPHIRE_DROP_TIME.get();
         }
     }
 

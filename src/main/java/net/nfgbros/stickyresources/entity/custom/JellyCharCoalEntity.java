@@ -19,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -104,13 +105,11 @@ public class JellyCharCoalEntity extends JellyEntity {
 
         // Handle item dropping logic on the server side
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
-            // Play sound when dropping item
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            // Spawn charcoal item at the entity's location
-            this.spawnAtLocation(ModItems.STICKY_CHARCOAL.get());
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_CHARCOAL.get(), StickyResourcesConfig.STICKY_CHARCOAL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            // Reset dropTime to a new random value
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_CHARCOAL_DROP_TIME.get();
         }
     }
 

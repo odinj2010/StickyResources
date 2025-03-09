@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sapphire_ore": {
+    "has_sticky_cobblestone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "sticky_resources:sapphire_ore"
+              "sticky_resources:sticky_cobblestone"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sticky_resources:sapphire_from_blasting_sapphire_ore"
+        "recipe": "sticky_resources:sticky_cobblestone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sapphire_ore",
+      "has_sticky_cobblestone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "sticky_resources:sapphire_from_blasting_sapphire_ore"
+      "sticky_resources:sticky_cobblestone"
     ]
   },
   "sends_telemetry_event": false

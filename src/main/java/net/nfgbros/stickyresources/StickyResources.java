@@ -2,7 +2,6 @@ package net.nfgbros.stickyresources;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.block.entity.ModBlockEntities;
 import net.nfgbros.stickyresources.entity.ModEntities;
@@ -14,6 +13,7 @@ import net.nfgbros.stickyresources.loot.ModLootModifiers;
 import net.nfgbros.stickyresources.screen.GemPolishingStationScreen;
 import net.nfgbros.stickyresources.screen.ModMenuTypes;
 import net.nfgbros.stickyresources.sound.ModSounds;
+
 import net.nfgbros.stickyresources.villager.ModVillagers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
@@ -59,8 +59,6 @@ public class StickyResources {
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-
-        StickyResourcesConfig.register(ModLoadingContext.get());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -19,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -91,11 +92,12 @@ public class JellyPrismerineEntity extends JellyEntity {
     public void aiStep(){
         super.aiStep();
 
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_PRISMERINE_CRYSTALS.get(), StickyResourcesConfig.STICKY_PRISMERINE_CRYSTALS_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_PRISMERINE_CRYSTALS_DROP_TIME.get();
         }
     }
 

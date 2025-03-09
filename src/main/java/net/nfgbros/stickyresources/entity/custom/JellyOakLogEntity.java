@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
@@ -81,11 +82,12 @@ public class JellyOakLogEntity extends JellyEntity {
 
     // Handles the logic for dropping oak logs
     private void handleItemDrop() {
-        if (this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(ModBlocks.STICKY_OAK_LOG.get()); // Drop an oak log
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModBlocks.STICKY_OAK_LOG.get(), StickyResourcesConfig.STICKY_OAK_LOG_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(MAX_DROP_TIME_VARIATION) + MIN_DROP_TIME; // Reset drop time
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_OAK_LOG_DROP_TIME.get();
         }
     }
 
@@ -109,10 +111,10 @@ public class JellyOakLogEntity extends JellyEntity {
     // Creates the attribute modifiers for this entity
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 2D) // Low health
+                .add(Attributes.MAX_HEALTH, 10D) // Low health
                 .add(Attributes.FOLLOW_RANGE, 24D) // Moderate follow range
                 .add(Attributes.MOVEMENT_SPEED, 0.25D) // Slow movement speed
-                .add(Attributes.ARMOR_TOUGHNESS, 0f) // No armor toughness
+                .add(Attributes.ARMOR_TOUGHNESS, 1f) // No armor toughness
                 .add(Attributes.ATTACK_KNOCKBACK, 0f) // No attack knockback
                 .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
     }

@@ -2,6 +2,8 @@ package net.nfgbros.stickyresources.entity.custom;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,6 +31,21 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
+
+    private void transformToElectric_Jelly() {
+        if (this.level() instanceof ServerLevel) {
+            // Create the ElectricJelly entity
+            JellyElectricEntity ElectricJelly = ModEntities.JELLY_ELECTRIC.get().create((ServerLevel) this.level());
+            if (ElectricJelly != null) {
+                ElectricJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                ElectricJelly.finalizeSpawn((ServerLevel) this.level(), this.level().getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.CONVERSION, null, null);
+
+                // Remove the current entity and add the Electric jelly entity
+                this.level().addFreshEntity(ElectricJelly);
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
+    }
 
     @Override
     public void tick() {
@@ -114,13 +131,23 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
     @Override
     public void aiStep() {
         super.aiStep();
-
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Items.SLIME_BALL);
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(Items.SLIME_BALL, StickyResourcesConfig.JELLY_SLIME_BALL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.ITEM_DROP_TIME.get();
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.JELLY_SLIME_BALL_DROP_TIME.get();
         }
+    }
+
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_FIRE)) {
+            transformToElectric_Jelly();
+            return false; // Ignore fire damage
+        }
+        return super.hurt(source, amount);
     }
 
     @Override
