@@ -2,6 +2,7 @@ package net.nfgbros.stickyresources;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.block.entity.ModBlockEntities;
 import net.nfgbros.stickyresources.entity.ModEntities;
@@ -48,6 +49,8 @@ public class StickyResources {
 
         ModLootModifiers.register(modEventBus);
         ModVillagers.register(modEventBus);
+
+        StickyResourcesConfig.register(ModLoadingContext.get());
 
         ModSounds.register(modEventBus);
         ModEntities.register(modEventBus);

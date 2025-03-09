@@ -26,6 +26,7 @@ import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 public class JellyOakLogEntity extends JellyEntity {
@@ -65,8 +66,6 @@ public class JellyOakLogEntity extends JellyEntity {
         super.tick();
         if (this.level().isClientSide()) {
             updateAnimationStates(); // Update animation states on client side
-        } else {
-            handleItemDrop(); // Handle item dropping logic on server side
         }
     }
 
@@ -81,7 +80,10 @@ public class JellyOakLogEntity extends JellyEntity {
     }
 
     // Handles the logic for dropping oak logs
-    private void handleItemDrop() {
+    @Override
+    public void aiStep(){
+        super.aiStep();
+
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             // Use config values for slime ball drop time and amount

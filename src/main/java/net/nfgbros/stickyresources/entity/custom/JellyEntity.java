@@ -29,6 +29,22 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
         this.dropTime = this.random.nextInt(200) + 200;
     }
 
+    //Transform into water jelly
+    private void transformToWaterJelly() {
+        if (this.level() instanceof ServerLevel) {
+            // Create the WaterJelly entity
+            JellyWaterEntity waterJelly = ModEntities.JELLY_WATER.get().create((ServerLevel) this.level());
+            if (waterJelly != null) {
+                waterJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                waterJelly.finalizeSpawn((ServerLevel) this.level(), this.level().getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.CONVERSION, null, null);
+
+                // Remove the current entity and add the Water jelly entity
+                this.level().addFreshEntity(waterJelly);
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
+    }
+
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
@@ -131,12 +147,19 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
     @Override
     public void aiStep() {
         super.aiStep();
+
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+
             // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(Items.SLIME_BALL, StickyResourcesConfig.JELLY_SLIME_BALL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.JELLY_SLIME_BALL_DROP_TIME.get();
+
+            // Check if the entity is in water AND is a regular Jelly entity
+            if (this.isInWater() && this.getType() == ModEntities.JELLY.get()) {
+                transformToWaterJelly();
+            }
         }
     }
 

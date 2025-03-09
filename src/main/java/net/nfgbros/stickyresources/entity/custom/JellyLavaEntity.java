@@ -19,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,6 +90,11 @@ public class JellyLavaEntity extends JellyEntity {
     @Override
     public void aiStep(){
         super.aiStep();
+
+        // Access config values here
+        int dropTime = StickyResourcesConfig.STICKY_RAW_GOLD_DROP_TIME.get();
+        int dropAmount = StickyResourcesConfig.STICKY_RAW_GOLD_DROP_AMOUNT.get();
+
 
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
