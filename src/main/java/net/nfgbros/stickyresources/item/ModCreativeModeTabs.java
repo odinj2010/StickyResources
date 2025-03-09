@@ -105,6 +105,34 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.sticky_resources_misc_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.PINE_CONE.get());
+                        //
+                        // Sticky Items
+                        //
+                        pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
+                        pOutput.accept(ModItems.STICKY_COAL.get());
+                        pOutput.accept(ModItems.STICKY_CHARCOAL.get());
+                        pOutput.accept(ModBlocks.STICKY_COBBLESTONE.get());
+                        pOutput.accept(ModItems.STICKY_RAW_COPPER.get());
+                        pOutput.accept(ModItems.STICKY_DIAMOND.get());
+                        pOutput.accept(ModBlocks.STICKY_DIRT.get());
+                        pOutput.accept(ModItems.STICKY_EMERALD.get());
+                        pOutput.accept(ModItems.STICKY_ENDER_PEARL.get());
+                        pOutput.accept(ModBlocks.STICKY_GLASS.get());
+                        pOutput.accept(ModItems.STICKY_RAW_GOLD.get());
+                        pOutput.accept(ModBlocks.STICKY_GRAVEL.get());
+                        pOutput.accept(ModItems.STICKY_RAW_IRON.get());
+                        pOutput.accept(ModItems.STICKY_LAPIS_LAZULI.get());
+                        pOutput.accept(ModBlocks.STICKY_OAK_LOG.get());
+                        pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
+                        pOutput.accept(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
+                        pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());
+                        pOutput.accept(ModItems.STICKY_REDSTONE_DUST.get());
+                        pOutput.accept(ModBlocks.STICKY_SAND.get());
+                        pOutput.accept(ModItems.STICKY_WATER_BUCKET.get());
+                        pOutput.accept(ModItems.STICKY_LAVA_BUCKET.get());
+                        //
+                        //
+                        //
                         pOutput.accept(ModBlocks.SOUND_BLOCK.get());
                     })
                     .build());

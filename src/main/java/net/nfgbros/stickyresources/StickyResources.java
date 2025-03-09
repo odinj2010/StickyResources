@@ -2,6 +2,7 @@ package net.nfgbros.stickyresources;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.block.entity.ModBlockEntities;
 import net.nfgbros.stickyresources.entity.ModEntities;
@@ -58,6 +59,8 @@ public class StickyResources {
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+
+        StickyResourcesConfig.register(ModLoadingContext.get());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -68,7 +71,6 @@ public class StickyResources {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.SAPPHIRE);
             event.accept(ModItems.RAW_SAPPHIRE);
         }
     }

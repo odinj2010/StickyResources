@@ -21,6 +21,42 @@ public class ModItems {
     public static final RegistryObject<Item> PINE_CONE = ITEMS.register("pine_cone",
             () -> new FuelItem(new Item.Properties(), 400));
     ///
+    ///  Sticky Items ///
+    ///
+    public static final RegistryObject<Item> STICKY_BONE_MEAL = ITEMS.register("sticky_bone_meal",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_COAL = ITEMS.register("sticky_coal",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_CHARCOAL = ITEMS.register("sticky_charcoal",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_RAW_COPPER = ITEMS.register("sticky_raw_copper",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_DIAMOND = ITEMS.register("sticky_diamond",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_EMERALD = ITEMS.register("sticky_emerald",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_ENDER_PEARL = ITEMS.register("sticky_ender_pearl",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_RAW_GOLD = ITEMS.register("sticky_raw_gold",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_RAW_IRON = ITEMS.register("sticky_raw_iron",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_LAPIS_LAZULI = ITEMS.register("sticky_lapis_lazuli",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_PRISMERINE_CRYSTALS = ITEMS.register("sticky_prismerine_crystals",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_RAW_SAPPHIRE = ITEMS.register("sticky_raw_sapphire",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_REDSTONE_DUST = ITEMS.register("sticky_redstone_dust",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_WATER_BUCKET = ITEMS.register("sticky_water_bucket",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_LAVA_BUCKET = ITEMS.register("sticky_lava_bucket",
+            () -> new Item(new Item.Properties()));
+
+
+
+    ///
     /// Utility Items ///
     ///
     public static final RegistryObject<Item> METAL_DETECTOR = ITEMS.register("metal_detector",

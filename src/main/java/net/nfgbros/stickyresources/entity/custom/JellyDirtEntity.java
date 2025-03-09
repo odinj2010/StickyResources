@@ -19,7 +19,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -92,7 +94,7 @@ public class JellyDirtEntity extends JellyEntity {
 
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() &&  --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Items.DIRT);
+            this.spawnAtLocation(ModBlocks.STICKY_DIRT.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + 200;
         }

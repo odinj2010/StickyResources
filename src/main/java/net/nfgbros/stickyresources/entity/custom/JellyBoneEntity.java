@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 public class JellyBoneEntity extends JellyEntity {
@@ -106,7 +107,7 @@ public class JellyBoneEntity extends JellyEntity {
             // Play sound when dropping item
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             // Spawn bone meal item at the entity's location
-            this.spawnAtLocation(Items.BONE_MEAL);
+            this.spawnAtLocation(ModItems.STICKY_BONE_MEAL.get());
             // Trigger game event
             this.gameEvent(GameEvent.ENTITY_PLACE);
             // Reset dropTime to a new random value

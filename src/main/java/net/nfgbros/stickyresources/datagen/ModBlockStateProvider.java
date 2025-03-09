@@ -18,13 +18,22 @@ import java.util.function.Function;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, StickyResources.MOD_ID, exFileHelper);
+        super(output, "sticky_resources", exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(ModBlocks.SAPPHIRE_BLOCK);
         blockWithItem(ModBlocks.RAW_SAPPHIRE_BLOCK);
+
+        blockWithItem(ModBlocks.STICKY_COBBLESTONE);
+        blockWithItem(ModBlocks.STICKY_DIRT);
+        blockWithItem(ModBlocks.STICKY_GLASS);
+        blockWithItem(ModBlocks.STICKY_GRAVEL);
+        blockWithItem(ModBlocks.STICKY_OAK_LOG);
+        blockWithItem(ModBlocks.STICKY_OBSIDIAN);
+        blockWithItem(ModBlocks.STICKY_SAND);
+
 
         blockWithItem(ModBlocks.SAPPHIRE_ORE);
         blockWithItem(ModBlocks.DEEPSLATE_SAPPHIRE_ORE);

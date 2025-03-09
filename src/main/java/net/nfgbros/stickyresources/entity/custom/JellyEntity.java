@@ -13,6 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -118,7 +119,7 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.spawnAtLocation(Items.SLIME_BALL);
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.ITEM_DROP_TIME.get();
         }
     }
 

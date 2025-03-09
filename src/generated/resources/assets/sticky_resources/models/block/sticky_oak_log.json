@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sticky_resources:block/sticky_oak_log"
+  }
+}

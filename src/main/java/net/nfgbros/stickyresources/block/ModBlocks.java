@@ -26,6 +26,24 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, StickyResources.MOD_ID);
 
+    public static final RegistryObject<Block> STICKY_COBBLESTONE = registerBlock("sticky_cobblestone",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_DIRT = registerBlock("sticky_dirt",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT).copy(Blocks.SLIME_BLOCK).sound(SoundType.ROOTED_DIRT).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_GLASS = registerBlock("sticky_glass",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GLASS).copy(Blocks.SLIME_BLOCK).sound(SoundType.GLASS).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_GRAVEL = registerBlock("sticky_gravel",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRAVEL).copy(Blocks.SLIME_BLOCK).sound(SoundType.GRAVEL).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_OAK_LOG = registerBlock("sticky_oak_log",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).copy(Blocks.SLIME_BLOCK).sound(SoundType.WOOD).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_OBSIDIAN = registerBlock("sticky_obsidian",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> STICKY_SAND = registerBlock("sticky_sand",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SAND).copy(Blocks.SLIME_BLOCK).sound(SoundType.SAND).sound(SoundType.SLIME_BLOCK)));
+
+
+
+
     public static final RegistryObject<Block> SAPPHIRE_BLOCK = registerBlock("sapphire_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
     public static final RegistryObject<Block> RAW_SAPPHIRE_BLOCK = registerBlock("raw_sapphire_block",

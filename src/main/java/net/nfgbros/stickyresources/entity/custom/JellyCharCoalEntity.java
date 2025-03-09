@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 public class JellyCharCoalEntity extends JellyEntity {
@@ -106,8 +107,7 @@ public class JellyCharCoalEntity extends JellyEntity {
             // Play sound when dropping item
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             // Spawn charcoal item at the entity's location
-            this.spawnAtLocation(Items.CHARCOAL);
-            // Trigger game event
+            this.spawnAtLocation(ModItems.STICKY_CHARCOAL.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             // Reset dropTime to a new random value
             this.dropTime = this.random.nextInt(200) + 200;

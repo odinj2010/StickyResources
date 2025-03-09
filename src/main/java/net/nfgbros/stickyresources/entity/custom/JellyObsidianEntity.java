@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,18 +68,18 @@ public class JellyObsidianEntity extends JellyEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL, Items.ACACIA_BOAT), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 2D)
+                .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.ARMOR_TOUGHNESS, 0f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0f)
+                .add(Attributes.MOVEMENT_SPEED, 0.35D)
+                .add(Attributes.ARMOR_TOUGHNESS, 5f)
+                .add(Attributes.ATTACK_KNOCKBACK, 1f)
                 .add(Attributes.ATTACK_DAMAGE, 1f);
     }
 
@@ -88,7 +89,7 @@ public class JellyObsidianEntity extends JellyEntity {
 
         if (!this.level().isClientSide && this.isAlive() &&!this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Items.OBSIDIAN);
+            this.spawnAtLocation(ModBlocks.STICKY_OBSIDIAN.get());
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + 200;
         }

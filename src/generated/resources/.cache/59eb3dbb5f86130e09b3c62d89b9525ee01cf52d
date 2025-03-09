@@ -1,4 +1,4 @@
-// 1.20.1	2025-02-22T22:49:09.8037499	Loot Tables
+// 1.20.1	2025-03-08T15:28:27.0215745	Loot Tables
 6866e4887d305a91ea8cc0b2b6686858971407be data/sticky_resources/loot_tables/blocks/catmint.json
 3830029158c20f8a6925559c31269b2511fe4f35 data/sticky_resources/loot_tables/blocks/corn_crop.json
 cb026099a99669f7b4d386eaf0936ecf7e5cd016 data/sticky_resources/loot_tables/blocks/deepslate_sapphire_ore.json
@@ -19,4 +19,11 @@ c0711a34ca3f0fb22f1e5ac27ce9961ec20660bf data/sticky_resources/loot_tables/block
 52508192aee7cb1999bca10e65bfe1d0dedc81ea data/sticky_resources/loot_tables/blocks/sapphire_trapdoor.json
 2497530a6953db0bbb7034a57a64249b2851c362 data/sticky_resources/loot_tables/blocks/sapphire_wall.json
 72a5a231ba1ecf235119f39a02adf859c0737926 data/sticky_resources/loot_tables/blocks/sound_block.json
+383a44655da8daced794a282cfa2610add3dc5ba data/sticky_resources/loot_tables/blocks/sticky_cobblestone.json
+676a456d8e6d7431f0ccab68a325020aad42aa6b data/sticky_resources/loot_tables/blocks/sticky_dirt.json
+d1cf49b8e99272138d40b80d35960512eba4a8ed data/sticky_resources/loot_tables/blocks/sticky_glass.json
+49711ab325461808653a2ee03f2bdf661fe94b5c data/sticky_resources/loot_tables/blocks/sticky_gravel.json
+a4ea27a534a4afdeb471d6d8d3394a24a5c97958 data/sticky_resources/loot_tables/blocks/sticky_oak_log.json
+9183e65d7e84f0d8dca1c1462ebbe9965761c76b data/sticky_resources/loot_tables/blocks/sticky_obsidian.json
+f808b5168a5911f09e3e952e3a567f6057402007 data/sticky_resources/loot_tables/blocks/sticky_sand.json
 83975c0e2b9d93389778578724a6b1e897a5b107 data/sticky_resources/loot_tables/blocks/strawberry_crop.json

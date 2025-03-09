@@ -41,17 +41,39 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     @Override
+    public String getName() {
+        return "StickyResources Item Models";
+    }
+
+    @Override
     protected void registerModels() {
-        simpleItem(ModItems.SAPPHIRE);
-        simpleItem(ModItems.RAW_SAPPHIRE);
+        // Sticky Items
+        simpleItem(ModItems.STICKY_BONE_MEAL, "item/bone_meal", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_COAL, "item/coal", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_CHARCOAL, "item/charcoal", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_RAW_COPPER, "item/raw_copper", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_DIAMOND, "item/diamond", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_EMERALD, "item/emerald", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_ENDER_PEARL, "item/ender_pearl", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_RAW_GOLD, "item/raw_gold", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_RAW_IRON, "item/raw_iron", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_LAPIS_LAZULI, "item/lapis_lazuli", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_PRISMERINE_CRYSTALS, "item/prismarine_crystals", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_RAW_SAPPHIRE, "sticky_resources:item/raw_sapphire", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_REDSTONE_DUST, "item/redstone", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_WATER_BUCKET, "item/water_bucket", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_LAVA_BUCKET, "item/lava_bucket", "item/sticky/jelly_slime_ball");
 
-        simpleItem(ModItems.METAL_DETECTOR);
-        simpleItem(ModItems.PINE_CONE);
-        simpleItem(ModItems.STRAWBERRY);
-        simpleItem(ModItems.STRAWBERRY_SEEDS);
+        simpleItem(ModItems.SAPPHIRE, "sticky_resources:item/sapphire");
+        simpleItem(ModItems.RAW_SAPPHIRE, "sticky_resources:item/raw_sapphire");
 
-        simpleItem(ModItems.CORN);
-        simpleItem(ModItems.CORN_SEEDS);
+        simpleItem(ModItems.METAL_DETECTOR, "sticky_resources:item/metal_detector");
+        simpleItem(ModItems.PINE_CONE, "sticky_resources:item/pine_cone");
+        simpleItem(ModItems.STRAWBERRY, "sticky_resources:item/strawberry");
+        simpleItem(ModItems.STRAWBERRY_SEEDS, "sticky_resources:item/strawberry_seeds");
+
+        simpleItem(ModItems.CORN, "sticky_resources:item/corn");
+        simpleItem(ModItems.CORN_SEEDS, "sticky_resources:item/corn_seeds");
 
         simpleItem(ModItems.BAR_BRAWL_MUSIC_DISC);
 
@@ -108,7 +130,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.JELLY_SAPPHIRE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.JELLY_WATER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
-
     }
 
     // Shoutout to El_Redstoniano for making this
@@ -159,12 +180,23 @@ public class ModItemModelProvider extends ItemModelProvider {
         }
     }
 
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
-        return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(StickyResources.MOD_ID,"item/" + item.getId().getPath()));
-    }
+    private ItemModelBuilder simpleItem(RegistryObject<Item> item, String... textureLayers) {
+        ItemModelBuilder builder = withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated"));
+        for (int i = 0; i < textureLayers.length; i++) {
+            String texturePath = textureLayers[i];
+            if (!texturePath.isEmpty()) { // Check if the texture path is not empty
+                ResourceLocation textureLocation = new ResourceLocation(texturePath);
 
+                // Always prepend the mod ID for the second layer (and any subsequent layers)
+                if (i > 0) {
+                    textureLocation = new ResourceLocation(StickyResources.MOD_ID, texturePath);
+                }
+                builder.texture("layer" + i, textureLocation);
+            }
+        }
+        return builder;
+    }
     public void evenSimplerBlockItem(RegistryObject<Block> block) {
         this.withExistingParent(StickyResources.MOD_ID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
                 modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));

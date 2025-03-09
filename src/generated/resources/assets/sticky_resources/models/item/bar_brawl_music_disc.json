@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "sticky_resources:item/bar_brawl_music_disc"
-  }
+  "parent": "minecraft:item/generated"
 }

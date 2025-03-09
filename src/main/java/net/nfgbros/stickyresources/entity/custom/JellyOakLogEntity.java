@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,7 +83,7 @@ public class JellyOakLogEntity extends JellyEntity {
     private void handleItemDrop() {
         if (this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(Blocks.OAK_LOG); // Drop an oak log
+            this.spawnAtLocation(ModBlocks.STICKY_OAK_LOG.get()); // Drop an oak log
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(MAX_DROP_TIME_VARIATION) + MIN_DROP_TIME; // Reset drop time
         }
