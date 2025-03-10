@@ -13,50 +13,44 @@ import net.minecraft.world.level.Level;
 import java.util.Map;
 
 public class ModArmorItem extends ArmorItem {
-    // Map linking ArmorMaterial to their respective MobEffectInstance
     private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
                     .put(ModArmorMaterials.SAPPHIRE, new MobEffectInstance(MobEffects.NIGHT_VISION, 200, 1,
-                            false, false, true))
-                    .build();
+                            false,false, true)).build();
 
     public ModArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
     }
 
-    // Called every tick when armor is being worn by the player
     @Override
     public void onArmorTick(ItemStack stack, Level world, Player player) {
-        if (!world.isClientSide()) { // Only process on the server side
-            if (hasFullSuitOfArmorOn(player)) { // Check if player wears a full suit of armor
-                evaluateArmorEffects(player); // Apply effects based on armor materials
+        if(!world.isClientSide()) {
+            if(hasFullSuitOfArmorOn(player)) {
+                evaluateArmorEffects(player);
             }
         }
     }
 
-    // Evaluate and apply effects for the player based on their armor
     private void evaluateArmorEffects(Player player) {
         for (Map.Entry<ArmorMaterial, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
             ArmorMaterial mapArmorMaterial = entry.getKey();
             MobEffectInstance mapStatusEffect = entry.getValue();
 
-            if (hasCorrectArmorOn(mapArmorMaterial, player)) { // Check if the correct armor is equipped
-                addStatusEffectForMaterial(player, mapArmorMaterial, mapStatusEffect); // Apply effect
+            if(hasCorrectArmorOn(mapArmorMaterial, player)) {
+                addStatusEffectForMaterial(player, mapArmorMaterial, mapStatusEffect);
             }
         }
     }
 
-    // Add a status effect to the player if not already active
     private void addStatusEffectForMaterial(Player player, ArmorMaterial mapArmorMaterial,
                                             MobEffectInstance mapStatusEffect) {
         boolean hasPlayerEffect = player.hasEffect(mapStatusEffect.getEffect());
 
-        if (hasCorrectArmorOn(mapArmorMaterial, player) && !hasPlayerEffect) {
-            player.addEffect(new MobEffectInstance(mapStatusEffect)); // Add new effect
+        if(hasCorrectArmorOn(mapArmorMaterial, player) && !hasPlayerEffect) {
+            player.addEffect(new MobEffectInstance(mapStatusEffect));
         }
     }
 
-    // Check if the player is wearing a full suit of armor
     private boolean hasFullSuitOfArmorOn(Player player) {
         ItemStack boots = player.getInventory().getArmor(0);
         ItemStack leggings = player.getInventory().getArmor(1);
@@ -67,19 +61,17 @@ public class ModArmorItem extends ArmorItem {
                 && !leggings.isEmpty() && !boots.isEmpty();
     }
 
-    // Check if the player is wearing a full suit of specific armor material
     private boolean hasCorrectArmorOn(ArmorMaterial material, Player player) {
         for (ItemStack armorStack : player.getInventory().armor) {
-            if (!(armorStack.getItem() instanceof ArmorItem)) { // Validate all items are armor
+            if(!(armorStack.getItem() instanceof ArmorItem)) {
                 return false;
             }
         }
 
-        // Check individual armor pieces for the correct material
-        ArmorItem boots = ((ArmorItem) player.getInventory().getArmor(0).getItem());
-        ArmorItem leggings = ((ArmorItem) player.getInventory().getArmor(1).getItem());
-        ArmorItem breastplate = ((ArmorItem) player.getInventory().getArmor(2).getItem());
-        ArmorItem helmet = ((ArmorItem) player.getInventory().getArmor(3).getItem());
+        ArmorItem boots = ((ArmorItem)player.getInventory().getArmor(0).getItem());
+        ArmorItem leggings = ((ArmorItem)player.getInventory().getArmor(1).getItem());
+        ArmorItem breastplate = ((ArmorItem)player.getInventory().getArmor(2).getItem());
+        ArmorItem helmet = ((ArmorItem)player.getInventory().getArmor(3).getItem());
 
         return helmet.getMaterial() == material && breastplate.getMaterial() == material &&
                 leggings.getMaterial() == material && boots.getMaterial() == material;

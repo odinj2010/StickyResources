@@ -1,5 +1,7 @@
 package net.nfgbros.stickyresources.entity;
 
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -8,41 +10,44 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 
 public class JellyStickHandler {
 
-    private static final Map<EntityPair, Integer> STICKING_DURATION = new ConcurrentHashMap<>();
-    private static final int MERGE_THRESHOLD = 40; // Ticks before merging
+    private static final Map<Entity, Integer> STICKING_DURATION = new HashMap<>();
+    private static final int MERGE_THRESHOLD = StickyResourcesConfig.JELLY_MERGE_THRESHOLD.get(); // Ticks before merging
 
     public static void handleJellyInteraction(ServerLevel world, Mob firstJelly, Mob secondJelly) {
         double distance = firstJelly.distanceTo(secondJelly);
 
-        if (distance <= 2.0) {
-            EntityPair pairKey = new EntityPair(firstJelly, secondJelly);
-            stickJellies(firstJelly, secondJelly, distance);
+        if (distance <= StickyResourcesConfig.JELLY_INTERACTION_BLOCK_DISTANCE.get()) {
+            stickJellies(firstJelly, secondJelly);
+            spawnBreakingParticles(world, firstJelly);
+            spawnBreakingParticles(world, secondJelly);
 
-            // Track sticking duration
-            STICKING_DURATION.put(pairKey, STICKING_DURATION.getOrDefault(pairKey, 0) + 1);
+            Entity combinedKey = getCombinedKey(firstJelly, secondJelly);
+            STICKING_DURATION.put(combinedKey, STICKING_DURATION.getOrDefault(combinedKey, 0) + 1);
 
-            if (STICKING_DURATION.get(pairKey) >= MERGE_THRESHOLD) {
+            if (STICKING_DURATION.get(combinedKey) >= MERGE_THRESHOLD) {
                 mergeJellies(world, firstJelly, secondJelly);
-                STICKING_DURATION.remove(pairKey);
+                STICKING_DURATION.remove(combinedKey);
             }
         } else {
-            STICKING_DURATION.remove(new EntityPair(firstJelly, secondJelly));
+            STICKING_DURATION.remove(getCombinedKey(firstJelly, secondJelly));
         }
     }
 
-    private static void stickJellies(Mob firstJelly, Mob secondJelly, double distance) {
-        Vec3 firstPos = firstJelly.position();
-        Vec3 secondPos = secondJelly.position();
+    private static void stickJellies(Mob firstJelly, Mob secondJelly) {
+        Vec3 midpoint = firstJelly.position().add(secondJelly.position()).scale(0.5);
+        firstJelly.setPos(midpoint.x, midpoint.y, midpoint.z);
+        secondJelly.setPos(midpoint.x, midpoint.y, midpoint.z);
 
-        Vec3 direction = secondPos.subtract(firstPos).normalize().scale(0.05); // Smooth movement
+        firstJelly.setDeltaMovement(0, 0, 0);
+        secondJelly.setDeltaMovement(0, 0, 0);
+    }
 
-        firstJelly.setDeltaMovement(direction);
-        secondJelly.setDeltaMovement(direction.reverse());
+    private static void spawnBreakingParticles(ServerLevel world, Entity entity) {
+        world.sendParticles(ParticleTypes.ELECTRIC_SPARK, entity.getX(), entity.getY(), entity.getZ(), 5, 0.5, 0.5, 0.5, 0.1);
     }
 
     private static void mergeJellies(ServerLevel world, Mob firstJelly, Mob secondJelly) {
@@ -51,12 +56,14 @@ public class JellyStickHandler {
         if (newEntityType != null) {
             Entity mergedEntity = newEntityType.create(world);
             if (mergedEntity != null) {
-                Vec3 midpoint = firstJelly.position().add(secondJelly.position()).scale(0.5);
-                mergedEntity.setPos(midpoint.x, midpoint.y, midpoint.z);
-                world.addFreshEntity(mergedEntity);
+                Vec3 midpoint = firstJelly.position().add(secondJelly.position()).scale(0.5).add(0, 0.5, 0);
 
+                firstJelly.setDeltaMovement(0, 0, 0);
+                secondJelly.setDeltaMovement(0, 0, 0);
+                mergedEntity.setPos(midpoint.x, midpoint.y, midpoint.z);
                 firstJelly.discard();
                 secondJelly.discard();
+                world.addFreshEntity(mergedEntity);
             }
         }
     }
@@ -64,31 +71,12 @@ public class JellyStickHandler {
     private static EntityType<? extends Entity> getMergedEntityType(EntityType<?> firstType, EntityType<?> secondType) {
         if ((firstType == ModEntities.JELLY_ELECTRIC.get() && secondType == ModEntities.JELLY_IRON.get()) ||
                 (firstType == ModEntities.JELLY_IRON.get() && secondType == ModEntities.JELLY_ELECTRIC.get())) {
-            return ModEntities.JELLY_GRAVEL.get();
+            return ModEntities.JELLY_MAGNET.get();
         }
         return null;
     }
 
-    private static class EntityPair {
-        private final int id1;
-        private final int id2;
-
-        public EntityPair(Entity e1, Entity e2) {
-            this.id1 = Math.min(e1.getId(), e2.getId());
-            this.id2 = Math.max(e1.getId(), e2.getId());
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            EntityPair that = (EntityPair) o;
-            return id1 == that.id1 && id2 == that.id2;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(id1, id2);
-        }
+    private static Entity getCombinedKey(Entity first, Entity second) {
+        return first.getId() < second.getId() ? first : second;
     }
 }

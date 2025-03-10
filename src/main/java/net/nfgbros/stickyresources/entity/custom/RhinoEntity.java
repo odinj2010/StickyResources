@@ -21,29 +21,25 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public class RhinoEntity extends Animal {
-    // Animation-related fields
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
-
-    // Constructor
     public RhinoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    // Tick method to handle animations
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+
+
     @Override
     public void tick() {
         super.tick();
 
-        // Setup animations for client side
-        if (this.level().isClientSide()) {
+        if(this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
-    // Method to manage idle animation states
     private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
+        if(this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -51,11 +47,10 @@ public class RhinoEntity extends Animal {
         }
     }
 
-    // Updates walk animation based on pose
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if (this.getPose() == Pose.STANDING) {
+        if(this.getPose() == Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;
@@ -64,58 +59,57 @@ public class RhinoEntity extends Animal {
         this.walkAnimation.update(f, 0.2f);
     }
 
-    // Register AI goals
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this)); // Priority 0: Float on water
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Priority 1: Breeding
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.COOKED_BEEF), false)); // Priority 2: Temptation with food
-        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.1D)); // Priority 3: Follow parent
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.1D)); // Priority 4: Random strolling
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f)); // Priority 5: Look at player
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Priority 6: Random look around
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.COOKED_BEEF), false));
+
+        this.goalSelector.addGoal(3, new FollowParentGoal(this, 1.1D));
+
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.1D));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+
     }
 
-    // Define entity attributes
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 20D) // Health
-                .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
-                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Movement speed
-                .add(Attributes.ARMOR_TOUGHNESS, 0.1f) // Armor toughness
-                .add(Attributes.ATTACK_KNOCKBACK, 0.5f) // Knockback resistance
-                .add(Attributes.ATTACK_DAMAGE, 2f); // Attack damage
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.5f)
+                .add(Attributes.ATTACK_DAMAGE, 2f);
     }
 
-    // Handle breeding
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.RHINO.get().create(pLevel);
     }
 
-    // Determine if an item is food for this entity
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.COOKED_BEEF);
     }
 
-    // Sound methods
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.HOGLIN_AMBIENT; // Ambient sound
+        return SoundEvents.HOGLIN_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.RAVAGER_HURT; // Hurt sound
+        return SoundEvents.RAVAGER_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.DOLPHIN_DEATH; // Death sound
+        return SoundEvents.DOLPHIN_DEATH;
     }
 }

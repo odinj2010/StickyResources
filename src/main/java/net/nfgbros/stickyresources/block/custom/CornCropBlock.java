@@ -20,11 +20,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IPlantable;
 
 public class CornCropBlock extends CropBlock {
-    // Constants defining crop growth stages
     public static final int FIRST_STAGE_MAX_AGE = 7;
     public static final int SECOND_STAGE_MAX_AGE = 1;
 
-    // Shapes for each growth stage
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
@@ -36,10 +34,8 @@ public class CornCropBlock extends CropBlock {
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)};
 
-    // Crop age property definition
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 8);
 
-    // Constructor
     public CornCropBlock(Properties pProperties) {
         super(pProperties);
     }
@@ -49,22 +45,20 @@ public class CornCropBlock extends CropBlock {
         return SHAPE_BY_AGE[this.getAge(pState)];
     }
 
-    @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (!pLevel.isAreaLoaded(pPos, 1)) return; // Ensure area is loaded
-        if (pLevel.getRawBrightness(pPos, 0) >= 9) { // Check light level
+        if (!pLevel.isAreaLoaded(pPos, 1)) return;
+        if (pLevel.getRawBrightness(pPos, 0) >= 9) {
             int currentAge = this.getAge(pState);
 
-            if (currentAge < this.getMaxAge()) { // Only grow if not fully grown
+            if (currentAge < this.getMaxAge()) {
                 float growthSpeed = getGrowthSpeed(this, pLevel, pPos);
 
-                // Trigger growth conditions
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int) (25.0F / growthSpeed) + 1) == 0)) {
-                    if (currentAge == FIRST_STAGE_MAX_AGE) { // Transition to second stage
-                        if (pLevel.getBlockState(pPos.above(1)).is(Blocks.AIR)) {
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(pLevel, pPos, pState, pRandom.nextInt((int)(25.0F / growthSpeed) + 1) == 0)) {
+                    if(currentAge == FIRST_STAGE_MAX_AGE) {
+                        if(pLevel.getBlockState(pPos.above(1)).is(Blocks.AIR)) {
                             pLevel.setBlock(pPos.above(1), this.getStateForAge(currentAge + 1), 2);
                         }
-                    } else { // Regular growth
+                    } else {
                         pLevel.setBlock(pPos, this.getStateForAge(currentAge + 1), 2);
                     }
 
@@ -81,7 +75,6 @@ public class CornCropBlock extends CropBlock {
 
     @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        // Check conditions for survival, including top segment of corn plant
         return super.canSurvive(pState, pLevel, pPos) || (pLevel.getBlockState(pPos.below(1)).is(this) &&
                 pLevel.getBlockState(pPos.below(1)).getValue(AGE) == 7);
     }
@@ -90,36 +83,34 @@ public class CornCropBlock extends CropBlock {
     public void growCrops(Level pLevel, BlockPos pPos, BlockState pState) {
         int nextAge = this.getAge(pState) + this.getBonemealAgeIncrease(pLevel);
         int maxAge = this.getMaxAge();
-        if (nextAge > maxAge) { // Cap growth at maximum age
+        if(nextAge > maxAge) {
             nextAge = maxAge;
         }
 
-        if (this.getAge(pState) == FIRST_STAGE_MAX_AGE && pLevel.getBlockState(pPos.above(1)).is(Blocks.AIR)) {
-            // Grow in second stage
+        if(this.getAge(pState) == FIRST_STAGE_MAX_AGE && pLevel.getBlockState(pPos.above(1)).is(Blocks.AIR)) {
             pLevel.setBlock(pPos.above(1), this.getStateForAge(nextAge), 2);
         } else {
-            // Regular growth
             pLevel.setBlock(pPos, this.getStateForAge(nextAge - SECOND_STAGE_MAX_AGE), 2);
         }
     }
 
     @Override
     public int getMaxAge() {
-        return FIRST_STAGE_MAX_AGE + SECOND_STAGE_MAX_AGE; // Maximum age accounting for both stages
+        return FIRST_STAGE_MAX_AGE + SECOND_STAGE_MAX_AGE;
     }
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return ModItems.CORN_SEEDS.get(); // Seed item for the crop
+        return ModItems.CORN_SEEDS.get();
     }
 
     @Override
     public IntegerProperty getAgeProperty() {
-        return AGE; // Return the age property
+        return AGE;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(AGE); // Register the age property
+        pBuilder.add(AGE);
     }
 }

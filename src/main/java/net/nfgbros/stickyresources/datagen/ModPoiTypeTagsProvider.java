@@ -12,16 +12,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ModPoiTypeTagsProvider extends PoiTypeTagsProvider {
-
-    // Constructor for the custom POI Type Tags Provider
-    public ModPoiTypeTagsProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pProvider,
-                                  @Nullable ExistingFileHelper existingFileHelper) {
+    public ModPoiTypeTagsProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(pOutput, pProvider, StickyResources.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        // Adding the custom POI type tag under ACQUIRABLE_JOB_SITE
         tag(PoiTypeTags.ACQUIRABLE_JOB_SITE)
                 .addOptional(new ResourceLocation(StickyResources.MOD_ID, "sound_poi"));
     }

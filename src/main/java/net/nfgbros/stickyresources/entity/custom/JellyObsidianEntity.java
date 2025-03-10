@@ -25,27 +25,25 @@ import org.jetbrains.annotations.Nullable;
 
 public class JellyObsidianEntity extends JellyEntity {
 
-    // Fields
     public int dropTime;
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
 
-    // Constructor
     public JellyObsidianEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.dropTime = this.random.nextInt(200) + 200;
     }
 
-    // Tick method
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+
     @Override
     public void tick() {
         super.tick();
+
         if (this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
-    // Handles idle animation state
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
@@ -55,7 +53,6 @@ public class JellyObsidianEntity extends JellyEntity {
         }
     }
 
-    // Walk animation update logic
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
@@ -64,10 +61,10 @@ public class JellyObsidianEntity extends JellyEntity {
         } else {
             f = 0f;
         }
+
         this.walkAnimation.update(f, 0.2f);
     }
 
-    // Register AI goals
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -77,7 +74,6 @@ public class JellyObsidianEntity extends JellyEntity {
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
     }
 
-    // Define custom attributes
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
@@ -88,35 +84,31 @@ public class JellyObsidianEntity extends JellyEntity {
                 .add(Attributes.ATTACK_DAMAGE, 1f);
     }
 
-    // Custom AI step behavior
     @Override
     public void aiStep() {
         super.aiStep();
 
-        // Handle item drops based on dropTime
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
+            // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(ModBlocks.STICKY_OBSIDIAN.get(), StickyResourcesConfig.STICKY_OBSIDIAN_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_OBSIDIAN_DROP_TIME.get();
         }
     }
 
-    // Breeding logic
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.JELLY_OBSIDIAN.get().create(pLevel);
     }
 
-    // Check if the item can be used as food
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.SLIME_BALL);
     }
 
-    // Sound events
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
@@ -129,7 +121,6 @@ public class JellyObsidianEntity extends JellyEntity {
         return SoundEvents.SLIME_DEATH_SMALL;
     }
 
-    // Reading saved state
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("ItemLayTime")) {
@@ -137,13 +128,11 @@ public class JellyObsidianEntity extends JellyEntity {
         }
     }
 
-    // Saving state data
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("ItemLayTime", this.dropTime);
     }
 
-    // Custom travel logic
     @Override
     public void travel(Vec3 pTravelVector) {
         if (this.isInLava()) {

@@ -22,6 +22,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 public class JellyCobblestoneEntity extends JellyEntity {
@@ -65,6 +66,7 @@ public class JellyCobblestoneEntity extends JellyEntity {
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
+        // Adjust walk animation based on pose
         if (this.getPose() == Pose.STANDING) {
             // If standing, set animation speed based on partial tick
             f = Math.min(pPartialTick * 6F, 1f);
@@ -79,31 +81,23 @@ public class JellyCobblestoneEntity extends JellyEntity {
 
     @Override
     protected void registerGoals() {
-        // Prevent drowning
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-
-        // Allow breeding
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
-
-        // Tempt with slime balls
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
-
-        // Look at nearby players
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
-
-        // Randomly look around
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        // Add AI goals to the entity
+        this.goalSelector.addGoal(0, new FloatGoal(this)); // Prevent drowning
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Allow breeding
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false)); // Tempt with slime balls
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f)); // Look at nearby players
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Randomly look around
     }
 
-    // Creates and returns the attribute supplier for this entity
+    // Creates attribute supplier for the entity
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10D) // Health
-                .add(Attributes.FOLLOW_RANGE, 24D) // Detection range
-                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Movement speed
-                .add(Attributes.ARMOR_TOUGHNESS, 1f) // Armor toughness
-                .add(Attributes.ATTACK_KNOCKBACK, 0f) // Attack knockback
-                .add(Attributes.ATTACK_DAMAGE, 1f); // Attack damage
+                .add(Attributes.MAX_HEALTH, 10D) // Low health
+                .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
+                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Slow movement
+                .add(Attributes.ARMOR_TOUGHNESS, 1f) // No armor toughness
+                .add(Attributes.ATTACK_KNOCKBACK, 0f) // No attack knockback
+                .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
     }
 
     @Override
@@ -112,16 +106,10 @@ public class JellyCobblestoneEntity extends JellyEntity {
 
         // Handle item dropping logic on the server side
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
-            // Play sound when item drops
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-
-            // Drop configured amount of Sticky Cobblestone
+            // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(ModBlocks.STICKY_COBBLESTONE.get(), StickyResourcesConfig.STICKY_COBBLESTONE_DROP_AMOUNT.get()));
-
-            // Trigger entity place event
             this.gameEvent(GameEvent.ENTITY_PLACE);
-
-            // Reset dropTime using configuration value
             this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_COBBLESTONE_DROP_TIME.get();
         }
     }
@@ -129,7 +117,7 @@ public class JellyCobblestoneEntity extends JellyEntity {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        // Create and return a new offspring entity
+        // Create a new JellyCobblestoneEntity as offspring
         return ModEntities.JELLY_COBBLESTONE.get().create(pLevel);
     }
 
@@ -155,7 +143,6 @@ public class JellyCobblestoneEntity extends JellyEntity {
 
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-
         // Read dropTime from NBT
         if (pCompound.contains("ItemLayTime")) {
             this.dropTime = pCompound.getInt("ItemLayTime");
@@ -164,7 +151,6 @@ public class JellyCobblestoneEntity extends JellyEntity {
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-
         // Write dropTime to NBT
         pCompound.putInt("ItemLayTime", this.dropTime);
     }

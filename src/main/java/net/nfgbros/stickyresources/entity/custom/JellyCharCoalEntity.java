@@ -26,18 +26,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class JellyCharCoalEntity extends JellyEntity {
 
-    // Field declarations
-    public int dropTime; // Time until the entity drops charcoal
-    public final AnimationState idleAnimationState = new AnimationState(); // Animation state for idle behavior
-    private int idleAnimationTimeout = 0; // Idle animation timeout
+    // Time until the entity drops charcoal
+    public int dropTime;
 
-    // Constructor
+    // Animation state for idle behavior
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+
     public JellyCharCoalEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(200) + 200; // Initialize dropTime to a random value between 200 and 400 ticks
+        // Initialize dropTime to a random value between 200 and 400 ticks
+        this.dropTime = this.random.nextInt(200) + 200;
     }
-
-    // Core logic methods
 
     @Override
     public void tick() {
@@ -49,28 +49,33 @@ public class JellyCharCoalEntity extends JellyEntity {
         }
     }
 
+    // Sets up the idle animation state
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
-            // Set a new random timeout between 80 and 120 ticks and start idle animation
+            // Set a new random timeout between 80 and 120 ticks
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
+            // Start the idle animation
             this.idleAnimationState.start(this.tickCount);
         } else {
-            --this.idleAnimationTimeout; // Decrement the timeout
+            // Decrement the timeout
+            --this.idleAnimationTimeout;
         }
     }
 
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
-        float walkSpeed;
-
+        float f;
         // Adjust walk animation based on pose
         if (this.getPose() == Pose.STANDING) {
-            walkSpeed = Math.min(pPartialTick * 6F, 1f); // If standing, set animation speed based on tick
+            // If standing, set animation speed based on partial tick
+            f = Math.min(pPartialTick * 6F, 1f);
         } else {
-            walkSpeed = 0f; // No walk animation if not standing
+            // If not standing, no walk animation
+            f = 0f;
         }
 
-        this.walkAnimation.update(walkSpeed, 0.2f); // Update walk animation state
+        // Update the walk animation state
+        this.walkAnimation.update(f, 0.2f);
     }
 
     @Override
@@ -83,8 +88,8 @@ public class JellyCharCoalEntity extends JellyEntity {
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Randomly look around
     }
 
+    // Creates attribute supplier for the entity
     public static AttributeSupplier.Builder createAttributes() {
-        // Define the entity's attributes
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D) // Low health
                 .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
@@ -98,53 +103,54 @@ public class JellyCharCoalEntity extends JellyEntity {
     public void aiStep() {
         super.aiStep();
 
-        // Handle item-dropping logic on the server side
+        // Handle item dropping logic on the server side
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.spawnAtLocation(new ItemStack(ModItems.STICKY_CHARCOAL.get(), StickyResourcesConfig.STICKY_CHARCOAL_DROP_AMOUNT.get())); // Drop charcoal
+            // Use config values for slime ball drop time and amount
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_CHARCOAL.get(), StickyResourcesConfig.STICKY_CHARCOAL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_CHARCOAL_DROP_TIME.get(); // Reset dropTime
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_CHARCOAL_DROP_TIME.get();
         }
     }
 
-    // Breeding logic
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return ModEntities.JELLY_CHARCOAL.get().create(pLevel); // Create a new JellyCharCoalEntity as offspring
+        // Create a new JellyCharCoalEntity as offspring
+        return ModEntities.JELLY_CHARCOAL.get().create(pLevel);
     }
 
-    // Feeding behavior
     @Override
     public boolean isFood(ItemStack pStack) {
-        return pStack.is(Items.SLIME_BALL); // Entity is fed by slime balls
+        // Entity is fed by slime balls
+        return pStack.is(Items.SLIME_BALL);
     }
-
-    // Sound effects
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.SLIME_HURT; // Hurt sound
+        // Hurt sound
+        return SoundEvents.SLIME_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SLIME_DEATH_SMALL; // Death sound
+        // Death sound
+        return SoundEvents.SLIME_DEATH_SMALL;
     }
-
-    // Persistence (saving/loading)
 
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
+        // Read dropTime from NBT
         if (pCompound.contains("ItemLayTime")) {
-            this.dropTime = pCompound.getInt("ItemLayTime"); // Read dropTime from NBT
+            this.dropTime = pCompound.getInt("ItemLayTime");
         }
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.putInt("ItemLayTime", this.dropTime); // Write dropTime to NBT
+        // Write dropTime to NBT
+        pCompound.putInt("ItemLayTime", this.dropTime);
     }
 }

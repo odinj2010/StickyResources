@@ -1,8 +1,10 @@
 package net.nfgbros.stickyresources.block;
 
-import ca.weblite.objc.Proxy;
 import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.block.custom.*;
+import net.nfgbros.stickyresources.block.custom.CornCropBlock;
+import net.nfgbros.stickyresources.block.custom.GemPolishingStationBlock;
+import net.nfgbros.stickyresources.block.custom.SoundBlock;
+import net.nfgbros.stickyresources.block.custom.StrawberryCropBlock;
 import net.nfgbros.stickyresources.item.ModItems;
 import net.nfgbros.stickyresources.sound.ModSounds;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +26,6 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, StickyResources.MOD_ID);
 
-    // Sticky Blocks
     public static final RegistryObject<Block> STICKY_COBBLESTONE = registerBlock("sticky_cobblestone",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
     public static final RegistryObject<Block> STICKY_DIRT = registerBlock("sticky_dirt",
@@ -40,13 +41,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> STICKY_SAND = registerBlock("sticky_sand",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SAND).copy(Blocks.SLIME_BLOCK).sound(SoundType.SAND).sound(SoundType.SLIME_BLOCK)));
 
-    // Sapphire Blocks
+
+
+
     public static final RegistryObject<Block> SAPPHIRE_BLOCK = registerBlock("sapphire_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
     public static final RegistryObject<Block> RAW_SAPPHIRE_BLOCK = registerBlock("raw_sapphire_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
 
-    // Sapphire Ores
     public static final RegistryObject<Block> SAPPHIRE_ORE = registerBlock("sapphire_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
@@ -60,11 +62,9 @@ public class ModBlocks {
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE)
                     .strength(5f).requiresCorrectToolForDrops(), UniformInt.of(3, 7)));
 
-    // Blocks with Special Functionality
     public static final RegistryObject<Block> SOUND_BLOCK = registerBlock("sound_block",
             () -> new SoundBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(ModSounds.SOUND_BLOCK_SOUNDS)));
 
-    // Sapphire Functional Blocks
     public static final RegistryObject<Block> SAPPHIRE_STAIRS = registerBlock("sapphire_stairs",
             () -> new StairBlock(() -> ModBlocks.SAPPHIRE_BLOCK.get().defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
@@ -90,13 +90,14 @@ public class ModBlocks {
     public static final RegistryObject<Block> SAPPHIRE_TRAPDOOR = registerBlock("sapphire_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST).noOcclusion(), BlockSetType.IRON));
 
-    // Crops
+
     public static final RegistryObject<Block> STRAWBERRY_CROP = BLOCKS.register("strawberry_crop",
             () -> new StrawberryCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
+
     public static final RegistryObject<Block> CORN_CROP = BLOCKS.register("corn_crop",
             () -> new CornCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion().noCollission()));
 
-    // Decor Blocks
+
     public static final RegistryObject<Block> CATMINT = registerBlock("catmint",
             () -> new FlowerBlock(() -> MobEffects.LUCK, 5,
                     BlockBehaviour.Properties.copy(Blocks.ALLIUM).noOcclusion().noCollission()));
@@ -104,13 +105,9 @@ public class ModBlocks {
             () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), ModBlocks.CATMINT,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM).noOcclusion()));
 
-    // Custom Blocks
     public static final RegistryObject<Block> GEM_POLISHING_STATION = registerBlock("gem_polishing_station",
             () -> new GemPolishingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
-    public static final RegistryObject<Block> JELLY_STORAGE_BE = registerBlock("jelly_storage_be",
-            () -> new JellyStorageBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
-    // Utility Methods
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

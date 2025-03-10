@@ -25,33 +25,31 @@ import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
+
 public class JellyGoldEntity extends JellyEntity {
 
-    // Drop timer for STICKY_RAW_GOLD
     public int dropTime;
 
-    // Animation states
+    public JellyGoldEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+        this.dropTime = this.random.nextInt(200) + 200;
+    }
+
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
 
-    // Constructor
-    public JellyGoldEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(200) + 200; // Initialize drop time
-    }
 
-    // Tick method
     @Override
     public void tick() {
         super.tick();
-        if (this.level().isClientSide()) {
-            setupAnimationStates(); // Setup idle animation states
+
+        if(this.level().isClientSide()) {
+            setupAnimationStates();
         }
     }
 
-    // Handles animation states
     private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
+        if(this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -59,19 +57,18 @@ public class JellyGoldEntity extends JellyEntity {
         }
     }
 
-    // Updates walk animation
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if (this.getPose() == Pose.STANDING) {
+        if(this.getPose() == Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;
         }
+
         this.walkAnimation.update(f, 0.2f);
     }
 
-    // Register AI goals
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -79,9 +76,9 @@ public class JellyGoldEntity extends JellyEntity {
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+
     }
 
-    // Entity attributes
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D)
@@ -92,55 +89,47 @@ public class JellyGoldEntity extends JellyEntity {
                 .add(Attributes.ATTACK_DAMAGE, 1f);
     }
 
-    // AI step logic
     @Override
-    public void aiStep() {
+    public void aiStep(){
         super.aiStep();
 
-        // Handle raw gold drop logic
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(ModItems.STICKY_RAW_GOLD.get(), StickyResourcesConfig.STICKY_RAW_GOLD_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
             this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_RAW_GOLD_DROP_TIME.get();
         }
     }
 
-    // Handles breeding
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.JELLY_GOLD.get().create(pLevel);
     }
-
-    // Defines food for this entity
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.SLIME_BALL);
     }
-
-    // Sound events
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return SoundEvents.SLIME_HURT;
     }
-
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.SLIME_DEATH_SMALL;
     }
 
-    // Save data to NBT
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("ItemLayTime")) {
             this.dropTime = pCompound.getInt("ItemLayTime");
         }
+
     }
 
-    // Load data from NBT
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("ItemLayTime", this.dropTime);

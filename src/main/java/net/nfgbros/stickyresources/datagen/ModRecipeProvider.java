@@ -44,112 +44,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModBlocks.SAPPHIRE_BLOCK.get()), has(ModBlocks.SAPPHIRE_BLOCK.get()))
                 .save(pWriter);
 
-
-        //Sticky cobblestone
+        // Other recipes...
+        // Example:
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_COBBLESTONE.get())
-                .pattern("ss")
-                .pattern("sc")
-                .define('c', Blocks.COBBLESTONE)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_COBBLESTONE.get()), has(ModBlocks.STICKY_COBBLESTONE.get()))
-                .save(pWriter);
-        // Sticky Dirt
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_DIRT.get())
-                .pattern("ss")
-                .pattern("sd")
-                .define('d', Blocks.DIRT)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_DIRT.get()), has(ModBlocks.STICKY_DIRT.get()))
-                .save(pWriter);
-
-        // 2. Sticky Glass
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_GLASS.get())
-                .pattern("ss")
-                .pattern("sg")
-                .define('g', Blocks.GLASS)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_GLASS.get()), has(ModBlocks.STICKY_GLASS.get()))
-                .save(pWriter);
-
-        // 3. Sticky Gravel
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_GRAVEL.get())
-                .pattern("ss")
-                .pattern("sg")
-                .define('g', Blocks.GRAVEL)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_GRAVEL.get()), has(ModBlocks.STICKY_GRAVEL.get()))
-                .save(pWriter);
-
-        // 4. Sticky Oak Log
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_OAK_LOG.get())
-                .pattern("ss")
-                .pattern("sl")
-                .define('l', Blocks.OAK_LOG)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_OAK_LOG.get()), has(ModBlocks.STICKY_OAK_LOG.get()))
-                .save(pWriter);
-
-        // 5. Sticky Obsidian
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_OBSIDIAN.get())
-                .pattern("ss")
-                .pattern("so")
-                .define('o', Blocks.OBSIDIAN)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_OBSIDIAN.get()), has(ModBlocks.STICKY_OBSIDIAN.get()))
-                .save(pWriter);
-
-        // 6. Sticky Sand
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_SAND.get())
-                .pattern("ss")
-                .pattern("sa")
-                .define('a', Blocks.SAND)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_SAND.get()), has(ModBlocks.STICKY_SAND.get()))
-                .save(pWriter);
-
-        // 7. Pine Cone
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModItems.PINE_CONE.get())
-                .requires(Items.STICK)
-                .requires(Blocks.SPRUCE_LEAVES)
-                .unlockedBy(getHasName(ModItems.PINE_CONE.get()), has(ModItems.PINE_CONE.get()))
-                .save(pWriter);
-
-        // 8. Metal Detector
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.METAL_DETECTOR.get())
-                .pattern("rir")
-                .pattern("rsr")
-                .pattern(" i ")
-                .define('i', Items.IRON_INGOT)
-                .define('r', Items.REDSTONE)
-                .define('s', Items.STICK)
-                .unlockedBy(getHasName(ModItems.METAL_DETECTOR.get()), has(ModItems.METAL_DETECTOR.get()))
-                .save(pWriter);
-
-        // 9. Sapphire Block from Raw Sapphire Block (Gem Polishing Station)
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ModBlocks.RAW_SAPPHIRE_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.SAPPHIRE_BLOCK.get())
-                .unlockedBy(getHasName(ModBlocks.RAW_SAPPHIRE_BLOCK.get()), has(ModBlocks.RAW_SAPPHIRE_BLOCK.get()))
-                .save(pWriter, new ResourceLocation(StickyResources.MOD_ID, "sapphire_block_from_raw_sapphire_block_stonecutting"));
-
-        // 10. Corn
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.CORN.get())
-                .requires(ModItems.CORN_SEEDS.get())
-                .unlockedBy(getHasName(ModItems.CORN_SEEDS.get()), has(ModItems.CORN_SEEDS.get()))
-                .save(pWriter);
-
-        // 11. Strawberry
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.STRAWBERRY.get())
-                .requires(ModItems.STRAWBERRY_SEEDS.get())
-                .unlockedBy(getHasName(ModItems.STRAWBERRY_SEEDS.get()), has(ModItems.STRAWBERRY_SEEDS.get()))
-                .save(pWriter);
-
-        // 12. Bar Brawl Music Disc
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BAR_BRAWL_MUSIC_DISC.get())
-                .requires(Items.MUSIC_DISC_OTHERSIDE)
-                .requires(ModItems.SAPPHIRE.get())
-                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
-                .save(pWriter);
-
-        // Add more recipes for other items (except spawn eggs)
+                 .pattern("ss")
+                 .pattern("sS")
+                 .define('S', Blocks.COBBLESTONE)
+                 .define('s', Items.SLIME_BALL)
+                 .unlockedBy(getHasName(ModBlocks.STICKY_COBBLESTONE.get()), has(ModBlocks.STICKY_COBBLESTONE.get()))
+                 .save(pWriter);
+        /// ... Add more recipes for other items
     }
 
     // Helper methods for smelting and blasting recipes
