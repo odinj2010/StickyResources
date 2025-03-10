@@ -92,10 +92,10 @@ public class JellyCobblestoneEntity extends JellyEntity {
     // Creates attribute supplier for the entity
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 2D) // Low health
+                .add(Attributes.MAX_HEALTH, 10D) // Low health
                 .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
                 .add(Attributes.MOVEMENT_SPEED, 0.25D) // Slow movement
-                .add(Attributes.ARMOR_TOUGHNESS, 0f) // No armor toughness
+                .add(Attributes.ARMOR_TOUGHNESS, 1f) // No armor toughness
                 .add(Attributes.ATTACK_KNOCKBACK, 0f) // No attack knockback
                 .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
     }

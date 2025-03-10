@@ -21,6 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,8 +71,9 @@ public class JellyElectricEntity extends JellyEntity {
         if (!nearbyEntities.isEmpty()) {
             for (LivingEntity entity : nearbyEntities) {
                 // Check if the entity is NOT an electric jelly AND is NOT wearing armor
-                if (!(entity instanceof JellyElectricEntity) && !isWearingArmor(entity)) {
-                    entity.hurt(this.damageSources().magic(), 2.0F);
+                if (!(entity instanceof JellyElectricEntity) && !isWearingArmor(entity) && !(entity instanceof JellyCobblestoneEntity) &&
+                        !(entity instanceof JellyIronEntity)) {
+                    entity.hurt(this.damageSources().magic(), 0.0F + StickyResourcesConfig.ELECTRIC_JELLY_SHOCK_DAMAGE.get());
                     this.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.0F, 1.0F);
 
                     double dx = entity.getX() - this.getX();
@@ -128,15 +130,9 @@ public class JellyElectricEntity extends JellyEntity {
     @Override
     public void aiStep() {
         super.aiStep();
-
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
-            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + 200;
-        }
         // Check if the entity is in water
         if (this.isInWater()) {
-            this.hurt(this.damageSources().drown(), 2.0F); // Adjust damage value as needed
+            this.hurt(this.damageSources().drown(), 0.0F + StickyResourcesConfig.WATER_DAMAGE_ELECTRIC_JELLY.get()); // Adjust damage value as needed
         }
     }
 
