@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sticky_oak_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sticky_resources:sticky_oak_log"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "sticky_resources:sticky_oak_log"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_sticky_oak_log",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "sticky_resources:sticky_oak_log"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "item": "minecraft:sand"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "ss",
+    "sa"
+  ],
+  "result": {
+    "item": "sticky_resources:sticky_sand"
+  },
+  "show_notification": true
+}

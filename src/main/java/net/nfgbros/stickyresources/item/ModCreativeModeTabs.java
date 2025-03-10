@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -14,10 +13,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, StickyResources.MOD_ID);
+
+    // Sapphire Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_SAPPHIRE_TAB = CREATIVE_MODE_TABS.register("sticky_resources_sapphire_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.SAPPHIRE.get()))
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModItems.SAPPHIRE.get()))
                     .title(Component.translatable("creativetab.sticky_resources_sapphire_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // Sapphire Items
                         pOutput.accept(ModItems.SAPPHIRE.get());
                         pOutput.accept(ModItems.RAW_SAPPHIRE.get());
                         pOutput.accept(ModItems.SAPPHIRE_STAFF.get());
@@ -30,12 +33,16 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SAPPHIRE_CHESTPLATE.get());
                         pOutput.accept(ModItems.SAPPHIRE_LEGGINGS.get());
                         pOutput.accept(ModItems.SAPPHIRE_BOOTS.get());
+
+                        // Sapphire Blocks
                         pOutput.accept(ModBlocks.SAPPHIRE_BLOCK.get());
                         pOutput.accept(ModBlocks.RAW_SAPPHIRE_BLOCK.get());
                         pOutput.accept(ModBlocks.SAPPHIRE_ORE.get());
                         pOutput.accept(ModBlocks.DEEPSLATE_SAPPHIRE_ORE.get());
                         pOutput.accept(ModBlocks.NETHER_SAPPHIRE_ORE.get());
                         pOutput.accept(ModBlocks.END_STONE_SAPPHIRE_ORE.get());
+
+                        // Sapphire Building Blocks
                         pOutput.accept(ModBlocks.SAPPHIRE_STAIRS.get());
                         pOutput.accept(ModBlocks.SAPPHIRE_SLAB.get());
                         pOutput.accept(ModBlocks.SAPPHIRE_BUTTON.get());
@@ -45,35 +52,45 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.SAPPHIRE_WALL.get());
                         pOutput.accept(ModBlocks.SAPPHIRE_DOOR.get());
                         pOutput.accept(ModBlocks.SAPPHIRE_TRAPDOOR.get());
-
                     })
                     .build());
+
+    // Devices Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_DEVICES_TAB = CREATIVE_MODE_TABS.register("sticky_resources_devices_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.METAL_DETECTOR.get()))
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModItems.METAL_DETECTOR.get()))
                     .title(Component.translatable("creativetab.sticky_resources_devices_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // Devices Items
                         pOutput.accept(ModItems.METAL_DETECTOR.get());
+                        // Device Blocks
                         pOutput.accept(ModBlocks.GEM_POLISHING_STATION.get());
                     })
                     .build());
+
+    // Food Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_FOOD_TAB = CREATIVE_MODE_TABS.register("sticky_resources_food_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STRAWBERRY.get()))
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModItems.STRAWBERRY.get()))
                     .title(Component.translatable("creativetab.sticky_resources_food_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // Food Items
                         pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
                         pOutput.accept(ModItems.STRAWBERRY.get());
                         pOutput.accept(ModItems.CORN_SEEDS.get());
                         pOutput.accept(ModItems.CORN.get());
                     })
                     .build());
+
+    // Spawn Egg Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_SPAWN_EGG_TAB = CREATIVE_MODE_TABS.register("sticky_resources_spawn_egg_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.JELLY_SPAWN_EGG.get()))
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModItems.JELLY_SPAWN_EGG.get()))
                     .title(Component.translatable("creativetab.sticky_resources_spawn_egg_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // Spawn Eggs
                         pOutput.accept(ModItems.RHINO_SPAWN_EGG.get());
                         pOutput.accept(ModItems.JELLY_SPAWN_EGG.get());
-                        /// ///////
-                        /// ///////
                         pOutput.accept(ModItems.JELLY_BONE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.JELLY_COAL_SPAWN_EGG.get());
                         pOutput.accept(ModItems.JELLY_CHARCOAL_SPAWN_EGG.get());
@@ -97,17 +114,19 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.JELLY_SAND_SPAWN_EGG.get());
                         pOutput.accept(ModItems.JELLY_SAPPHIRE_SPAWN_EGG.get());
                         pOutput.accept(ModItems.JELLY_WATER_SPAWN_EGG.get());
-
                     })
                     .build());
+
+    // Miscellaneous Creative Mode Tab
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_MISC_TAB = CREATIVE_MODE_TABS.register("sticky_resources_misc_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.SOUND_BLOCK.get()))
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModBlocks.SOUND_BLOCK.get()))
                     .title(Component.translatable("creativetab.sticky_resources_misc_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // Miscellaneous Items
                         pOutput.accept(ModItems.PINE_CONE.get());
-                        //
+
                         // Sticky Items
-                        //
                         pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
                         pOutput.accept(ModItems.STICKY_COAL.get());
                         pOutput.accept(ModItems.STICKY_CHARCOAL.get());
@@ -130,12 +149,13 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STICKY_SAND.get());
                         pOutput.accept(ModItems.STICKY_WATER_BUCKET.get());
                         pOutput.accept(ModItems.STICKY_LAVA_BUCKET.get());
-                        //
-                        //
-                        //
+
+                        // Additional Blocks
                         pOutput.accept(ModBlocks.SOUND_BLOCK.get());
                     })
                     .build());
+
+    // Method to register all Creative Mode Tabs
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "sticky_resources:raw_sapphire_block"
+  },
+  "result": "sticky_resources:sapphire_block"
+}

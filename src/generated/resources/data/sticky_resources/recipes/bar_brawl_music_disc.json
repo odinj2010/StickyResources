@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:music_disc_otherside"
+    },
+    {
+      "item": "sticky_resources:sapphire"
+    }
+  ],
+  "result": {
+    "item": "sticky_resources:bar_brawl_music_disc"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "d": {
+      "item": "minecraft:dirt"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "ss",
+    "sd"
+  ],
+  "result": {
+    "item": "sticky_resources:sticky_dirt"
+  },
+  "show_notification": true
+}

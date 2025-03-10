@@ -3,6 +3,8 @@ package net.nfgbros.stickyresources;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.block.entity.ModBlockEntities;
 import net.nfgbros.stickyresources.entity.ModEntities;
@@ -39,27 +41,33 @@ public class StickyResources {
     public static final String MOD_ID = "sticky_resources";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    public static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MOD_ID, MOD_ID),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
+
     public StickyResources() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModCreativeModeTabs.register(modEventBus);
-
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
-
-        ModLootModifiers.register(modEventBus);
-        ModVillagers.register(modEventBus);
-
-        StickyResourcesConfig.register(ModLoadingContext.get());
-
-        ModSounds.register(modEventBus);
+        // Register entities first
         ModEntities.register(modEventBus);
 
+        // Then register other content
+        ModCreativeModeTabs.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModLootModifiers.register(modEventBus);
+        ModVillagers.register(modEventBus);
+        StickyResourcesConfig.register(ModLoadingContext.get());
+        ModSounds.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
 
+        // Add listeners and event handlers
         modEventBus.addListener(this::commonSetup);
-
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
     }

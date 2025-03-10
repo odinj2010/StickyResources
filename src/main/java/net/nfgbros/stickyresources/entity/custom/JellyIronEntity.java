@@ -26,59 +26,51 @@ import org.jetbrains.annotations.Nullable;
 
 public class JellyIronEntity extends JellyEntity {
 
-    // Time until the entity drops an iron item
-    public int dropTime;
+    // Fields
+    public int dropTime; // Time until the entity drops an iron item
+    public final AnimationState idleAnimationState = new AnimationState(); // Animation state for idle behavior
+    private int idleAnimationTimeout = 0; // Timeout for idle animations
 
-    // Animation state for idle behavior
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
-
+    // Constructor
     public JellyIronEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        // Initialize dropTime to a random value between 200 and 400 ticks
-        this.dropTime = this.random.nextInt(200) + 200;
+        this.dropTime = this.random.nextInt(200) + 200; // Randomize initial drop time
     }
 
+    // Tick method
     @Override
     public void tick() {
         super.tick();
-        // Setup animation states on the client side
         if (this.level().isClientSide()) {
-            setupAnimationStates();
+            setupAnimationStates(); // Setup animations on the client side
         }
     }
 
-    // Sets up the idle animation state
+    // Setup idle animation states
     private void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
-            // Set a new random timeout between 80 and 120 ticks
-            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
-            // Start the idle animation
-            this.idleAnimationState.start(this.tickCount);
+            this.idleAnimationTimeout = this.random.nextInt(40) + 80; // Random timeout
+            this.idleAnimationState.start(this.tickCount); // Start idle animation
         } else {
-            // Decrement the timeout
-            --this.idleAnimationTimeout;
+            --this.idleAnimationTimeout; // Decrement timeout
         }
     }
 
+    // Update walk animation
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        // Adjust walk animation based on pose
         if (this.getPose() == Pose.STANDING) {
-            // If standing, set animation speed based on partial tick
-            f = Math.min(pPartialTick * 6F, 1f);
+            f = Math.min(pPartialTick * 6F, 1f); // Animation speed when standing
         } else {
-            // If not standing, no walk animation
-            f = 0f;
+            f = 0f; // No animation if not standing
         }
-        // Update the walk animation state
         this.walkAnimation.update(f, 0.2f);
     }
 
+    // Register entity goals
     @Override
     protected void registerGoals() {
-        // Add AI goals to the entity
         this.goalSelector.addGoal(0, new FloatGoal(this)); // Prevent drowning
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Allow breeding
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false)); // Tempt with slime balls
@@ -86,7 +78,7 @@ public class JellyIronEntity extends JellyEntity {
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Randomly look around
     }
 
-    // Creates attribute supplier for the entity
+    // Define entity attributes
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D) // Low health
@@ -97,58 +89,57 @@ public class JellyIronEntity extends JellyEntity {
                 .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
     }
 
+    // AI step logic
     @Override
     public void aiStep() {
         super.aiStep();
 
-        // Handle item dropping logic on the server side
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
-            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            // Use config values for slime ball drop time and amount
-            this.spawnAtLocation(new ItemStack(ModItems.STICKY_RAW_IRON.get(), StickyResourcesConfig.STICKY_RAW_IRON_DROP_AMOUNT.get()));
+            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F); // Play sound
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_RAW_IRON.get(), StickyResourcesConfig.STICKY_RAW_IRON_DROP_AMOUNT.get())); // Drop item
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_RAW_IRON_DROP_TIME.get();
+            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_RAW_IRON_DROP_TIME.get(); // Reset drop time
         }
     }
 
+    // Breeding behavior
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        // Create a new JellyIronEntity as offspring
-        return ModEntities.JELLY_IRON.get().create(pLevel);
+        return ModEntities.JELLY_IRON.get().create(pLevel); // Create offspring
     }
 
+    // Check if item is food
     @Override
     public boolean isFood(ItemStack pStack) {
-        // Entity is fed by slime balls
-        return pStack.is(Items.SLIME_BALL);
+        return pStack.is(Items.SLIME_BALL); // Fed by slime balls
     }
 
+    // Get hurt sound
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        // Hurt sound
         return SoundEvents.SLIME_HURT;
     }
 
+    // Get death sound
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        // Death sound
         return SoundEvents.SLIME_DEATH_SMALL;
     }
 
+    // Read additional save data
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        // Read dropTime from NBT
         if (pCompound.contains("ItemLayTime")) {
-            this.dropTime = pCompound.getInt("ItemLayTime");
+            this.dropTime = pCompound.getInt("ItemLayTime"); // Read drop time from NBT
         }
     }
 
+    // Write additional save data
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        // Write dropTime to NBT
-        pCompound.putInt("ItemLayTime", this.dropTime);
+        pCompound.putInt("ItemLayTime", this.dropTime); // Save drop time to NBT
     }
 }

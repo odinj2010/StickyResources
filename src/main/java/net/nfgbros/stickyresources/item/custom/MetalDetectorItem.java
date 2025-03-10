@@ -27,30 +27,44 @@ public class MetalDetectorItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
-        if(!pContext.getLevel().isClientSide()) {
+        if (!pContext.getLevel().isClientSide()) {
             BlockPos positionClicked = pContext.getClickedPos();
             Player player = pContext.getPlayer();
             boolean foundBlock = false;
 
-            for(int i = 0; i <= positionClicked.getY() + 64; i++) {
+            // Search for valuable blocks below the clicked position
+            for (int i = 0; i <= positionClicked.getY() + 64; i++) {
                 BlockState state = pContext.getLevel().getBlockState(positionClicked.below(i));
 
+                // Check if the current block is valuable
                 if (isValuableBlock(state)) {
+                    // Output valuable coordinates and play sound
                     outputValuableCoordinates(positionClicked.below(i), player, state.getBlock());
                     foundBlock = true;
 
-                    pContext.getLevel().playSeededSound(null, positionClicked.getX(), positionClicked.getY(), positionClicked.getZ(),
-                            ModSounds.METAL_DETECTOR_FOUND_ORE.get(), SoundSource.BLOCKS, 1f, 1f, 0);
+                    pContext.getLevel().playSeededSound(
+                            null,
+                            positionClicked.getX(),
+                            positionClicked.getY(),
+                            positionClicked.getZ(),
+                            ModSounds.METAL_DETECTOR_FOUND_ORE.get(),
+                            SoundSource.BLOCKS,
+                            1f,
+                            1f,
+                            0
+                    );
 
-                    break;
+                    break; // Stop searching after finding the first valuable block
                 }
             }
 
-            if(!foundBlock) {
+            // Notify the player if no valuable blocks are found
+            if (!foundBlock) {
                 player.sendSystemMessage(Component.literal("No valuables Found!"));
             }
         }
 
+        // Damage the item after use
         pContext.getItemInHand().hurtAndBreak(1, pContext.getPlayer(),
                 player -> player.broadcastBreakEvent(player.getUsedItemHand()));
 
@@ -59,15 +73,18 @@ public class MetalDetectorItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        // Add tooltip to the item
         pTooltipComponents.add(Component.translatable("tooltip.StickyResources.metal_detector.tooltip"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
+    // Outputs the coordinates of the valuable block to the player
     private void outputValuableCoordinates(BlockPos blockPos, Player player, Block block) {
         player.sendSystemMessage(Component.literal("Found " + I18n.get(block.getDescriptionId()) + " at " +
                 "(" + blockPos.getX() + ", " + blockPos.getY() + "," + blockPos.getZ() + ")"));
     }
 
+    // Checks if the block state represents a valuable block
     private boolean isValuableBlock(BlockState state) {
         return state.is(ModTags.Blocks.METAL_DETECTOR_VALUABLES);
     }

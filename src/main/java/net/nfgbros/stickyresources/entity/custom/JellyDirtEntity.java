@@ -22,34 +22,37 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
-import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
-
 
 public class JellyDirtEntity extends JellyEntity {
 
+    // Drop timer for the entity
     public int dropTime;
 
+    // Animation state and timeout for idle animation
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
+
+    // Constructor
     public JellyDirtEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.dropTime = this.random.nextInt(200) + 200;
     }
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
-
-
+    // Entity tick method
     @Override
     public void tick() {
         super.tick();
 
-        if(this.level().isClientSide()) {
+        // Setup animations on the client side
+        if (this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
+    // Setup idle animation states
     private void setupAnimationStates() {
-        if(this.idleAnimationTimeout <= 0) {
+        if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
@@ -57,10 +60,11 @@ public class JellyDirtEntity extends JellyEntity {
         }
     }
 
+    // Update walk animation
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if(this.getPose() == Pose.STANDING) {
+        if (this.getPose() == Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;
@@ -69,6 +73,7 @@ public class JellyDirtEntity extends JellyEntity {
         this.walkAnimation.update(f, 0.2f);
     }
 
+    // Register AI goals
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -76,9 +81,9 @@ public class JellyDirtEntity extends JellyEntity {
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-
     }
 
+    // Define entity attributes
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D)
@@ -89,48 +94,60 @@ public class JellyDirtEntity extends JellyEntity {
                 .add(Attributes.ATTACK_DAMAGE, 1f);
     }
 
+    // Entity AI step
     @Override
-    public void aiStep(){
+    public void aiStep() {
         super.aiStep();
 
+        // Dropping items at regular intervals
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
-            // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(ModBlocks.STICKY_DIRT.get(), StickyResourcesConfig.STICKY_DIRT_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
+
             this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_DIRT_DROP_TIME.get();
         }
     }
 
+    // Behavior upon breeding
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.JELLY_DIRT.get().create(pLevel);
     }
+
+    // Determine if the given item is food for the entity
     @Override
     public boolean isFood(ItemStack pStack) {
         return pStack.is(Items.SLIME_BALL);
     }
+
+    // Sound when the entity gets hurt
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return SoundEvents.SLIME_HURT;
     }
+
+    // Sound upon death
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.SLIME_DEATH_SMALL;
     }
 
+    // Load additional data from NBT
+    @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("ItemLayTime")) {
             this.dropTime = pCompound.getInt("ItemLayTime");
         }
-
     }
 
+    // Save additional data to NBT
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("ItemLayTime", this.dropTime);

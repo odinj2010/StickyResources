@@ -23,22 +23,26 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class GemPolishingStationBlock extends BaseEntityBlock {
+    // Define the shape of the block
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
 
     public GemPolishingStationBlock(Properties pProperties) {
         super(pProperties);
     }
 
+    // Get the shape of the block for rendering and collision
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
 
+    // Define the rendering type of the block
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
 
+    // Handle block removal and drop inventory if necessary
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
@@ -47,37 +51,40 @@ public class GemPolishingStationBlock extends BaseEntityBlock {
                 ((GemPolishingStationBlockEntity) blockEntity).drops();
             }
         }
-
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+    // Handle interaction with the block
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof GemPolishingStationBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (GemPolishingStationBlockEntity)entity, pPos);
+            if (entity instanceof GemPolishingStationBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer) pPlayer), (GemPolishingStationBlockEntity) entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
         }
-
         return InteractionResult.sidedSuccess(pLevel.isClientSide());
     }
 
+    // Create a new block entity instance
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new GemPolishingStationBlockEntity(pPos, pState);
     }
 
+    // Define the ticker for the block entity
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if(pLevel.isClientSide()) {
+        // Client-side does not require a ticker
+        if (pLevel.isClientSide()) {
             return null;
         }
 
+        // Server-side ticker logic
         return createTickerHelper(pBlockEntityType, ModBlockEntities.GEM_POLISHING_BE.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }

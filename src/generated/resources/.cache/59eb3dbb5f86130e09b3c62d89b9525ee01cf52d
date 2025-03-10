@@ -1,9 +1,10 @@
-// 1.20.1	2025-03-08T15:28:27.0215745	Loot Tables
+// 1.20.1	2025-03-09T21:03:00.2819963	Loot Tables
 6866e4887d305a91ea8cc0b2b6686858971407be data/sticky_resources/loot_tables/blocks/catmint.json
 3830029158c20f8a6925559c31269b2511fe4f35 data/sticky_resources/loot_tables/blocks/corn_crop.json
 cb026099a99669f7b4d386eaf0936ecf7e5cd016 data/sticky_resources/loot_tables/blocks/deepslate_sapphire_ore.json
 ba573ecc10448e11f8acd3423ce52a6cd5393652 data/sticky_resources/loot_tables/blocks/end_stone_sapphire_ore.json
 ed3f9b1c7b68c6fee95108488e997487cdb5d5be data/sticky_resources/loot_tables/blocks/gem_polishing_station.json
+a35e11b44cf91386c11d8f1eb52ed67590802da7 data/sticky_resources/loot_tables/blocks/jelly_storage_be.json
 9a6d586af4dbefbaf6424a02e2bf81c299d8a645 data/sticky_resources/loot_tables/blocks/nether_sapphire_ore.json
 bf58c94cce6a56e6bb90bf72931f675e7d62d263 data/sticky_resources/loot_tables/blocks/potted_catmint.json
 731e5638a3cce18329a11448b8d85ad637cf0bd7 data/sticky_resources/loot_tables/blocks/raw_sapphire_block.json

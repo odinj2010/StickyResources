@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
+    "c": {
       "item": "minecraft:cobblestone"
     },
     "s": {
@@ -11,7 +11,7 @@
   },
   "pattern": [
     "ss",
-    "sS"
+    "sc"
   ],
   "result": {
     "item": "sticky_resources:sticky_cobblestone"

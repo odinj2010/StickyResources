@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "ss",
+    "sg"
+  ],
+  "result": {
+    "item": "sticky_resources:sticky_glass"
+  },
+  "show_notification": true
+}

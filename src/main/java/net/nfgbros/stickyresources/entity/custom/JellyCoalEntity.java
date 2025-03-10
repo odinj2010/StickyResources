@@ -64,38 +64,37 @@ public class JellyCoalEntity extends JellyEntity {
 
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        // Adjust walk animation based on pose
+        float animationSpeed;
         if (this.getPose() == Pose.STANDING) {
             // If standing, set animation speed based on partial tick
-            f = Math.min(pPartialTick * 6F, 1f);
+            animationSpeed = Math.min(pPartialTick * 6F, 1f);
         } else {
             // If not standing, no walk animation
-            f = 0f;
+            animationSpeed = 0f;
         }
 
         // Update the walk animation state
-        this.walkAnimation.update(f, 0.2f);
+        this.walkAnimation.update(animationSpeed, 0.2f);
     }
 
     @Override
     protected void registerGoals() {
-        // Add AI goals to the entity
+        // Define AI goals
         this.goalSelector.addGoal(0, new FloatGoal(this)); // Prevent drowning
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Allow breeding
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Breeding
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false)); // Tempt with slime balls
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f)); // Look at nearby players
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Randomly look around
     }
 
-    // Creates attribute supplier for the entity
+    // Creates and returns the attribute supplier for the entity
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D) // Low health
                 .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
-                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Slow movement
+                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Movement speed
                 .add(Attributes.ARMOR_TOUGHNESS, 0f) // No armor toughness
-                .add(Attributes.ATTACK_KNOCKBACK, 0f) // No attack knockback
+                .add(Attributes.ATTACK_KNOCKBACK, 0f) // No knockback
                 .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
     }
 
@@ -103,54 +102,60 @@ public class JellyCoalEntity extends JellyEntity {
     public void aiStep() {
         super.aiStep();
 
-        // Handle item dropping logic on the server side
+        // Handle resource dropping on the server side
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
-            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            // Use config values for slime ball drop time and amount
-            this.spawnAtLocation(new ItemStack(ModItems.STICKY_COAL.get(), StickyResourcesConfig.STICKY_COAL_DROP_AMOUNT.get()));
+            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F,
+                    (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+
+            // Spawn sticky coal item
+            this.spawnAtLocation(new ItemStack(ModItems.STICKY_COAL.get(),
+                    StickyResourcesConfig.STICKY_COAL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_COAL_DROP_TIME.get();
+
+            // Reset dropTime using config
+            this.dropTime = this.random.nextInt(200) +
+                    StickyResourcesConfig.STICKY_COAL_DROP_TIME.get();
         }
     }
 
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        // Create a new JellyCoalEntity as offspring
+        // Create and return offspring entity
         return ModEntities.JELLY_COAL.get().create(pLevel);
     }
 
     @Override
     public boolean isFood(ItemStack pStack) {
-        // Entity is fed by slime balls
+        // Define feeding item (slime ball)
         return pStack.is(Items.SLIME_BALL);
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        // Hurt sound
-        return SoundEvents.SLIME_HURT;
+        return SoundEvents.SLIME_HURT; // Hurt sound
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        // Death sound
-        return SoundEvents.SLIME_DEATH_SMALL;
+        return SoundEvents.SLIME_DEATH_SMALL; // Death sound
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        // Read dropTime from NBT
+        // Read dropTime from NBT data
         if (pCompound.contains("ItemLayTime")) {
             this.dropTime = pCompound.getInt("ItemLayTime");
         }
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        // Write dropTime to NBT
+        // Save dropTime to NBT data
         pCompound.putInt("ItemLayTime", this.dropTime);
     }
 }

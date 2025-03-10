@@ -3,12 +3,15 @@ package net.nfgbros.stickyresources.entity.custom;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.ModItems;
+import net.nfgbros.stickyresources.item.custom.jellyentity.JellyEntityItem;
 import org.jetbrains.annotations.Nullable;
 
 public class JellyEntity extends Animal implements net.nfgbros.stickyresources.entity.custom.LookableEntity {
@@ -24,9 +29,24 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
     public int dropTime;
     private float lookingYRot;
 
+    private int productionTimer;
+
     public JellyEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.dropTime = this.random.nextInt(200) + 200;
+        this.productionTimer = getRandomProductionTime(); // Initialize with a random time
+    }
+    public int getProductionTimer() {
+        return productionTimer;
+    }
+
+    public void resetProductionTimer() {
+        this.productionTimer = getRandomProductionTime();
+    }
+
+    private int getRandomProductionTime() {
+        // Retrieve production time from config and add some randomness
+        return StickyResourcesConfig.JELLY_SLIME_BALL_DROP_TIME.get() + random.nextInt(600); // Example
     }
 
     //Transform into water jelly
@@ -61,6 +81,11 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
                 this.remove(RemovalReason.DISCARDED);
             }
         }
+    }
+
+    public ItemStack generateItem() {
+        // Generate the default item for JellyEntity (slime ball)
+        return new ItemStack(Items.SLIME_BALL);
     }
 
     @Override
@@ -203,6 +228,19 @@ public class JellyEntity extends Animal implements net.nfgbros.stickyresources.e
         }else {
             return ModEntities.JELLY.get().create(pLevel);
         }
+    }
+    @Override
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack heldItem = pPlayer.getItemInHand(pHand);
+        if (!level().isClientSide() && heldItem.getItem() == ModItems.SAPPHIRE_HOE.get()) { // Example tool
+            // Turn the entity into a JellyEntityItem
+            ItemStack jellyItem = new ItemStack(ModItems.JELLY_ENTITY_ITEM.get()); // Get the correct item for this entity type
+            ItemEntity itemEntity = new ItemEntity(level(), getX(), getY(), getZ(), jellyItem); // Use level() here
+            level().addFreshEntity(itemEntity); // Use level() here
+            this.discard(); // Remove the entity from the world
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(pPlayer, pHand);
     }
 
     @Override

@@ -35,65 +35,52 @@ public class JellyBoneEntity extends JellyEntity {
 
     public JellyBoneEntity(EntityType<? extends JellyEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        // Initialize dropTime to a random value between 200 and 400 ticks
-        this.dropTime = this.random.nextInt(200) + 200;
+        // Initialize dropTime using a fixed config value plus some randomness
+        this.dropTime = StickyResourcesConfig.STICKY_BONE_MEAL_DROP_TIME.get() + this.random.nextInt(100);
     }
 
     @Override
     public void tick() {
         super.tick();
-
-        // Setup animation states on the client side
+        // Only set up animations on the client side
         if (this.level().isClientSide()) {
             setupAnimationStates();
         }
     }
 
-    // Sets up the idle animation state
+    // Handles idle animations
     private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
-            // Set a new random timeout between 80 and 120 ticks
+        if (this.idleAnimationTimeout <= 0 && !this.idleAnimationState.isStarted()) {
+            // Set a new timeout before restarting the animation
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
-            // Start the idle animation
             this.idleAnimationState.start(this.tickCount);
         } else {
-            // Decrement the timeout
             --this.idleAnimationTimeout;
         }
     }
 
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        // Adjust walk animation based on pose
-        if (this.getPose() == Pose.STANDING) {
-            // If standing, set animation speed based on partial tick
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            // If not standing, no walk animation
-            f = 0f;
-        }
-
-        // Update the walk animation state
+        // Adjust walk animation only if the entity is standing
+        float f = (this.getPose() == Pose.STANDING) ? Math.min(pPartialTick * 6F, 1f) : 0f;
         this.walkAnimation.update(f, 0.2f);
     }
 
     @Override
     protected void registerGoals() {
-        // Add AI goals to the entity
+        // Define AI goals for movement and interaction
         this.goalSelector.addGoal(0, new FloatGoal(this)); // Prevent drowning
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D)); // Allow breeding
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false)); // Tempt with slime balls
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f)); // Look at nearby players
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this)); // Randomly look around
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false)); // Follow player with slime ball
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 3f)); // Look at nearby players
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this)); // Randomly look around
     }
 
-    // Creates attribute supplier for the entity
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2D) // Low health
                 .add(Attributes.FOLLOW_RANGE, 24D) // Follow range
-                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Slow movement
+                .add(Attributes.MOVEMENT_SPEED, 0.25D) // Movement speed
                 .add(Attributes.ARMOR_TOUGHNESS, 0f) // No armor toughness
                 .add(Attributes.ATTACK_KNOCKBACK, 0f) // No attack knockback
                 .add(Attributes.ATTACK_DAMAGE, 1f); // Low attack damage
@@ -102,14 +89,13 @@ public class JellyBoneEntity extends JellyEntity {
     @Override
     public void aiStep() {
         super.aiStep();
-
-        // Handle item dropping logic on the server side
+        // Handle item dropping logic
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            // Use config values for slime ball drop time and amount
             this.spawnAtLocation(new ItemStack(ModItems.STICKY_BONE_MEAL.get(), StickyResourcesConfig.STICKY_BONE_MEAL_DROP_AMOUNT.get()));
             this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.STICKY_BONE_MEAL_DROP_TIME.get();
+            // Reset dropTime with a new interval
+            this.dropTime = StickyResourcesConfig.STICKY_BONE_MEAL_DROP_TIME.get() + this.random.nextInt(100);
         }
     }
 
@@ -122,21 +108,21 @@ public class JellyBoneEntity extends JellyEntity {
 
     @Override
     public boolean isFood(ItemStack pStack) {
-        // Entity is fed by slime balls
-        return pStack.is(Items.SLIME_BALL);
+        // Entity is attracted to slime balls
+        return Ingredient.of(Items.SLIME_BALL).test(pStack);
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        // Hurt sound
+        // Sound effect when hurt
         return SoundEvents.SLIME_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        // Death sound
+        // Sound effect when it dies
         return SoundEvents.SLIME_DEATH_SMALL;
     }
 

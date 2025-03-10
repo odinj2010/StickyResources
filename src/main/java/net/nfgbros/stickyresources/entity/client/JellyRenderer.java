@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyModel<T>> {
 
+    // Texture Resources
     private final ResourceLocation defaultTexture;
     private final ResourceLocation boneTexture;
     private final ResourceLocation coalTexture;
@@ -45,9 +46,10 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
     private final ResourceLocation sapphireTexture;
     private final ResourceLocation waterTexture;
 
-    // Map to store cached RenderTypes
+    // Cache for RenderTypes
     private final Map<ResourceLocation, RenderType> renderTypeCache = new HashMap<>();
 
+    // Constructor to initialize textures and model
     public JellyRenderer(EntityRendererProvider.Context pContext, ResourceLocation defaultTexture, ResourceLocation boneTexture,
                          ResourceLocation coalTexture, ResourceLocation charcoalTexture, ResourceLocation cobblestoneTexture, ResourceLocation copperTexture,
                          ResourceLocation diamondTexture, ResourceLocation dirtTexture, ResourceLocation electricTexture,
@@ -83,6 +85,7 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
         this.waterTexture = waterTexture;
     }
 
+    // Determine texture location for given entity
     @Override
     public ResourceLocation getTextureLocation(T pEntity) {
         if (pEntity instanceof JellyBoneEntity) {
@@ -136,27 +139,30 @@ public class JellyRenderer<T extends JellyEntity> extends MobRenderer<T, JellyMo
         }
     }
 
+    // Render logic for the entity
     @Override
     public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack,
                        MultiBufferSource buffer, int packedLight) {
 
+        // Check if entity is a baby and scale accordingly
         if (entity.isBaby()) {
             poseStack.scale(0.5f, 0.5f, 0.5f);
         }
 
-        // Update animation state
+        // Update animation state based on entity's pose and partial ticks
         entity.walkAnimation.update(entity.getPose() == Pose.STANDING ? Math.min(partialTicks * 6F, 1f) : 0f, 0.1f);
 
-        // Apply animation state to the model
+        // Apply animation state to entity's model
         this.model.setupAnim(entity, entity.walkAnimation.position(), entity.walkAnimation.position(),
                 entity.tickCount + partialTicks, 0, entity.getXRot());
 
-        // Render the model
+        // Render the model with correct texture and effects
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity)));
         int packedOverlay = getOverlay(entity, partialTicks);
         this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, 1f, 1f, 1f, 0.9f);
     }
 
+    // Get overlay coordinates for rendering effects
     protected int getOverlay(T pEntity, float pPartialTicks) {
         return LivingEntityRenderer.getOverlayCoords((LivingEntity) pEntity, 0);
     }
