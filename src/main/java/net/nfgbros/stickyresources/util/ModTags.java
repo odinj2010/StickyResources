@@ -23,7 +23,6 @@ public class ModTags {
             return BlockTags.create(new ResourceLocation("forge", name));
         }
     }
-
     public static class Items {
         public static final net.minecraft.tags.TagKey<Item> NEEDS_SAPPHIRE_TOOL
                 = tag("needs_sapphire_tool");

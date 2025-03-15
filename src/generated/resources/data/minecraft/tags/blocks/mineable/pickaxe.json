@@ -7,7 +7,6 @@
     "sticky_resources:sapphire_ore",
     "sticky_resources:deepslate_sapphire_ore",
     "sticky_resources:nether_sapphire_ore",
-    "sticky_resources:end_stone_sapphire_ore",
-    "sticky_resources:sound_block"
+    "sticky_resources:end_stone_sapphire_ore"
   ]
 }

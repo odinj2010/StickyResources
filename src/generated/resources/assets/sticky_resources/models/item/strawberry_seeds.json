@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "sticky_resources:item/strawberry_seeds"
-  }
-}

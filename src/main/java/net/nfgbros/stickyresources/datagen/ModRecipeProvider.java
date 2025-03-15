@@ -24,16 +24,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        // Add your recipes here
-
         // Sapphire
         oreSmelting(pWriter, List.of(ModItems.RAW_SAPPHIRE.get()), RecipeCategory.MISC, ModItems.SAPPHIRE.get(), 0.25f, 200, "sapphire");
         oreBlasting(pWriter, List.of(ModItems.RAW_SAPPHIRE.get()), RecipeCategory.MISC, ModItems.SAPPHIRE.get(), 0.25f, 100, "sapphire");
 
         // Sapphire Block
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SAPPHIRE_BLOCK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GEM_POLISHING_STATION.get())
                 .pattern("SSS")
-                .pattern("SSS")
+                .pattern("S S")
                 .pattern("SSS")
                 .define('S', ModItems.SAPPHIRE.get())
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
@@ -44,34 +42,72 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModBlocks.SAPPHIRE_BLOCK.get()), has(ModBlocks.SAPPHIRE_BLOCK.get()))
                 .save(pWriter);
 
-        // Other recipes...
-        // Example:
+        // Sticky Cobblestone
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_COBBLESTONE.get())
-                 .pattern("ss")
-                 .pattern("sS")
-                 .define('S', Blocks.COBBLESTONE)
-                 .define('s', Items.SLIME_BALL)
-                 .unlockedBy(getHasName(ModBlocks.STICKY_COBBLESTONE.get()), has(ModBlocks.STICKY_COBBLESTONE.get()))
-                 .save(pWriter);
-        /// ... Add more recipes for other items
-    }
+                .pattern("ss")
+                .pattern("sS")
+                .define('S', Blocks.COBBLESTONE)
+                .define('s', Items.SLIME_BALL)
+                .unlockedBy(getHasName(ModBlocks.STICKY_COBBLESTONE.get()), has(ModBlocks.STICKY_COBBLESTONE.get()))
+                .save(pWriter);
 
-    // Helper methods for smelting and blasting recipes
-    protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-        oreCooking(pFinishedRecipeConsumer, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smelting");
-    }
+        // Sticky Gravel
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_GRAVEL.get())
+                .pattern("gs")
+                .pattern("sg")
+                .define('g', Blocks.GRAVEL)
+                .define('s', Items.SLIME_BALL)
+                .unlockedBy(getHasName(ModBlocks.STICKY_GRAVEL.get()), has(ModBlocks.STICKY_GRAVEL.get()))
+                .save(pWriter);
 
-    protected static void oreBlasting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
-        oreCooking(pFinishedRecipeConsumer, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting");
-    }
+        // Sticky Glass
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.STICKY_GLASS.get())
+                .requires(Blocks.GLASS)
+                .requires(Items.SLIME_BALL)
+                .unlockedBy(getHasName(ModBlocks.STICKY_GLASS.get()), has(ModBlocks.STICKY_GLASS.get()))
+                .save(pWriter);
 
-    protected static void oreCooking(Consumer<FinishedRecipe> pFinishedRecipeConsumer, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
-        for (ItemLike itemlike : pIngredients) {
-            String recipeName = StickyResources.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike);
-            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
-                            pExperience, pCookingTime, pCookingSerializer)
-                    .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pFinishedRecipeConsumer, new ResourceLocation(recipeName));
-        }
+        // Sapphire Tools
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_PICKAXE.get())
+                .pattern("SSS")
+                .pattern(" S ")
+                .pattern(" S ")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_AXE.get())
+                .pattern("SS")
+                .pattern(" S")
+                .pattern(" S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_SWORD.get())
+                .pattern("S")
+                .pattern("S")
+                .pattern("S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_SHOVEL.get())
+                .pattern("S")
+                .pattern("S")
+                .pattern("S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_HOE.get())
+                .pattern("SS")
+                .pattern(" S")
+                .pattern(" S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
+        // More recipes can be added here in the same pattern for the remaining mod items
     }
 }

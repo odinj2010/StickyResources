@@ -1,212 +1,81 @@
 package net.nfgbros.stickyresources.entity.custom;
 
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.nfgbros.stickyresources.StickyResourcesConfig;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 
-public class JellyEntity extends Animal implements net.nfgbros.stickyresources.entity.custom.LookableEntity {
+import java.util.Map;
 
-    public int dropTime;
-    private float lookingYRot;
+public class JellyEntity extends Animal {
 
-    public JellyEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
-        this.dropTime = this.random.nextInt(200) + 200;
+    public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
-    //Transform into water jelly
-    private void transformToWaterJelly() {
-        if (this.level() instanceof ServerLevel) {
-            // Create the WaterJelly entity
-            JellyWaterEntity waterJelly = ModEntities.JELLY_WATER.get().create((ServerLevel) this.level());
-            if (waterJelly != null) {
-                waterJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
-                waterJelly.finalizeSpawn((ServerLevel) this.level(), this.level().getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.CONVERSION, null, null);
+    public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 4.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.ATTACK_DAMAGE, 1.0D);
 
-                // Remove the current entity and add the Water jelly entity
-                this.level().addFreshEntity(waterJelly);
-                this.remove(RemovalReason.DISCARDED);
-            }
-        }
+        return builder;
     }
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
-
-    private void transformToElectric_Jelly() {
-        if (this.level() instanceof ServerLevel) {
-            // Create the ElectricJelly entity
-            JellyElectricEntity ElectricJelly = ModEntities.JELLY_ELECTRIC.get().create((ServerLevel) this.level());
-            if (ElectricJelly != null) {
-                ElectricJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
-                ElectricJelly.finalizeSpawn((ServerLevel) this.level(), this.level().getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.CONVERSION, null, null);
-
-                // Remove the current entity and add the Electric jelly entity
-                this.level().addFreshEntity(ElectricJelly);
-                this.remove(RemovalReason.DISCARDED);
-            }
-        }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (!this.level().isClientSide) {
-            // Calculate the angle towards the nearest player
-            Player nearestPlayer = this.level().getNearestPlayer(this, 24.0D);
-            if (nearestPlayer != null) {
-                double dx = nearestPlayer.getX() - this.getX();
-                double dz = nearestPlayer.getZ() - this.getZ();
-                float targetYRot = (float) (Math.atan2(dz, dx) * (180F / Math.PI)) - 90F;
-
-                // Calculate the relative rotation needed
-                float deltaYRot = targetYRot - this.lookingYRot;
-
-                // Ensure deltaYRot is within -180 to 180 degrees
-                deltaYRot = (deltaYRot + 540) % 360 - 180;
-
-                // Update lookingYRot with the relative rotation
-                this.lookingYRot += deltaYRot * 0.15F; // Adjust the multiplier for smoother turning
-            }
-        } else {
-            setupAnimationStates();
-        }
-    }
-
-    private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeout;
-        }
-    }
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
+    public ModEntities.JellyType getJellyType() {
+        return ModEntities.JELLY_ENTITIES.entrySet().stream()
+                .filter(entry -> entry.getValue().get() == this.getType())
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(ModEntities.JellyType.DEFAULT);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.15D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.2D, Ingredient.of(Items.SLIME_BALL), false));
+        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.15D));
+        this.goalSelector.addGoal(7, new TemptGoal(this, 1.1D, Ingredient.of(Items.SLIME_BALL), false));
+        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1D));
 
-        // Modified LookAtPlayerGoal with null check
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 3f) {
-            @Override
-            public boolean canUse() {
-                // Check if a player to look at has been found
-                if (this.lookAt != null) {
-                    return this.lookAt.isAlive();
-                }
-                return false; // Skip if no player is found
-            }
-        });
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 2D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.ARMOR_TOUGHNESS, 0f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0f)
-                .add(Attributes.ATTACK_DAMAGE, 1f);
-    }
-    @Override
-    public EntityDimensions getDimensions(Pose pose) {
-        return super.getDimensions(pose).scale(1.0f, 0.5f); // Adjust the 0.5f for desired height
     }
 
     @Override
-    public void aiStep() {
-        super.aiStep();
-
-        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.dropTime <= 0 && this.getType() == ModEntities.JELLY.get()) {
-            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-
-            // Use config values for slime ball drop time and amount
-            this.spawnAtLocation(new ItemStack(Items.SLIME_BALL, StickyResourcesConfig.JELLY_SLIME_BALL_DROP_AMOUNT.get()));
-            this.gameEvent(GameEvent.ENTITY_PLACE);
-            this.dropTime = this.random.nextInt(200) + StickyResourcesConfig.JELLY_SLIME_BALL_DROP_TIME.get();
-
-            // Check if the entity is in water AND is a regular Jelly entity
-            if (this.isInWater() && this.getType() == ModEntities.JELLY.get()) {
-                transformToWaterJelly();
-            }
-        }
-    }
-
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (source.is(DamageTypeTags.IS_FIRE)) {
-            transformToElectric_Jelly();
-            return false; // Ignore fire damage
-        }
-        return super.hurt(source, amount);
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.SLIME_HURT;
     }
 
     @Override
-    public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal instanceof JellyOakLogEntity && this.isInLove() && otherAnimal.isInLove()) {
-            return true;
-        }
-        return super.canMate(otherAnimal);
-    }
-
-    @Override
-    public boolean isFood(ItemStack pStack) {
-        return pStack.is(Items.SLIME_BALL);
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.SLIME_DEATH;
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        boolean thisInWater = this.isInWater();
-        boolean otherInWater = pOtherParent.isInWater();
-
-        if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get()) {
-            return ModEntities.JELLY.get().create(pLevel);
-        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY.get() && thisInWater && otherInWater) {
-            return ModEntities.JELLY_WATER.get().create(pLevel);
-        } else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_WATER.get() && thisInWater){
-            return ModEntities.JELLY_WATER.get().create(pLevel);
-        }else if (this.getType() == ModEntities.JELLY.get() && pOtherParent.getType() == ModEntities.JELLY_OAK_LOG.get()) {
-            return ModEntities.JELLY_OAK_LOG.get().create(pLevel);
-        }else {
-            return ModEntities.JELLY.get().create(pLevel);
-        }
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+        return ModEntities.JELLY_ENTITIES.get(this.getJellyType()).get().create(level);
     }
 
     @Override
-    public float getLookingYRot() {
-        return lookingYRot;
+    public boolean isFood(ItemStack stack) {
+        return stack.is(Items.SLIME_BALL);
     }
 }

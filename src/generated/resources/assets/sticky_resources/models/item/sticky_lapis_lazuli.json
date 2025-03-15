@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft:item/lapis_lazuli",
-    "layer1": "sticky_resources:item/sticky/jelly_slime_ball"
-  }
-}
