@@ -30,14 +30,6 @@ public class JellyEntity extends Animal {
     private int absorbItemTickCounter = 0;
     private final Map<ModEntities.JellyType, Integer> absorptionCount = new HashMap<>();
 
-    private static final Map<ItemStack, ModEntities.JellyType> ABSORPTION_MAP = Map.of(
-            new ItemStack(Items.COBBLESTONE), ModEntities.JellyType.COBBLESTONE,
-            new ItemStack(Items.COAL), ModEntities.JellyType.COAL,
-            new ItemStack(Items.CHARCOAL), ModEntities.JellyType.CHARCOAL,
-            new ItemStack(Items.DIAMOND), ModEntities.JellyType.DIAMOND,
-            new ItemStack(Items.RAW_IRON), ModEntities.JellyType.RAWIRON
-    );
-
     public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
     }
@@ -204,7 +196,24 @@ public class JellyEntity extends Animal {
         Level world = this.level();
         ModEntities.JellyType jellyType = this.getJellyType();
 
-        // Absorption check for Default Jelly (only absorbs Cobblestone)
+        // Absorption check for Cobblestone Jelly (only absorbs Raw Iron)
+        if (jellyType == ModEntities.JellyType.COBBLESTONE) {
+            world.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.2D)).forEach(itemEntity -> {
+                ItemStack stack = itemEntity.getItem();
+                // Check if the absorbed item is Raw Iron, and if so, transform the jelly
+                if (stack.getItem() == Items.RAW_IRON) {
+                    absorptionCount.put(ModEntities.JellyType.RAWIRON, absorptionCount.getOrDefault(ModEntities.JellyType.RAWIRON, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met (e.g., 20 items)
+                    if (absorptionCount.get(ModEntities.JellyType.RAWIRON) >= 2) {
+                        transformInto(ModEntities.JellyType.RAWIRON);
+                    }
+                }
+            });
+        }
+
+        // Absorption check for Default Jelly (absorbs the following items)
+
         if (jellyType == ModEntities.JellyType.DEFAULT) {
             world.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.2D)).forEach(itemEntity -> {
                 ItemStack stack = itemEntity.getItem();
@@ -217,20 +226,119 @@ public class JellyEntity extends Animal {
                         transformInto(ModEntities.JellyType.COBBLESTONE);
                     }
                 }
-            });
-        }
-
-        // Absorption check for Cobblestone Jelly (only absorbs Raw Iron)
-        if (jellyType == ModEntities.JellyType.COBBLESTONE) {
-            world.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.2D)).forEach(itemEntity -> {
-                ItemStack stack = itemEntity.getItem();
-                // Check if the absorbed item is Raw Iron, and if so, transform the jelly
-                if (stack.getItem() == Items.RAW_IRON) {
-                    absorptionCount.put(ModEntities.JellyType.RAWIRON, absorptionCount.getOrDefault(ModEntities.JellyType.RAWIRON, 0) + stack.getCount());
+                // Absorb Dirt
+                else if (stack.getItem() == Items.DIRT) {
+                    absorptionCount.put(ModEntities.JellyType.DIRT, absorptionCount.getOrDefault(ModEntities.JellyType.DIRT, 0) + stack.getCount());
                     itemEntity.discard();
-                    // Check if the absorption threshold is met (e.g., 20 items)
-                    if (absorptionCount.get(ModEntities.JellyType.RAWIRON) >= 2) {
-                        transformInto(ModEntities.JellyType.RAWIRON);
+                    // Check if the absorption threshold is met (e.g., 2 items)
+                    if (absorptionCount.get(ModEntities.JellyType.DIRT) >= 2) {
+                        transformInto(ModEntities.JellyType.DIRT);
+                    }
+                }
+                // Absorb Bone
+                else if (stack.getItem() == Items.BONE) {
+                    absorptionCount.put(ModEntities.JellyType.BONE, absorptionCount.getOrDefault(ModEntities.JellyType.BONE, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met (e.g., 2 items)
+                    if (absorptionCount.get(ModEntities.JellyType.BONE) >= 2) {
+                        transformInto(ModEntities.JellyType.BONE);
+                    }
+                }
+                // Absorb Coal
+                else if (stack.getItem() == Items.COAL) {
+                    absorptionCount.put(ModEntities.JellyType.COAL, absorptionCount.getOrDefault(ModEntities.JellyType.COAL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met
+                    if (absorptionCount.get(ModEntities.JellyType.COAL) >= 2) {
+                        transformInto(ModEntities.JellyType.COAL);
+                    }
+                }
+                // Absorb Charcoal
+                else if (stack.getItem() == Items.CHARCOAL) {
+                    absorptionCount.put(ModEntities.JellyType.CHARCOAL, absorptionCount.getOrDefault(ModEntities.JellyType.CHARCOAL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.CHARCOAL) >= 2) {
+                        transformInto(ModEntities.JellyType.CHARCOAL);
+                    }
+                }
+                // Absorb Emerald
+                else if (stack.getItem() == Items.EMERALD) {
+                    absorptionCount.put(ModEntities.JellyType.EMERALD, absorptionCount.getOrDefault(ModEntities.JellyType.EMERALD, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.EMERALD) >= 2) {
+                        transformInto(ModEntities.JellyType.EMERALD);
+                    }
+                }
+                // Absorb Ender Pearl
+                else if (stack.getItem() == Items.ENDER_PEARL) {
+                    absorptionCount.put(ModEntities.JellyType.ENDERPEARL, absorptionCount.getOrDefault(ModEntities.JellyType.ENDERPEARL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.ENDERPEARL) >= 2) {
+                        transformInto(ModEntities.JellyType.ENDERPEARL);
+                    }
+                }
+                // Absorb Glass
+                else if (stack.getItem() == Items.GLASS) {
+                    absorptionCount.put(ModEntities.JellyType.GLASS, absorptionCount.getOrDefault(ModEntities.JellyType.GLASS, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.GLASS) >= 2) {
+                        transformInto(ModEntities.JellyType.GLASS);
+                    }
+                }
+                // Absorb Gravel
+                else if (stack.getItem() == Items.GRAVEL) {
+                    absorptionCount.put(ModEntities.JellyType.GRAVEL, absorptionCount.getOrDefault(ModEntities.JellyType.GRAVEL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.GRAVEL) >= 2) {
+                        transformInto(ModEntities.JellyType.GRAVEL);
+                    }
+                }
+                // Absorb Lapis
+                else if (stack.getItem() == Items.LAPIS_LAZULI) {
+                    absorptionCount.put(ModEntities.JellyType.LAPIS, absorptionCount.getOrDefault(ModEntities.JellyType.LAPIS, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.LAPIS) >= 2) {
+                        transformInto(ModEntities.JellyType.LAPIS);
+                    }
+                }
+                // Absorb Obsidian
+                else if (stack.getItem() == Items.OBSIDIAN) {
+                    absorptionCount.put(ModEntities.JellyType.OBSIDIAN, absorptionCount.getOrDefault(ModEntities.JellyType.OBSIDIAN, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.OBSIDIAN) >= 2) {
+                        transformInto(ModEntities.JellyType.OBSIDIAN);
+                    }
+                }
+                // Absorb Redstone
+                else if (stack.getItem() == Items.REDSTONE) {
+                    absorptionCount.put(ModEntities.JellyType.REDSTONEDUST, absorptionCount.getOrDefault(ModEntities.JellyType.REDSTONEDUST, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.REDSTONEDUST) >= 2) {
+                        transformInto(ModEntities.JellyType.REDSTONEDUST);
+                    }
+                }
+                // Absorb Sand
+                else if (stack.getItem() == Items.SAND) {
+                    absorptionCount.put(ModEntities.JellyType.SAND, absorptionCount.getOrDefault(ModEntities.JellyType.SAND, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.SAND) >= 2) {
+                        transformInto(ModEntities.JellyType.SAND);
+                    }
+                }
+                // Absorb Sapphire (if custom item exists)
+                else if (stack.getItem() == ModItems.SAPPHIRE.get()) {
+                    absorptionCount.put(ModEntities.JellyType.SAPPHIRE, absorptionCount.getOrDefault(ModEntities.JellyType.SAPPHIRE, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.SAPPHIRE) >= 2) {
+                        transformInto(ModEntities.JellyType.SAPPHIRE);
+                    }
+                }
+                // Absorb Water Bucket
+                else if (stack.getItem() == Items.WATER_BUCKET) {
+                    absorptionCount.put(ModEntities.JellyType.WATER, absorptionCount.getOrDefault(ModEntities.JellyType.WATER, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.WATER) >= 2) {
+                        transformInto(ModEntities.JellyType.WATER);
                     }
                 }
             });

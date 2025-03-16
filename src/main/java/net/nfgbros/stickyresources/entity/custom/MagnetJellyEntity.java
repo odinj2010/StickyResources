@@ -96,6 +96,15 @@ public class MagnetJellyEntity extends JellyEntity {
             }
         });
 
+        // Attraction to other MagnetJelly entities
+        this.level().getEntitiesOfClass(MagnetJellyEntity.class, this.getBoundingBox().inflate(5), entity -> entity instanceof MagnetJellyEntity).forEach(entity -> {
+            if (entity != this) { // Don't attract itself
+                // Calculate the direction from the current entity to the other Magnet Jelly
+                Vec3 direction = entity.position().subtract(this.position()).normalize();
+                this.setDeltaMovement(this.getDeltaMovement().add(direction.scale(ATTRACTION_FORCE)));
+            }
+        });
+
         // Repulsion and levitation from iron blocks
         int entityX = (int) Math.floor(this.getX());
         int entityY = (int) Math.floor(this.getY() - 0.5);
@@ -156,6 +165,7 @@ public class MagnetJellyEntity extends JellyEntity {
         // Constant gravity (if you still want some gravity influence)
         this.setDeltaMovement(this.getDeltaMovement().add(0, -0.008, 0));
     }
+
 
     private boolean isValuableBlock(BlockState state) {
         return state.is(ModTags.Blocks.METAL_DETECTOR_VALUABLES);

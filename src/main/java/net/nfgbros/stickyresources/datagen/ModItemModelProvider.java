@@ -48,6 +48,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+
         // Sticky Items
         simpleItem(ModItems.STICKY_BONE_MEAL, "item/bone_meal", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_COAL, "item/coal", "item/sticky/jelly_slime_ball");

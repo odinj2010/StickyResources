@@ -22,6 +22,7 @@ public class ModItems {
     public static final RegistryObject<Item> PINE_CONE = ITEMS.register("pine_cone",
             () -> new FuelItem(new Item.Properties(), 400));
 
+
     // Sticky Items
     public static final RegistryObject<Item> STICKY_COAL = ITEMS.register("sticky_coal",
             () -> new Item(new Item.Properties()));

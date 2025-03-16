@@ -19,7 +19,7 @@ public class JellyStickEventHandler {
     private static final int MERGE_THRESHOLD = 40; // Ticks before merging
 
     static {
-         //Define your sticky pairs here
+        //Define your sticky pairs here
         STICKY_PAIRS.put(ElectricJellyEntity.class, List.of(CobblestoneJellyEntity.class, RawIronJellyEntity.class));
         STICKY_PAIRS.put(MagnetJellyEntity.class, List.of(RawIronJellyEntity.class));
         // Add more pairs as needed:
