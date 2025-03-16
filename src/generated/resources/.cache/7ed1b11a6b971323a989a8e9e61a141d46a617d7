@@ -1,8 +1,8 @@
-// 1.20.1	2025-03-11T01:53:14.3785783	Tags for minecraft:block mod id sticky_resources
+// 1.20.1	2025-03-15T20:57:02.4706029	Tags for minecraft:block mod id sticky_resources
 ad70a019fde319239ccc917ad9141391c197ecc1 data/forge/tags/blocks/needs_netherite_tool.json
 26271f66a8e539e606843cdd8806285223d25329 data/minecraft/tags/blocks/fences.json
 031a5340217584aa3f46b1d3c1f6e404e83e2aa1 data/minecraft/tags/blocks/fence_gates.json
-11dbbf132b6d9a495e075fda0fd99e42028145a6 data/minecraft/tags/blocks/mineable/axe.json
+11f6356546e4cfabfc03ec1d6d8650ad5834184c data/minecraft/tags/blocks/mineable/axe.json
 ce724bea07c478ccd7e209051d6a4ac1ff628b35 data/minecraft/tags/blocks/mineable/pickaxe.json
 e49c7cf07c4549f6841d1fe05560c92e492d8339 data/minecraft/tags/blocks/mineable/shovel.json
 b11349721bdd17e4fb3c43c22728ab5f72274837 data/minecraft/tags/blocks/needs_diamond_tool.json

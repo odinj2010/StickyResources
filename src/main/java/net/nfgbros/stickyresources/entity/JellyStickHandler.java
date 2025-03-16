@@ -69,10 +69,10 @@ public class JellyStickHandler {
     }
 
     private static EntityType<? extends Entity> getMergedEntityType(EntityType<?> firstType, EntityType<?> secondType) {
-        //if ((firstType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.ELECTRIC).get() && secondType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.IRON).get() ||
-        //        (firstType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.IRON).get() && secondType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.ELECTRIC).get()))) {
-        //    return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.MAGNET).get();
-        //}
+        if ((firstType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.ELECTRIC).get() && secondType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.RAWIRON).get() ||
+                (firstType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.RAWIRON).get() && secondType == ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.ELECTRIC).get()))) {
+            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.MAGNET).get();
+        }
         return null;
     }
 

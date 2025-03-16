@@ -37,7 +37,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.STICKY_DIRT.get());
         this.dropSelf(ModBlocks.STICKY_GLASS.get());
         this.dropSelf(ModBlocks.STICKY_GRAVEL.get());
-        this.dropSelf(ModBlocks.STICKY_OAK_LOG.get());
+        this.dropSelf(ModBlocks.STICKY_LOG_OAK.get());
         this.dropSelf(ModBlocks.STICKY_OBSIDIAN.get());
         this.dropSelf(ModBlocks.STICKY_SAND.get());
 

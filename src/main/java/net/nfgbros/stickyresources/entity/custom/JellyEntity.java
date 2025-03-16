@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -90,15 +91,75 @@ public class JellyEntity extends Animal {
         // Drop an item every 200 ticks
         if (tickCounter >= 200) {
             Level world = this.level();
-            ItemStack dropStack = Items.SLIME_BALL.getDefaultInstance(); // Default drop
+
+            ItemStack dropStack = ItemStack.EMPTY; // Default drop
 
             ModEntities.JellyType type = this.getJellyType();  // Get the JellyType
 
-            if (type == ModEntities.JellyType.BONE) {
+            if (type == ModEntities.JellyType.DEFAULT) {
+                dropStack = new ItemStack(Items.SLIME_BALL);
+            }
+            else if (type == ModEntities.JellyType.BONE) {
                 dropStack = new ItemStack(ModItems.STICKY_BONE_MEAL.get());
-            } else if (type == ModEntities.JellyType.CHARCOAL) {
+            }
+            else if (type == ModEntities.JellyType.CHARCOAL) {
                 dropStack = new ItemStack(ModItems.STICKY_CHARCOAL.get());
             }
+            else if (type == ModEntities.JellyType.COAL) {
+                dropStack = new ItemStack(ModItems.STICKY_COAL.get());
+            }
+            else if (type == ModEntities.JellyType.COBBLESTONE) {
+                dropStack = new ItemStack(ModBlocks.STICKY_COBBLESTONE.get());
+            }
+            else if (type == ModEntities.JellyType.DIAMOND) {
+                dropStack = new ItemStack(ModItems.STICKY_DIAMOND.get());
+            }
+            else if (type == ModEntities.JellyType.DIRT) {
+                dropStack = new ItemStack(ModBlocks.STICKY_DIRT.get());
+            }
+            else if (type == ModEntities.JellyType.EMERALD) {
+                dropStack = new ItemStack(ModItems.STICKY_EMERALD.get());
+            }
+            else if (type == ModEntities.JellyType.ENDERPEARL) {
+                dropStack = new ItemStack(ModItems.STICKY_ENDER_PEARL.get());
+            }
+            else if (type == ModEntities.JellyType.GLASS) {
+                dropStack = new ItemStack(ModBlocks.STICKY_GLASS.get());
+            }
+            else if (type == ModEntities.JellyType.GRAVEL) {
+                dropStack = new ItemStack(ModBlocks.STICKY_GRAVEL.get());
+            }
+            else if (type == ModEntities.JellyType.LAPIS) {
+                dropStack = new ItemStack(ModItems.STICKY_LAPIS_LAZULI.get());
+            }
+            else if (type == ModEntities.JellyType.OAKLOG) {
+                dropStack = new ItemStack(ModBlocks.STICKY_LOG_OAK.get());
+            }
+            else if (type == ModEntities.JellyType.OBSIDIAN) {
+                dropStack = new ItemStack(ModBlocks.STICKY_OBSIDIAN.get());
+            }
+            else if (type == ModEntities.JellyType.PRISMERINE) {
+                dropStack = new ItemStack(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
+            }
+            else if (type == ModEntities.JellyType.RAWCOPPER) {
+                dropStack = new ItemStack(ModItems.STICKY_RAW_COPPER.get());
+            }
+            else if (type == ModEntities.JellyType.RAWGOLD) {
+                dropStack = new ItemStack(ModItems.STICKY_RAW_GOLD.get());
+            }
+            else if (type == ModEntities.JellyType.RAWIRON) {
+                dropStack = new ItemStack(ModItems.STICKY_RAW_IRON.get());
+            }
+            else if (type == ModEntities.JellyType.REDSTONEDUST) {
+                dropStack = new ItemStack(ModItems.STICKY_REDSTONE_DUST.get());
+            }
+            else if (type == ModEntities.JellyType.SAND) {
+                dropStack = new ItemStack(ModBlocks.STICKY_SAND.get());
+            }
+            else if (type == ModEntities.JellyType.SAPPHIRE) {
+                dropStack = new ItemStack(ModItems.STICKY_RAW_SAPPHIRE.get());
+            }
+
 
             ItemEntity itemEntity = new ItemEntity(world, this.getX(), this.getY(), this.getZ(), dropStack);
             world.addFreshEntity(itemEntity);

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "sticky_resources:sticky_oak_log"
+          "name": "sticky_resources:sticky_log_oak"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "sticky_resources:blocks/sticky_oak_log"
+  "random_sequence": "sticky_resources:blocks/sticky_log_oak"
 }

@@ -120,7 +120,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STICKY_GRAVEL.get());
                         pOutput.accept(ModItems.STICKY_RAW_IRON.get());
                         pOutput.accept(ModItems.STICKY_LAPIS_LAZULI.get());
-                        pOutput.accept(ModBlocks.STICKY_OAK_LOG.get());
+                        pOutput.accept(ModBlocks.STICKY_LOG_OAK.get());
                         pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
                         pOutput.accept(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
                         pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());

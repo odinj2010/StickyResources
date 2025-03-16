@@ -25,7 +25,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(
-                        ModBlocks.STICKY_OAK_LOG.get()
+                        ModBlocks.STICKY_LOG_OAK.get()
                 )
         ;
 

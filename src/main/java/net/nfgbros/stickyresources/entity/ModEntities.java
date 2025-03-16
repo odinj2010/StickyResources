@@ -2,8 +2,6 @@ package net.nfgbros.stickyresources.entity;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,7 +23,29 @@ public class ModEntities {
     public enum JellyType {
         DEFAULT(JellyEntity::new, "default_jelly", 1.0f, 1.0f),
         BONE(BoneJellyEntity::new, "bone_jelly", 1.0f, 1.0f),
-        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 1.0f, 1.0f);
+        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 1.0f, 1.0f),
+        COAL(CoalJellyEntity::new, "coal_jelly", 1.0f, 1.0f),
+        COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 1.0f, 1.0f),
+        DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 1.0f, 1.0f),
+        DIRT(DirtJellyEntity::new, "dirt_jelly", 1.0f, 1.0f),
+        ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 1.0f, 1.0f),
+        EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 1.0f, 1.0f),
+        ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 1.0f, 1.0f),
+        GLASS(GlassJellyEntity::new, "glass_jelly", 1.0f, 1.0f),
+        GRAVEL(GravelJellyEntity::new, "gravel_jelly", 1.0f, 1.0f),
+        LAPIS(LapisJellyEntity::new, "lapis_jelly", 1.0f, 1.0f),
+        LAVA(LavaJellyEntity::new, "lava_jelly", 1.0f, 1.0f),
+        MAGNET(MagnetJellyEntity::new, "magnet_jelly", 1.0f, 1.0f),
+        OAKLOG(LogOakJellyEntity::new, "logoak_jelly", 1.0f, 1.0f),
+        OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 1.0f, 1.0f),
+        PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 1.0f, 1.0f),
+        RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 1.0f, 1.0f),
+        RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 1.0f, 1.0f),
+        RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 1.0f, 1.0f),
+        REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 1.0f, 1.0f),
+        SAND(SandJellyEntity::new, "sand_jelly", 1.0f, 1.0f),
+        SAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 1.0f, 1.0f),
+        WATER(WaterJellyEntity::new, "water_jelly", 1.0f, 1.0f);
 
         public final EntityType.EntityFactory<? extends JellyEntity> factory;
         public final String registryName;

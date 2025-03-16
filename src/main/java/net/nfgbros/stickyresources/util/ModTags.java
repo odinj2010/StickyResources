@@ -84,7 +84,7 @@ public class ModTags {
                 return net.minecraft.world.level.block.Blocks.GLASS.asItem();
             } else if (item == ModBlocks.STICKY_GRAVEL.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.GRAVEL.asItem();
-            } else if (item == ModBlocks.STICKY_OAK_LOG.get().asItem()) {
+            } else if (item == ModBlocks.STICKY_LOG_OAK.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.OAK_LOG.asItem();
             } else if (item == ModBlocks.STICKY_OBSIDIAN.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.OBSIDIAN.asItem();

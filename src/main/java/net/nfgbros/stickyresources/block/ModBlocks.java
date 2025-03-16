@@ -33,7 +33,7 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.GLASS).copy(Blocks.SLIME_BLOCK).sound(SoundType.GLASS).sound(SoundType.SLIME_BLOCK)));
     public static final RegistryObject<Block> STICKY_GRAVEL = registerBlock("sticky_gravel",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.GRAVEL).copy(Blocks.SLIME_BLOCK).sound(SoundType.GRAVEL).sound(SoundType.SLIME_BLOCK)));
-    public static final RegistryObject<Block> STICKY_OAK_LOG = registerBlock("sticky_oak_log",
+    public static final RegistryObject<Block> STICKY_LOG_OAK = registerBlock("sticky_log_oak",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).copy(Blocks.SLIME_BLOCK).sound(SoundType.WOOD).sound(SoundType.SLIME_BLOCK)));
     public static final RegistryObject<Block> STICKY_OBSIDIAN = registerBlock("sticky_obsidian",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));

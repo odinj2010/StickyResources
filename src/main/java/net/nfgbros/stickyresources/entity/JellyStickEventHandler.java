@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.nfgbros.stickyresources.entity.custom.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,9 @@ public class JellyStickEventHandler {
     private static final int MERGE_THRESHOLD = 40; // Ticks before merging
 
     static {
-        // Define your sticky pairs here
-        //STICKY_PAIRS.put(JellyElectricEntity.class, List.of(JellyCobblestoneEntity.class, JellyIronEntity.class));
+         //Define your sticky pairs here
+        STICKY_PAIRS.put(ElectricJellyEntity.class, List.of(CobblestoneJellyEntity.class, RawIronJellyEntity.class));
+        STICKY_PAIRS.put(MagnetJellyEntity.class, List.of(RawIronJellyEntity.class));
         // Add more pairs as needed:
         // STICKY_PAIRS.put(JellyExampleEntity.class, List.of(JellyOtherExampleEntity.class, JellyAnotherExampleEntity.class));
     }

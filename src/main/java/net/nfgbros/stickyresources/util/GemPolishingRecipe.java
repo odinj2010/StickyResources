@@ -30,7 +30,7 @@ public enum GemPolishingRecipe {
     STICKY_DIRT(ModBlocks.STICKY_DIRT.get().asItem(), new ItemStack(Blocks.DIRT)),
     STICKY_GLASS(ModBlocks.STICKY_GLASS.get().asItem(), new ItemStack(Blocks.GLASS)),
     STICKY_GRAVEL(ModBlocks.STICKY_GRAVEL.get().asItem(), new ItemStack(Blocks.GRAVEL)),
-    STICKY_OAK_LOG(ModBlocks.STICKY_OAK_LOG.get().asItem(), new ItemStack(Blocks.OAK_LOG)),
+    STICKY_OAK_LOG(ModBlocks.STICKY_LOG_OAK.get().asItem(), new ItemStack(Blocks.OAK_LOG)),
     STICKY_OBSIDIAN(ModBlocks.STICKY_OBSIDIAN.get().asItem(), new ItemStack(Blocks.OBSIDIAN)),
     STICKY_SAND(ModBlocks.STICKY_SAND.get().asItem(), new ItemStack(Blocks.SAND));
 
