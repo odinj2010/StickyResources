@@ -1,8 +1,8 @@
 package net.nfgbros.stickyresources;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -27,8 +27,7 @@ import net.nfgbros.stickyresources.screen.ModMenuTypes;
 import net.nfgbros.stickyresources.sound.ModSounds;
 import net.nfgbros.stickyresources.villager.ModVillagers;
 import org.slf4j.Logger;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.registries.RegisterEvent;
+import net.nfgbros.stickyresources.screen.GemPolishingStationScreen;
 
 @Mod(StickyResources.MOD_ID)
 public class StickyResources {
@@ -74,6 +73,8 @@ public class StickyResources {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
+                MenuScreens.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
+
                 for (ModEntities.JellyType type : ModEntities.JellyType.values()) {
                     EntityRenderers.register(ModEntities.JELLY_ENTITIES.get(type).get(), JellyRenderer::new);
                 }

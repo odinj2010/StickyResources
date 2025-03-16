@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/raw_iron",
+    "layer1": "sticky_resources:item/sticky/jelly_slime_ball"
+  }
+}

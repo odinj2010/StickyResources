@@ -12,8 +12,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.entity.custom.BoneJellyEntity;
-import net.nfgbros.stickyresources.entity.custom.JellyEntity;
+import net.nfgbros.stickyresources.entity.custom.*;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -25,7 +24,8 @@ public class ModEntities {
 
     public enum JellyType {
         DEFAULT(JellyEntity::new, "default_jelly", 1.0f, 1.0f),
-        BONE(BoneJellyEntity::new, "bone_jelly", 1.0f, 1.0f);
+        BONE(BoneJellyEntity::new, "bone_jelly", 1.0f, 1.0f),
+        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 1.0f, 1.0f);
 
         public final EntityType.EntityFactory<? extends JellyEntity> factory;
         public final String registryName;

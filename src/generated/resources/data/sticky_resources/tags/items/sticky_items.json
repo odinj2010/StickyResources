@@ -14,6 +14,13 @@
     "sticky_resources:sticky_prismerine_crystals",
     "sticky_resources:sticky_redstone_dust",
     "sticky_resources:sticky_water_bucket",
-    "sticky_resources:sticky_lava_bucket"
+    "sticky_resources:sticky_lava_bucket",
+    "sticky_resources:sticky_cobblestone",
+    "sticky_resources:sticky_dirt",
+    "sticky_resources:sticky_glass",
+    "sticky_resources:sticky_gravel",
+    "sticky_resources:sticky_oak_log",
+    "sticky_resources:sticky_obsidian",
+    "sticky_resources:sticky_sand"
   ]
 }

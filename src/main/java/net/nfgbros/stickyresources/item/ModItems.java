@@ -108,6 +108,7 @@ public class ModItems {
     static {
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.DEFAULT, new Integer[]{0x00ff00, 0x008000});
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.BONE, new Integer[]{0x00ff00, 0x008000});
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.CHARCOAL, new Integer[]{0x00ff00, 0x008000});
 
         // Add other JellyTypes and their colors here...
     }

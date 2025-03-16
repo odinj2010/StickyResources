@@ -20,7 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GemPolishingStationBlock extends BaseEntityBlock {
@@ -45,9 +44,10 @@ public class GemPolishingStationBlock extends BaseEntityBlock {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof GemPolishingStationBlockEntity) {
-                ((GemPolishingStationBlockEntity) blockEntity).dropContents(pLevel, pPos);
+                ((GemPolishingStationBlockEntity) blockEntity).drops();
             }
         }
+
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
@@ -56,15 +56,16 @@ public class GemPolishingStationBlock extends BaseEntityBlock {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             if(entity instanceof GemPolishingStationBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer)pPlayer, (GemPolishingStationBlockEntity)entity, pPos);
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (GemPolishingStationBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
         }
+
         return InteractionResult.sidedSuccess(pLevel.isClientSide());
     }
 
-    @NotNull
+    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new GemPolishingStationBlockEntity(pPos, pState);
@@ -73,7 +74,11 @@ public class GemPolishingStationBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, ModBlockEntities.GEM_POLISHING_BE.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> ((GemPolishingStationBlockEntity) pBlockEntity).tick(pLevel1, pPos, pState1));
+        if(pLevel.isClientSide()) {
+            return null;
+        }
+
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.GEM_POLISHING_BE.get(),
+                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }
