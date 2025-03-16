@@ -5,14 +5,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.item.ModItems;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
-import net.nfgbros.stickyresources.item.ModItems;
-import net.nfgbros.stickyresources.block.ModBlocks;
 
 public class ModTags {
     public static class Blocks {

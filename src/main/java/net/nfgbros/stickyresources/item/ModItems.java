@@ -1,6 +1,5 @@
 package net.nfgbros.stickyresources.item;
 
-import io.netty.util.IntSupplier;
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
@@ -131,8 +130,6 @@ public class ModItems {
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAND, new Integer[]{0xe0cd98, 0xcbbba7}); // Light yellowish brown
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAPPHIRE, new Integer[]{0x89cff0, 0x5cb3e4}); // Lighter blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.WATER, new Integer[]{0x3dd5ff, 0x39a7e1});// Bright blue
-
-
         // Add other JellyTypes and their colors here...
     }
 

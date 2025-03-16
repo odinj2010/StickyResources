@@ -1,10 +1,8 @@
 package net.nfgbros.stickyresources;
-//Imports
-import ca.weblite.objc.Proxy;
+
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
-
 
 public class StickyResourcesConfig {
     //

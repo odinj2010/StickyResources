@@ -2,15 +2,12 @@ package net.nfgbros.stickyresources.event;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.item.ModItems;
-import net.nfgbros.stickyresources.villager.ModVillagers;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.trading.MerchantOffer;

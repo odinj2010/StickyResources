@@ -1,6 +1,8 @@
-// 1.20.1	2025-03-10T19:27:42.3985698	Recipes
+// 1.20.1	2025-03-16T01:54:47.8990718	Recipes
+67eba3f71b6b407c016b50f10b2a9db19963c361 data/minecraft/advancements/recipes/misc/air.json
 95329c35416e8e4614f280c26c4a4512c1f27e48 data/minecraft/advancements/recipes/misc/sapphire_from_blasting_raw_sapphire.json
 8640ebfc4fdd10288ce056147ad93d6b21d09b2d data/minecraft/advancements/recipes/misc/sapphire_from_smelting_raw_sapphire.json
+916332b31602785a66845204005aadef7bd0909a data/minecraft/recipes/air.json
 deeb9934b50e949b86d55ae8e118c70ee8233c6f data/minecraft/recipes/sapphire_from_blasting_raw_sapphire.json
 7a063ef10381fbfcaede0734a08851dc8a85f4ba data/minecraft/recipes/sapphire_from_smelting_raw_sapphire.json
 2b8cae2a48c5b5e1980554c51520353421670866 data/sticky_resources/advancements/recipes/building_blocks/sticky_cobblestone.json

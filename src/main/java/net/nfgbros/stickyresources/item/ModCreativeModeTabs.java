@@ -11,7 +11,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.ModBlocks;
-import net.nfgbros.stickyresources.entity.ModEntities;
 
 public class ModCreativeModeTabs {
 
@@ -89,9 +88,9 @@ public class ModCreativeModeTabs {
                         }
                     })
                     .title(Component.translatable("creativetab.sticky_resources_spawn_egg_tab"))
-                    .displayItems((pParameters, pOutput) -> {
-                        ModItems.ITEMS.getEntries().stream()
-                                .filter(item -> item.getId().getPath().startsWith("jelly_") && item.getId().getPath().toLowerCase().endsWith("_spawn_egg"))
+                    .displayItems((pParameters, pOutput) -> {ModItems.ITEMS.getEntries().stream()
+                                .filter(item -> item.getId().getPath().startsWith("jelly_") && item.getId()
+                                        .getPath().toLowerCase().endsWith("_spawn_egg"))
                                 .forEach(spawnEgg -> {
                                     if(spawnEgg.get() != null){
                                         pOutput.accept(spawnEgg.get());

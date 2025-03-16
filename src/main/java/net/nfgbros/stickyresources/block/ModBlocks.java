@@ -5,7 +5,6 @@ import net.nfgbros.stickyresources.block.custom.CornCropBlock;
 import net.nfgbros.stickyresources.block.custom.GemPolishingStationBlock;
 import net.nfgbros.stickyresources.block.custom.StrawberryCropBlock;
 import net.nfgbros.stickyresources.item.ModItems;
-import net.nfgbros.stickyresources.sound.ModSounds;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;

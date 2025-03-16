@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "e": {
+      "item": "minecraft:spider_eye"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "sss",
+    "ese",
+    "ssE"
+  ],
+  "result": {
+    "item": "minecraft:air"
+  },
+  "show_notification": true
+}
