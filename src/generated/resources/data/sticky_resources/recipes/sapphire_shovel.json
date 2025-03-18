@@ -4,12 +4,15 @@
   "key": {
     "S": {
       "item": "sticky_resources:sapphire"
+    },
+    "s": {
+      "item": "minecraft:stick"
     }
   },
   "pattern": [
     "S",
-    "S",
-    "S"
+    "s",
+    "s"
   ],
   "result": {
     "item": "sticky_resources:sapphire_shovel"

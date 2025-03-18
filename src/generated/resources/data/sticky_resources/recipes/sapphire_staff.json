@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "sticky_resources:sapphire"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " SS",
+    " sS",
+    "s  "
+  ],
+  "result": {
+    "item": "sticky_resources:sapphire_staff"
+  },
+  "show_notification": true
+}

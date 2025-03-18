@@ -34,6 +34,7 @@ public class ElectricJellyEntity extends JellyEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, CobblestoneJellyEntity.class, 5.0F, 1.5D, 1.3D));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, StoneJellyEntity.class, 5.0F, 1.5D, 1.3D));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));
@@ -50,7 +51,7 @@ public class ElectricJellyEntity extends JellyEntity {
             level().addParticle(ParticleTypes.ELECTRIC_SPARK, getX() + random.nextDouble() - 0.5, getY() + random.nextDouble() - 0.5, getZ() + random.nextDouble() - 0.5, 0, 0, 0);
 
             tickCount++;
-            if (tickCount >= 20) {
+            if (tickCount >= 200) {
                 tickCount = 0;
                 applyShockDamage();
             }
@@ -69,7 +70,7 @@ public class ElectricJellyEntity extends JellyEntity {
                         !isWearingArmor(entity)); // Added armor check
 
         for (LivingEntity entity : nearbyEntities) {
-            entity.hurt(this.damageSources().generic(), 1);
+            entity.hurt(this.damageSources().generic(), 5);
             entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));
             this.level().playSound(null, entity.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.AMBIENT, 0.5F, 1.0F); // Play sound
         }

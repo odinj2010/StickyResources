@@ -35,6 +35,7 @@ public class MagnetJellyEntity extends JellyEntity {
     private static final double MAX_VERTICAL_VELOCITY = 0.3; // Max upward velocity to prevent fast levitation
     private int searchCooldown = 0;
     private static final int SEARCH_COOLDOWN_TICKS = 20;
+    private static final double IRON_ABOVE_PULL_FORCE = 0.1; // Adjust this to control the pull strength
 
     public MagnetJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
@@ -96,40 +97,50 @@ public class MagnetJellyEntity extends JellyEntity {
             }
         });
 
-        // Attraction to other MagnetJelly entities
-        this.level().getEntitiesOfClass(MagnetJellyEntity.class, this.getBoundingBox().inflate(5), entity -> entity instanceof MagnetJellyEntity).forEach(entity -> {
-            if (entity != this) { // Don't attract itself
-                // Calculate the direction from the current entity to the other Magnet Jelly
-                Vec3 direction = entity.position().subtract(this.position()).normalize();
-                this.setDeltaMovement(this.getDeltaMovement().add(direction.scale(ATTRACTION_FORCE)));
-            }
-        });
-
         // Repulsion and levitation from iron blocks
         int entityX = (int) Math.floor(this.getX());
         int entityY = (int) Math.floor(this.getY() - 0.5);
         int entityZ = (int) Math.floor(this.getZ());
         int checkRadius = 1;
 
-        boolean ironBlockFound = false;
+        boolean ironBlockFoundBelow = false;
+        boolean ironBlockFoundAbove = false;
+
+        // Check for iron blocks below
         for (int x = -checkRadius; x <= checkRadius; x++) {
             for (int z = -checkRadius; z <= checkRadius; z++) {
                 BlockPos checkPos = new BlockPos(entityX + x, entityY, entityZ + z);
                 BlockState state = level().getBlockState(checkPos);
                 if (state.is(Blocks.IRON_BLOCK)) {
-                    ironBlockFound = true;
+                    ironBlockFoundBelow = true;
                     break;
                 }
             }
-            if (ironBlockFound) {
+            if (ironBlockFoundBelow) {
                 break;
             }
         }
 
+        // Check for iron blocks above
+        for (int x = -checkRadius; x <= checkRadius; x++) {
+            for (int z = -checkRadius; z <= checkRadius; z++) {
+                BlockPos checkPos = new BlockPos(entityX + x, entityY + 2, entityZ + z); // Checking 2 blocks above
+                BlockState state = level().getBlockState(checkPos);
+                if (state.is(Blocks.IRON_BLOCK)) {
+                    ironBlockFoundAbove = true;
+                    break;
+                }
+            }
+            if (ironBlockFoundAbove) {
+                break;
+            }
+        }
+
+
         Vec3 currentMovement = this.getDeltaMovement();
         Vec3 newMovement = currentMovement;
 
-        if (ironBlockFound) {
+        if (ironBlockFoundBelow) {
             // Levitation - consistent upward force
             newMovement = newMovement.add(0, 0.1, 0); // Adjust this value for hover height
 
@@ -157,6 +168,11 @@ public class MagnetJellyEntity extends JellyEntity {
             newMovement = new Vec3(newMovement.x() * 0.7, newMovement.y(), newMovement.z() * 0.7);
         }
 
+        if (ironBlockFoundAbove) {
+            // Consistent downward force to pull towards iron above
+            newMovement = newMovement.add(0, -IRON_ABOVE_PULL_FORCE, 0);
+        }
+
         // Damping for vertical movement
         newMovement = new Vec3(newMovement.x(), newMovement.y() * 0.8, newMovement.z()); // Vertical damping
 
@@ -165,7 +181,6 @@ public class MagnetJellyEntity extends JellyEntity {
         // Constant gravity (if you still want some gravity influence)
         this.setDeltaMovement(this.getDeltaMovement().add(0, -0.008, 0));
     }
-
 
     private boolean isValuableBlock(BlockState state) {
         return state.is(ModTags.Blocks.METAL_DETECTOR_VALUABLES);

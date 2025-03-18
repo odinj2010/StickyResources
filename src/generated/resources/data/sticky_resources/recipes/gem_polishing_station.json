@@ -2,14 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
     "S": {
       "item": "sticky_resources:sapphire"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
     }
   },
   "pattern": [
-    "SSS",
-    "S S",
-    "SSS"
+    "OOO",
+    "SWS",
+    "I I"
   ],
   "result": {
     "item": "sticky_resources:gem_polishing_station"

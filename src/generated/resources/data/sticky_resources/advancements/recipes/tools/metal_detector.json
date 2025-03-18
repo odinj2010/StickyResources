@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sticky_gravel": {
+    "has_redstone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "sticky_resources:sticky_gravel"
+              "minecraft:redstone"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "sticky_resources:sticky_gravel"
+        "recipe": "sticky_resources:metal_detector"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sticky_gravel",
+      "has_redstone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "sticky_resources:sticky_gravel"
+      "sticky_resources:metal_detector"
     ]
   },
   "sends_telemetry_event": false

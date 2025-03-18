@@ -35,6 +35,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
                         ModBlocks.STICKY_COBBLESTONE.get(),
                         ModBlocks.STICKY_OBSIDIAN.get(),
+                        ModBlocks.STICKY_STONE.get(),
 
                         ModBlocks.RAW_SAPPHIRE_BLOCK.get(),
                         ModBlocks.SAPPHIRE_ORE.get(),

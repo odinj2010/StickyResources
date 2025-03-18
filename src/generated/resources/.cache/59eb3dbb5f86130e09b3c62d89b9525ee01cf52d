@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-15T20:57:02.4716035	Loot Tables
+// 1.20.1	2025-03-16T23:00:29.7005852	Loot Tables
 6866e4887d305a91ea8cc0b2b6686858971407be data/sticky_resources/loot_tables/blocks/catmint.json
 3830029158c20f8a6925559c31269b2511fe4f35 data/sticky_resources/loot_tables/blocks/corn_crop.json
 cb026099a99669f7b4d386eaf0936ecf7e5cd016 data/sticky_resources/loot_tables/blocks/deepslate_sapphire_ore.json
@@ -25,4 +25,5 @@ d1cf49b8e99272138d40b80d35960512eba4a8ed data/sticky_resources/loot_tables/block
 7d3eeb11ee61483f9d94e779a8e9a03597044166 data/sticky_resources/loot_tables/blocks/sticky_log_oak.json
 9183e65d7e84f0d8dca1c1462ebbe9965761c76b data/sticky_resources/loot_tables/blocks/sticky_obsidian.json
 f808b5168a5911f09e3e952e3a567f6057402007 data/sticky_resources/loot_tables/blocks/sticky_sand.json
+048bbaafd5ae6c9bbc41c6a06bab8a2f40587282 data/sticky_resources/loot_tables/blocks/sticky_stone.json
 83975c0e2b9d93389778578724a6b1e897a5b107 data/sticky_resources/loot_tables/blocks/strawberry_crop.json

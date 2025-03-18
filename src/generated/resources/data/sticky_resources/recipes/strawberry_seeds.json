@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "sticky_resources:strawberry"
+    }
+  ],
+  "result": {
+    "item": "sticky_resources:strawberry_seeds"
+  }
+}

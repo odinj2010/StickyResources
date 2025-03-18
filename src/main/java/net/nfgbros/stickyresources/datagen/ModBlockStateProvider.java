@@ -33,6 +33,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.STICKY_LOG_OAK);
         blockWithItem(ModBlocks.STICKY_OBSIDIAN);
         blockWithItem(ModBlocks.STICKY_SAND);
+        blockWithItem(ModBlocks.STICKY_STONE);
 
 
         blockWithItem(ModBlocks.SAPPHIRE_ORE);

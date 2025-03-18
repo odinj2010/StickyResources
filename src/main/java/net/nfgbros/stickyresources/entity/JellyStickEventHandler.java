@@ -20,7 +20,7 @@ public class JellyStickEventHandler {
 
     static {
         //Define your sticky pairs here
-        STICKY_PAIRS.put(ElectricJellyEntity.class, List.of(CobblestoneJellyEntity.class, RawIronJellyEntity.class));
+        STICKY_PAIRS.put(ElectricJellyEntity.class, List.of(StoneJellyEntity.class, RawIronJellyEntity.class));
         STICKY_PAIRS.put(MagnetJellyEntity.class, List.of(RawIronJellyEntity.class));
         // Add more pairs as needed:
         // STICKY_PAIRS.put(JellyExampleEntity.class, List.of(JellyOtherExampleEntity.class, JellyAnotherExampleEntity.class));

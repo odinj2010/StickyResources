@@ -21,31 +21,38 @@ public class ModEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, StickyResources.MOD_ID);
 
     public enum JellyType {
-        DEFAULT(JellyEntity::new, "default_jelly", 1.0f, 1.0f),
-        BONE(BoneJellyEntity::new, "bone_jelly", 1.0f, 1.0f),
-        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 1.0f, 1.0f),
-        COAL(CoalJellyEntity::new, "coal_jelly", 1.0f, 1.0f),
-        COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 1.0f, 1.0f),
-        DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 1.0f, 1.0f),
-        DIRT(DirtJellyEntity::new, "dirt_jelly", 1.0f, 1.0f),
-        ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 1.0f, 1.0f),
-        EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 1.0f, 1.0f),
-        ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 1.0f, 1.0f),
-        GLASS(GlassJellyEntity::new, "glass_jelly", 1.0f, 1.0f),
-        GRAVEL(GravelJellyEntity::new, "gravel_jelly", 1.0f, 1.0f),
-        LAPIS(LapisJellyEntity::new, "lapis_jelly", 1.0f, 1.0f),
-        LAVA(LavaJellyEntity::new, "lava_jelly", 1.0f, 1.0f),
-        MAGNET(MagnetJellyEntity::new, "magnet_jelly", 1.0f, 1.0f),
-        OAKLOG(LogOakJellyEntity::new, "logoak_jelly", 1.0f, 1.0f),
-        OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 1.0f, 1.0f),
-        PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 1.0f, 1.0f),
-        RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 1.0f, 1.0f),
-        RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 1.0f, 1.0f),
-        RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 1.0f, 1.0f),
-        REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 1.0f, 1.0f),
-        SAND(SandJellyEntity::new, "sand_jelly", 1.0f, 1.0f),
-        SAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 1.0f, 1.0f),
-        WATER(WaterJellyEntity::new, "water_jelly", 1.0f, 1.0f);
+
+
+        AMETHYST(BoneJellyEntity::new, "amethyst_jelly", 0.5f, 0.5f), // Adjusted size
+        BONE(BoneJellyEntity::new, "bone_jelly", 0.5f, 0.5f), // Adjusted size
+        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 0.5f, 0.5f), // Adjusted size
+        COAL(CoalJellyEntity::new, "coal_jelly", 0.5f, 0.5f), // Adjusted size
+        COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 0.5f, 0.5f), // Adjusted size
+        DEFAULT(JellyEntity::new, "default_jelly", 0.5f, 0.5f), // Adjusted size
+        DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 0.5f, 0.5f), // Adjusted size
+        DIRT(DirtJellyEntity::new, "dirt_jelly", 0.5f, 0.5f), // Adjusted size
+        ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 0.5f, 0.5f), // Adjusted size
+        EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 0.5f, 0.5f), // Adjusted size
+        ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 0.5f, 0.5f), // Adjusted size
+        GLASS(GlassJellyEntity::new, "glass_jelly", 0.5f, 0.5f), // Adjusted size
+        GRAVEL(GravelJellyEntity::new, "gravel_jelly", 0.5f, 0.5f), // Adjusted size
+        LAPIS(LapisJellyEntity::new, "lapis_jelly", 0.5f, 0.5f), // Adjusted size
+        LAVA(LavaJellyEntity::new, "lava_jelly", 0.5f, 0.5f), // Adjusted size
+        MAGNET(MagnetJellyEntity::new, "magnet_jelly", 0.5f, 0.5f), // Adjusted size
+        LOGOAK(LogOakJellyEntity::new, "logoak_jelly", 0.5f, 0.5f), // Adjusted size
+        OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 0.5f, 0.5f), // Adjusted size
+        PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 0.5f, 0.5f), // Adjusted size
+        RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 0.5f, 0.5f), // Adjusted size
+        RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 0.5f, 0.5f), // Adjusted size
+        RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f), // Adjusted size
+        REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f), // Adjusted size
+        REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f), // Adjusted size
+        SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f), // Adjusted size
+        SAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f), // Adjusted size
+        STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f),
+        WATER(WaterJellyEntity::new, "water_jelly", 0.5f, 0.5f); // Adjusted size
+
+
 
         public final EntityType.EntityFactory<? extends JellyEntity> factory;
         public final String registryName;

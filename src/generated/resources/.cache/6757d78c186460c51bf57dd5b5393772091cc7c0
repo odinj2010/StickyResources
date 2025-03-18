@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-15T20:57:02.4716035	Block States: sticky_resources
+// 1.20.1	2025-03-16T23:00:29.7005852	Block States: sticky_resources
 7366370cc72bfe244860e8f63c46fcc386f4acf3 assets/sticky_resources/blockstates/catmint.json
 5c8dbbaf110655e3ecf907585e73f1f6b96e7a89 assets/sticky_resources/blockstates/corn_crop.json
 5d61318d3c184ccb8299ba9b9bf5c9299fa6faa8 assets/sticky_resources/blockstates/deepslate_sapphire_ore.json
@@ -25,6 +25,7 @@ c56c663cf68d182b10b0cb1557ef8fae575db4a2 assets/sticky_resources/blockstates/sti
 ddbe6d15b387e1ad5deba9d395e4594812b32508 assets/sticky_resources/blockstates/sticky_log_oak.json
 ae008521b475eddc72fcc7db174988ed97a7b50b assets/sticky_resources/blockstates/sticky_obsidian.json
 b53b10af2962c9d605e1ec211dfd4381f3dc9fe0 assets/sticky_resources/blockstates/sticky_sand.json
+d83ef515ecf5723a830efc93aa9be6a34a7ee58c assets/sticky_resources/blockstates/sticky_stone.json
 7da22fb170aa07358c7b43a79a7a030223056c51 assets/sticky_resources/blockstates/strawberry_crop.json
 00c349b3a4107c346e57d70ecfac017f963b135a assets/sticky_resources/models/block/catmint.json
 22e111dd1e0ad24c1f51810f78057e5bf0cf7efb assets/sticky_resources/models/block/corn_stage_0.json
@@ -79,6 +80,7 @@ e46f939a1cb42a17ef131badd4407ba0412109b2 assets/sticky_resources/models/block/st
 94a62b18872469e831c7d7235911414f30847cc9 assets/sticky_resources/models/block/sticky_log_oak.json
 8070ff12abb64c16575b7ff7abfa99b25f33167c assets/sticky_resources/models/block/sticky_obsidian.json
 35edbfacd772112658bb4cf0145765a278bb0b78 assets/sticky_resources/models/block/sticky_sand.json
+dfac24d9737402586e348d707c9fa50835e94aff assets/sticky_resources/models/block/sticky_stone.json
 7649553d0f1afbac44790d9db947c68d8c1e2ebc assets/sticky_resources/models/block/strawberry_stage0.json
 7ae985198a031391638d665d3307e51163e73de5 assets/sticky_resources/models/block/strawberry_stage1.json
 dfef1593242baa2b8627df8aed64a0a8e2dea7f0 assets/sticky_resources/models/block/strawberry_stage2.json
@@ -101,3 +103,4 @@ a9c6e7288c02f82e47d77507077dc9624c63c827 assets/sticky_resources/models/item/sti
 e0173dfefb6bb324cc9d04d540f35c034023b4c8 assets/sticky_resources/models/item/sticky_log_oak.json
 03b41a055b69d50e2a948fd2ad7a01af4a3901c8 assets/sticky_resources/models/item/sticky_obsidian.json
 c61c4358013d409b4c7ecbab2fe38e7aa78c851a assets/sticky_resources/models/item/sticky_sand.json
+261709608247fe5440740f530fb3cf287c147a05 assets/sticky_resources/models/item/sticky_stone.json

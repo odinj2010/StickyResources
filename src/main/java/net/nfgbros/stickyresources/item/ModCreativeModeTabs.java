@@ -105,6 +105,8 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.sticky_resources_misc_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.PINE_CONE.get());
+                        //Sticky Items
+                        pOutput.accept(ModItems.STICKY_AMETHYST.get());
                         pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
                         pOutput.accept(ModItems.STICKY_COAL.get());
                         pOutput.accept(ModItems.STICKY_CHARCOAL.get());
@@ -123,8 +125,10 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
                         pOutput.accept(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
                         pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());
+                        pOutput.accept(ModItems.STICKY_RED_MUSHROOM.get());
                         pOutput.accept(ModItems.STICKY_REDSTONE_DUST.get());
                         pOutput.accept(ModBlocks.STICKY_SAND.get());
+                        pOutput.accept(ModBlocks.STICKY_STONE.get());
                         pOutput.accept(ModItems.STICKY_WATER_BUCKET.get());
                         pOutput.accept(ModItems.STICKY_LAVA_BUCKET.get());
                     }).build()

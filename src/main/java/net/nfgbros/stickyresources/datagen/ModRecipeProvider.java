@@ -33,95 +33,119 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         oreSmelting(pWriter, List.of(ModItems.RAW_SAPPHIRE.get()), RecipeCategory.MISC, ModItems.SAPPHIRE.get(), 0.25f, 200, "sapphire");
         oreBlasting(pWriter, List.of(ModItems.RAW_SAPPHIRE.get()), RecipeCategory.MISC, ModItems.SAPPHIRE.get(), 0.25f, 100, "sapphire");
 
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GEM_POLISHING_STATION.get())
-                .pattern("SSS")
-                .pattern("S S")
-                .pattern("SSS")
-                .define('S', ModItems.SAPPHIRE.get())
-                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
-                .save(pWriter);
-
-        // Use the found registry object for creating the recipe
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, new SpawnEggItem(ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.DEFAULT).get(), 0xFFFFFF, 0x000000, new Item.Properties()))
-                .pattern("sss")
-                .pattern("ese")
-                .pattern("ssE")
-                .define('s', Items.SLIME_BALL)
-                .define('e', Items.SPIDER_EYE)
-                .define('E', Items.EGG)
-                .unlockedBy(getHasName(Items.SLIME_BALL), has(Items.SLIME_BALL))
-                .save(pWriter);
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SAPPHIRE.get(), 9)
                 .requires(ModBlocks.SAPPHIRE_BLOCK.get())
                 .unlockedBy(getHasName(ModBlocks.SAPPHIRE_BLOCK.get()), has(ModBlocks.SAPPHIRE_BLOCK.get()))
                 .save(pWriter);
 
-        // Sticky Cobblestone
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_COBBLESTONE.get())
-                .pattern("ss")
-                .pattern("sS")
-                .define('S', Blocks.COBBLESTONE)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_COBBLESTONE.get()), has(ModBlocks.STICKY_COBBLESTONE.get()))
+        //Sapphire Armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SAPPHIRE_HELMET.get())
+                .pattern("SSS")
+                .pattern("S S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
-
-        // Sticky Gravel
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STICKY_GRAVEL.get())
-                .pattern("gs")
-                .pattern("sg")
-                .define('g', Blocks.GRAVEL)
-                .define('s', Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_GRAVEL.get()), has(ModBlocks.STICKY_GRAVEL.get()))
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SAPPHIRE_CHESTPLATE.get())
+                .pattern("S S")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
-
-        // Sticky Glass
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.STICKY_GLASS.get())
-                .requires(Blocks.GLASS)
-                .requires(Items.SLIME_BALL)
-                .unlockedBy(getHasName(ModBlocks.STICKY_GLASS.get()), has(ModBlocks.STICKY_GLASS.get()))
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SAPPHIRE_LEGGINGS.get())
+                .pattern("SSS")
+                .pattern("S S")
+                .pattern("S S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SAPPHIRE_BOOTS.get())
+                .pattern("S S")
+                .pattern("S S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
 
         // Sapphire Tools
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_PICKAXE.get())
                 .pattern("SSS")
-                .pattern(" S ")
-                .pattern(" S ")
+                .pattern(" s ")
+                .pattern(" s ")
                 .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_STAFF.get())
+                .pattern(" SS")
+                .pattern(" sS")
+                .pattern("s  ")
+                .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_AXE.get())
                 .pattern("SS")
-                .pattern(" S")
-                .pattern(" S")
+                .pattern("Ss")
+                .pattern(" s")
                 .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_SWORD.get())
                 .pattern("S")
                 .pattern("S")
-                .pattern("S")
+                .pattern("s")
                 .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_SHOVEL.get())
                 .pattern("S")
-                .pattern("S")
-                .pattern("S")
+                .pattern("s")
+                .pattern("s")
                 .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_HOE.get())
+                .pattern("SS")
+                .pattern(" s")
+                .pattern(" s")
+                .define('S', ModItems.SAPPHIRE.get())
+                .define('s', Items.STICK)
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SAPPHIRE_HOE.get())
-                .pattern("SS")
-                .pattern(" S")
-                .pattern(" S")
+        //Utility
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GEM_POLISHING_STATION.get())///Item Washing Station**
+                .pattern("OOO")
+                .pattern("SWS")
+                .pattern("I I")
+                .define('O', Items.OBSIDIAN)
                 .define('S', ModItems.SAPPHIRE.get())
+                .define('I', Items.IRON_BLOCK)
+                .define('W', Items.WATER_BUCKET)
                 .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.METAL_DETECTOR.get())
+                .pattern("gsi")
+                .pattern(" sr")
+                .pattern("isi")
+                .define('i', Items.IRON_INGOT)
+                .define('s', Items.STICK)
+                .define('g', Items.GLASS_PANE)
+                .define('r', Items.REDSTONE)
+                .unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
+                .save(pWriter);
+
+        //Food Items
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.STRAWBERRY_SEEDS.get(), 1)
+                .requires(ModItems.STRAWBERRY.get())
+                .unlockedBy(getHasName(ModItems.STRAWBERRY.get()), has(ModItems.STRAWBERRY.get()))
+                .save(pWriter);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CORN_SEEDS.get(), 1)
+                .requires(ModItems.CORN.get())
+                .unlockedBy(getHasName(ModItems.CORN.get()), has(ModItems.CORN.get()))
                 .save(pWriter);
 
         // More recipes can be added here in the same pattern for the remaining mod items

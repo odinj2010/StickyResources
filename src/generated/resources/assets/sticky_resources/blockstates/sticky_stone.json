@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "sticky_resources:block/sticky_stone"
+    }
+  }
+}

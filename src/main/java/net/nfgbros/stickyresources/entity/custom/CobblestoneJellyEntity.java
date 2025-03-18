@@ -17,7 +17,6 @@ public class CobblestoneJellyEntity extends JellyEntity {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, ElectricJellyEntity.class, 5.0F, 1.5D, 1.3D));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.1D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.0D));

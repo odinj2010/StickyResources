@@ -63,8 +63,8 @@
   "item.sticky_resources.metal_detector.desc": "Detects valuable ores and treasures.",
   "item.sticky_resources.pine_cone": "Pine Cone",
   "item.sticky_resources.pine_cone.desc": "A seed-bearing cone from a pine tree.",
-  "block.sticky_resources.gem_polishing_station": "Gem Polishing Station",
-  "block.sticky_resources.gem_polishing_station.desc": "Used to polish raw gemstones.",
+  "block.sticky_resources.gem_polishing_station": "Item Washing Station",
+  "block.sticky_resources.gem_polishing_station.desc": "Used to wash items that are sticky.",
   "block.sticky_resources.sound_block": "Sound Block",
   "block.sticky_resources.sound_block.desc": "Emits a sound when powered.",
 
@@ -92,6 +92,8 @@
   "item.sticky_resources.sticky_sand": "Sticky Sand",
   "item.sticky_resources.sticky_water_bucket": "Sticky Water Bucket",
   "item.sticky_resources.sticky_lava_bucket": "Sticky Lava Bucket",
+
+  "item.sticky_resources.sticky_catalyst": "Sticky Catalyst",
 
 
 
@@ -153,5 +155,10 @@
   "creativetab.sticky_resources_devices_tab": "SR Devices",
   "creativetab.sticky_resources_food_tab": "SR Food",
   "creativetab.sticky_resources_spawn_egg_tab": "SR Jelly Spawn Eggs",
-  "creativetab.sticky_resources_misc_tab": "SR Misc."
+  "creativetab.sticky_resources_misc_tab": "SR Misc.",
+
+
+  "tooltip.sticky_resources.sticky_catalyst.shift": "Must use the correct placement of blocks, in the world, to summon the jelly.",
+  "tooltip.sticky_resources.sticky_catalyst.no_shift": "A Catalyst for summoning Jellies."
+
 }

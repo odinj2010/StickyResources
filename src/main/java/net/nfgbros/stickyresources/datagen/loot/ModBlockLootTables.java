@@ -38,6 +38,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.STICKY_LOG_OAK.get());
         this.dropSelf(ModBlocks.STICKY_OBSIDIAN.get());
         this.dropSelf(ModBlocks.STICKY_SAND.get());
+        this.dropSelf(ModBlocks.STICKY_STONE.get());
 
         this.add(ModBlocks.SAPPHIRE_ORE.get(),
                 block -> createCopperLikeOreDrops(ModBlocks.SAPPHIRE_ORE.get(), ModItems.RAW_SAPPHIRE.get()));
@@ -75,10 +76,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 .or(LootItemBlockStatePropertyCondition
                         .hasBlockStateProperties(ModBlocks.CORN_CROP.get())
                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.AGE, 8)));
-
-        // LootItemCondition.Builder lootitemcondition$builder2 = LootItemBlockStatePropertyCondition
-        //         .hasBlockStateProperties(ModBlocks.CORN_CROP.get())
-        //         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.AGE, 8));
 
         this.add(ModBlocks.CORN_CROP.get(), createCropDrops(ModBlocks.CORN_CROP.get(), ModItems.CORN.get(),
                 ModItems.CORN_SEEDS.get(), lootitemcondition$builder2));

@@ -1,6 +1,10 @@
 package net.nfgbros.stickyresources.event;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.item.ModItems;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -15,11 +19,26 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.nfgbros.stickyresources.util.JellySummoningUtils;
 
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = StickyResources.MOD_ID)
 public class ModEvents {
+
+    @SubscribeEvent
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        ItemStack catalyst = event.getItemStack();
+
+        // Check if the player is interacting with the top block (Slime Block)
+        if (level.getBlockState(pos).getBlock() == Blocks.SLIME_BLOCK) {
+            if (JellySummoningUtils.isJellySummoningStructure(level, pos, catalyst)) {
+                JellySummoningUtils.startJellySummoning(level, pos, catalyst);
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void addCustomTrades(VillagerTradesEvent event) {
