@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +20,12 @@ public class LavaJellyEntity extends JellyEntity {
     private static final int COBBLESTONE_DELAY = 60; // Ticks
     private int glassDropDelay = 0;
     private static final int GLASS_DELAY = 60; // Ticks
+    private int copperIngotDropDelay = 0;
+    private static final int COPPERINGOT_DELAY = 60; // Ticks
+    private int goldIngotDropDelay = 0;
+    private static final int GOLDINGOT_DELAY = 60; // Ticks
+    private int ironIngotDropDelay = 0;
+    private static final int IRONINGOT_DELAY = 60; // Ticks
 
     public LavaJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
@@ -34,6 +41,18 @@ public class LavaJellyEntity extends JellyEntity {
         checkSandJellyCollision();
         if (glassDropDelay > 0) {
             glassDropDelay--;
+        }
+        checkRawCopperJellyCollision();
+        if (copperIngotDropDelay > 0) {
+            copperIngotDropDelay--;
+        }
+        checkRawGoldJellyCollision();
+        if (goldIngotDropDelay > 0) {
+            goldIngotDropDelay--;
+        }
+        checkRawIronJellyCollision();
+        if (ironIngotDropDelay > 0) {
+            ironIngotDropDelay--;
         }
     }
 
@@ -82,6 +101,45 @@ public class LavaJellyEntity extends JellyEntity {
             }
         }
     }
+    private void checkRawIronJellyCollision() {
+        if (!this.level().isClientSide) {
+            for (Entity entity : this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D))) {
+                if (entity instanceof RawIronJellyEntity) {
+                    if (ironIngotDropDelay == 0 && this.level().dimension() == Level.OVERWORLD) {
+                        dropironIngotItem((ServerLevel) this.level(), this.getOnPos());
+                        ironIngotDropDelay = IRONINGOT_DELAY;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+    private void checkRawCopperJellyCollision() {
+        if (!this.level().isClientSide) {
+            for (Entity entity : this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D))) {
+                if (entity instanceof RawCopperJellyEntity) {
+                    if (copperIngotDropDelay == 0 && this.level().dimension() == Level.OVERWORLD) {
+                        dropcopperIngotItem((ServerLevel) this.level(), this.getOnPos());
+                        copperIngotDropDelay = COPPERINGOT_DELAY;
+                    }
+                    return;
+                }
+            }
+        }
+    }
+    private void checkRawGoldJellyCollision() {
+        if (!this.level().isClientSide) {
+            for (Entity entity : this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D))) {
+                if (entity instanceof RawGoldJellyEntity) {
+                    if (goldIngotDropDelay == 0 && this.level().dimension() == Level.OVERWORLD) {
+                        dropgoldIngotItem((ServerLevel) this.level(), this.getOnPos());
+                        goldIngotDropDelay = GOLDINGOT_DELAY;
+                    }
+                    return;
+                }
+            }
+        }
+    }
 
     private void dropCobblestoneItem(ServerLevel level, BlockPos pos) {
         ItemStack cobblestone = new ItemStack(Blocks.COBBLESTONE);
@@ -93,6 +151,23 @@ public class LavaJellyEntity extends JellyEntity {
         ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, glass);
         level.addFreshEntity(itemEntity);
     }
+    private void dropironIngotItem(ServerLevel level, BlockPos pos) {
+        ItemStack ironIngot = new ItemStack(Items.IRON_INGOT);
+        ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, ironIngot);
+        level.addFreshEntity(itemEntity);
+    }
+    private void dropcopperIngotItem(ServerLevel level, BlockPos pos) {
+        ItemStack copperIngot = new ItemStack(Items.COPPER_INGOT);
+        ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, copperIngot);
+        level.addFreshEntity(itemEntity);
+    }
+    private void dropgoldIngotItem(ServerLevel level, BlockPos pos) {
+        ItemStack goldIngot = new ItemStack(Items.GOLD_INGOT);
+        ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, goldIngot);
+        level.addFreshEntity(itemEntity);
+    }
+
+
     private boolean isFireImmune() {
         return true;
     }

@@ -24,4 +24,8 @@ public class GlassJellyEntity extends JellyEntity {
     public void tick() {
         super.tick(); // Call super to handle base JellyEntity logic
     }
+
+    private boolean isFireImmune() {
+        return true;
+    }
 }

@@ -17,6 +17,80 @@ public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, StickyResources.MOD_ID);
 
+    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_BLOCKS_TAB = CREATIVE_MODE_TABS.register(
+            "sticky_resources_blocks_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.STICKY_COBBLESTONE.get()))
+                    .title(Component.translatable("creativetab.sticky_resources_blocks_tab"))
+                    .displayItems((pParameters, pOutput) -> {
+
+                        pOutput.accept(ModBlocks.STICKY_COBBLESTONE.get());
+                        pOutput.accept(ModBlocks.STICKY_DIRT.get());
+                        pOutput.accept(ModBlocks.STICKY_GLASS.get());
+                        pOutput.accept(ModBlocks.STICKY_GRAVEL.get());
+                        pOutput.accept(ModBlocks.STICKY_LOG_OAK.get());
+                        pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
+                        pOutput.accept(ModBlocks.STICKY_SAND.get());
+                        pOutput.accept(ModBlocks.STICKY_STONE.get());
+                    }).build()
+    );
+
+    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_DEVICES_TAB = CREATIVE_MODE_TABS.register(
+            "sticky_resources_devices_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.METAL_DETECTOR.get()))
+                    .title(Component.translatable("creativetab.sticky_resources_devices_tab"))
+                    .displayItems((pParameters, pOutput) -> {
+                        pOutput.accept(ModItems.METAL_DETECTOR.get());
+                        pOutput.accept(ModBlocks.GEM_POLISHING_STATION.get());
+                        pOutput.accept(ModItems.STICKY_CATALYST.get());
+                    }).build()
+    );
+
+    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_FOOD_TAB = CREATIVE_MODE_TABS.register(
+            "sticky_resources_food_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STRAWBERRY.get()))
+                    .title(Component.translatable("creativetab.sticky_resources_food_tab"))
+                    .displayItems((pParameters, pOutput) -> {
+                        pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
+                        pOutput.accept(ModItems.STRAWBERRY.get());
+                        pOutput.accept(ModItems.CORN_SEEDS.get());
+                        pOutput.accept(ModItems.CORN.get());
+                    }).build()
+    );
+
+    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_ITEMS_TAB = CREATIVE_MODE_TABS.register(
+            "sticky_resources_items_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.SLIME_BALL))
+                    .title(Component.translatable("creativetab.sticky_resources_items_tab"))
+                    .displayItems((pParameters, pOutput) -> {
+                        //Sticky Items
+                        pOutput.accept(ModItems.STICKY_AMETHYST.get());
+                        pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
+                        pOutput.accept(ModItems.STICKY_COAL.get());
+                        pOutput.accept(ModItems.STICKY_CHARCOAL.get());
+                        pOutput.accept(ModItems.STICKY_RAW_COPPER.get());
+                        pOutput.accept(ModItems.STICKY_DIAMOND.get());
+                        pOutput.accept(ModBlocks.STICKY_DIRT.get());
+                        pOutput.accept(ModItems.STICKY_EMERALD.get());
+                        pOutput.accept(ModItems.STICKY_ENDER_PEARL.get());
+                        pOutput.accept(ModItems.STICKY_RAW_GOLD.get());
+                        pOutput.accept(ModItems.STICKY_RAW_IRON.get());
+                        pOutput.accept(ModItems.STICKY_LAPIS_LAZULI.get());
+                        pOutput.accept(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
+                        pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());
+                        pOutput.accept(ModItems.STICKY_RED_MUSHROOM.get());
+                        pOutput.accept(ModItems.STICKY_REDSTONE_DUST.get());
+                    }).build()
+    );
+
+    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_MISC_TAB = CREATIVE_MODE_TABS.register(
+            "sticky_resources_misc_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.SLIME_BALL))
+                    .title(Component.translatable("creativetab.sticky_resources_misc_tab"))
+                    .displayItems((pParameters, pOutput) -> {
+                        pOutput.accept(ModItems.PINE_CONE.get());
+                    }).build()
+    );
+
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_SAPPHIRE_TAB = CREATIVE_MODE_TABS.register(
             "sticky_resources_sapphire_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.SAPPHIRE.get()))
@@ -52,28 +126,6 @@ public class ModCreativeModeTabs {
                     }).build()
     );
 
-    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_DEVICES_TAB = CREATIVE_MODE_TABS.register(
-            "sticky_resources_devices_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.METAL_DETECTOR.get()))
-                    .title(Component.translatable("creativetab.sticky_resources_devices_tab"))
-                    .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModItems.METAL_DETECTOR.get());
-                        pOutput.accept(ModBlocks.GEM_POLISHING_STATION.get());
-                    }).build()
-    );
-
-    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_FOOD_TAB = CREATIVE_MODE_TABS.register(
-            "sticky_resources_food_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STRAWBERRY.get()))
-                    .title(Component.translatable("creativetab.sticky_resources_food_tab"))
-                    .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModItems.STRAWBERRY_SEEDS.get());
-                        pOutput.accept(ModItems.STRAWBERRY.get());
-                        pOutput.accept(ModItems.CORN_SEEDS.get());
-                        pOutput.accept(ModItems.CORN.get());
-                    }).build()
-    );
-
     public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_SPAWN_EGG_TAB = CREATIVE_MODE_TABS.register(
             "sticky_resources_spawn_egg_tab",
             () -> CreativeModeTab.builder()
@@ -99,40 +151,7 @@ public class ModCreativeModeTabs {
                     }).build()
     );
 
-    public static final RegistryObject<CreativeModeTab> STICKY_RESOURCES_MISC_TAB = CREATIVE_MODE_TABS.register(
-            "sticky_resources_misc_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.SLIME_BALL))
-                    .title(Component.translatable("creativetab.sticky_resources_misc_tab"))
-                    .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModItems.PINE_CONE.get());
-                        //Sticky Items
-                        pOutput.accept(ModItems.STICKY_AMETHYST.get());
-                        pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
-                        pOutput.accept(ModItems.STICKY_COAL.get());
-                        pOutput.accept(ModItems.STICKY_CHARCOAL.get());
-                        pOutput.accept(ModBlocks.STICKY_COBBLESTONE.get());
-                        pOutput.accept(ModItems.STICKY_RAW_COPPER.get());
-                        pOutput.accept(ModItems.STICKY_DIAMOND.get());
-                        pOutput.accept(ModBlocks.STICKY_DIRT.get());
-                        pOutput.accept(ModItems.STICKY_EMERALD.get());
-                        pOutput.accept(ModItems.STICKY_ENDER_PEARL.get());
-                        pOutput.accept(ModBlocks.STICKY_GLASS.get());
-                        pOutput.accept(ModItems.STICKY_RAW_GOLD.get());
-                        pOutput.accept(ModBlocks.STICKY_GRAVEL.get());
-                        pOutput.accept(ModItems.STICKY_RAW_IRON.get());
-                        pOutput.accept(ModItems.STICKY_LAPIS_LAZULI.get());
-                        pOutput.accept(ModBlocks.STICKY_LOG_OAK.get());
-                        pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
-                        pOutput.accept(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
-                        pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());
-                        pOutput.accept(ModItems.STICKY_RED_MUSHROOM.get());
-                        pOutput.accept(ModItems.STICKY_REDSTONE_DUST.get());
-                        pOutput.accept(ModBlocks.STICKY_SAND.get());
-                        pOutput.accept(ModBlocks.STICKY_STONE.get());
-                        pOutput.accept(ModItems.STICKY_WATER_BUCKET.get());
-                        pOutput.accept(ModItems.STICKY_LAVA_BUCKET.get());
-                    }).build()
-    );
+
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);

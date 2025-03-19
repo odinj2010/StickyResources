@@ -1,6 +1,7 @@
 package net.nfgbros.stickyresources.item;
 
 import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.custom.FuelItem;
@@ -21,7 +22,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, StickyResources.MOD_ID);
 
     public static final RegistryObject<Item> PINE_CONE = ITEMS.register("pine_cone",
-            () -> new FuelItem(new Item.Properties(), 400));
+            () -> new FuelItem(new Item.Properties(), 200));
 
 
     public static final RegistryObject<Item> STICKY_CATALYST = ITEMS.register("sticky_catalyst",
@@ -31,11 +32,11 @@ public class ModItems {
     // Sticky Items
     public static final RegistryObject<Item> STICKY_AMETHYST = ITEMS.register("sticky_amethyst",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_BONE_MEAL = ITEMS.register("sticky_bone_meal",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_COAL = ITEMS.register("sticky_coal",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_CHARCOAL = ITEMS.register("sticky_charcoal",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_RAW_COPPER = ITEMS.register("sticky_raw_copper",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_DIAMOND = ITEMS.register("sticky_diamond",
             () -> new Item(new Item.Properties()));
@@ -43,25 +44,21 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_ENDER_PEARL = ITEMS.register("sticky_ender_pearl",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_LAPIS_LAZULI = ITEMS.register("sticky_lapis_lazuli",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_PRISMERINE_CRYSTALS = ITEMS.register("sticky_prismerine_crystals",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_RAW_COPPER = ITEMS.register("sticky_raw_copper",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_RAW_GOLD = ITEMS.register("sticky_raw_gold",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_RAW_IRON = ITEMS.register("sticky_raw_iron",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_LAPIS_LAZULI = ITEMS.register("sticky_lapis_lazuli",
+    public static final RegistryObject<Item> STICKY_RAW_SAPPHIRE = ITEMS.register("sticky_raw_sapphire",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_RED_MUSHROOM = ITEMS.register("sticky_red_mushroom",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_PRISMERINE_CRYSTALS = ITEMS.register("sticky_prismerine_crystals",
-            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_REDSTONE_DUST = ITEMS.register("sticky_redstone_dust",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_WATER_BUCKET = ITEMS.register("sticky_water_bucket",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_LAVA_BUCKET = ITEMS.register("sticky_lava_bucket",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_BONE_MEAL = ITEMS.register("sticky_bone_meal",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_RAW_SAPPHIRE = ITEMS.register("sticky_raw_sapphire",
             () -> new Item(new Item.Properties()));
 
     // Utility Items
@@ -113,9 +110,8 @@ public class ModItems {
 
     // Spawn Egg Registration (Corrected)
     private static final Map<ModEntities.JellyType, Integer[]> JELLY_SPAWN_EGG_COLORS = new EnumMap<>(ModEntities.JellyType.class);
-
     static {
-
+        //Jelly Spawn Eggs                             //Jelly Type             //Color Codes
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.AMETHYST, new Integer[]{0xeeeeee, 0xcccccc}); // Off-white
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.BONE, new Integer[]{0xeeeeee, 0xcccccc}); // Off-white
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.CHARCOAL, new Integer[]{0x222222, 0x444444}); // Dark grey
@@ -127,41 +123,34 @@ public class ModItems {
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ELECTRIC, new Integer[]{0xffff00, 0xffd700}); // Yellow, gold
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.EMERALD, new Integer[]{0x17f275, 0x0fb058}); // Bright green
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ENDERPEARL, new Integer[]{0x160f29, 0xbb64d1}); // Dark purple with lighter purple
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GLASS, new Integer[]{0xcfdbe6, 0xa1b3ba}); // Light blue-grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.FIRE, new Integer[]{0xcc4633, 0x9e3526}); // Red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GLASS, new Integer[]{0xcfdbe6, 0xa1b3ba}); // Light blue-grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GRAVEL, new Integer[]{0xa39d93, 0x827e76}); // Grey-brown
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LAPIS, new Integer[]{0x2661c2, 0x1e4599}); // Blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LAVA, new Integer[]{0xff4500, 0xd43c00}); // Red-orange
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.MAGNET, new Integer[]{0x555555, 0x666666}); // Darker grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LOGOAK, new Integer[]{0x694e27, 0x513c1c}); // Darker brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.MAGNET, new Integer[]{0x555555, 0x666666}); // Darker grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.OBSIDIAN, new Integer[]{0x14141e, 0x292944}); // Very dark bluish grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.PRISMERINE, new Integer[]{0x69a49b, 0x4fa194}); // Greenish blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWCOPPER, new Integer[]{0xeca674, 0xd38b4b}); // Orange-ish
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWGOLD, new Integer[]{0xe5be76, 0xd1a555}); // Yellow-ish
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWIRON, new Integer[]{0xe0a8a1, 0xc98d85}); // Light reddish grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWSAPPHIRE, new Integer[]{0x89cff0, 0x5cb3e4}); // Lighter blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDMUSHROOM, new Integer[]{0xcc4633, 0x9e3526}); // Red
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDSTONEDUST, new Integer[]{0xcc4633, 0x9e3526}); // Red
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAND, new Integer[]{0xe0cd98, 0xcbbba7}); // Light yellowish brown
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWSAPPHIRE, new Integer[]{0x89cff0, 0x5cb3e4}); // Lighter blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STONE, new Integer[]{0x999999, 0x777777}); // Grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.WATER, new Integer[]{0x3dd5ff, 0x39a7e1});// Bright blue
         // Add other JellyTypes and their colors here...
     }
-
-    static {
-        for (ModEntities.JellyType type : ModEntities.JellyType.values()) {
-            Integer[] colors = JELLY_SPAWN_EGG_COLORS.get(type);
-            if (colors != null) {
-                ITEMS.register("jelly_" + type.name().toLowerCase() + "_spawn_egg",
-                        () -> new ForgeSpawnEggItem(
-                                () -> ModEntities.JELLY_ENTITIES.get(type).get(),
-                                colors[0],
-                                colors[1],
-                                new Item.Properties()));
-            }
+    //Register spawn eggs as items
+    static {for (ModEntities.JellyType type : ModEntities.JellyType.values()) {Integer[] colors = JELLY_SPAWN_EGG_COLORS.get(type);
+        if (colors != null) {
+            ITEMS.register("jelly_" + type.name().toLowerCase() + "_spawn_egg", () -> new ForgeSpawnEggItem(
+                    () -> ModEntities.JELLY_ENTITIES.get(type).get(), colors[0], colors[1], new Item.Properties()));
         }
     }
-
+    }
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

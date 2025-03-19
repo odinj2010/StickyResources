@@ -27,7 +27,7 @@ public class JellyStickHandler {
             Entity combinedKey = getCombinedKey(firstJelly, secondJelly);
             STICKING_DURATION.put(combinedKey, STICKING_DURATION.getOrDefault(combinedKey, 0) + 1);
 
-            if (STICKING_DURATION.get(combinedKey) >= MERGE_THRESHOLD) {
+            if (STICKING_DURATION.get(combinedKey) >= StickyResourcesConfig.JELLY_MERGE_THRESHOLD.get()) {
                 mergeJellies(world, firstJelly, secondJelly);
                 STICKING_DURATION.remove(combinedKey);
             }

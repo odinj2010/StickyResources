@@ -27,8 +27,6 @@ public enum GemPolishingRecipe {
     STICKY_PRISMERINE_CRYSTALS(ModItems.STICKY_PRISMERINE_CRYSTALS.get(), new ItemStack(Items.PRISMARINE_CRYSTALS)),
     STICKY_RED_MUSHROOM(ModItems.STICKY_RED_MUSHROOM.get(), new ItemStack(Items.RED_MUSHROOM)),
     STICKY_REDSTONE_DUST(ModItems.STICKY_REDSTONE_DUST.get(), new ItemStack(Items.REDSTONE)),
-    STICKY_WATER_BUCKET(ModItems.STICKY_WATER_BUCKET.get(), new ItemStack(Items.WATER_BUCKET)),
-    STICKY_LAVA_BUCKET(ModItems.STICKY_LAVA_BUCKET.get(), new ItemStack(Items.LAVA_BUCKET)),
     STICKY_COBBLESTONE(ModBlocks.STICKY_COBBLESTONE.get().asItem(), new ItemStack(Blocks.COBBLESTONE)),
     STICKY_DIRT(ModBlocks.STICKY_DIRT.get().asItem(), new ItemStack(Blocks.DIRT)),
     STICKY_GLASS(ModBlocks.STICKY_GLASS.get().asItem(), new ItemStack(Blocks.GLASS)),

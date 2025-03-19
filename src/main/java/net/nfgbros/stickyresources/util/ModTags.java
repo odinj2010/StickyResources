@@ -66,8 +66,6 @@ public class ModTags {
                 return net.minecraft.world.level.block.Blocks.GRAVEL.asItem();
             } else if (item == ModItems.STICKY_LAPIS_LAZULI.get()) {
                 return net.minecraft.world.item.Items.LAPIS_LAZULI;
-            } else if (item == ModItems.STICKY_LAVA_BUCKET.get()) {
-                return net.minecraft.world.item.Items.LAVA_BUCKET;
             } else if (item == ModBlocks.STICKY_LOG_OAK.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.OAK_LOG.asItem();
             } else if (item == ModBlocks.STICKY_OBSIDIAN.get().asItem()) {
@@ -90,8 +88,6 @@ public class ModTags {
                 return net.minecraft.world.level.block.Blocks.SAND.asItem();
             } else if (item == ModBlocks.STICKY_STONE.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.STONE.asItem();
-            } else if (item == ModItems.STICKY_WATER_BUCKET.get()) {
-                return net.minecraft.world.item.Items.WATER_BUCKET;
             }
             return item; // If it's not a sticky item, return the item itself
         }

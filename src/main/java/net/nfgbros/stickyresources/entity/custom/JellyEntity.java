@@ -59,26 +59,6 @@ public class JellyEntity extends Animal {
         return skeletonSkullGrazedCount;
     }
 
-
-    public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
-        super(entityType, level);
-    }
-
-    public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                .add(Attributes.ATTACK_DAMAGE, 1D);
-    }
-
-    public ModEntities.JellyType getJellyType() {
-        return ModEntities.JELLY_ENTITIES.entrySet().stream()
-                .filter(entry -> entry.getValue().get() == this.getType())
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(ModEntities.JellyType.DEFAULT);
-    }
-
     private JellyEntity swarmLeader; // Store the leader
 
     public JellyEntity getSwarmLeader() {
@@ -90,25 +70,38 @@ public class JellyEntity extends Animal {
     }
 
 
+    public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
+        super(entityType, level);
+    }
+    public ModEntities.JellyType getJellyType() {
+        return ModEntities.JELLY_ENTITIES.entrySet().stream()
+                .filter(entry -> entry.getValue().get() == this.getType())
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(ModEntities.JellyType.DEFAULT);
+    }
+
+    public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.ATTACK_DAMAGE, 1.0D);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-
         int nearbyJellies = countNearbyJellies();
 
-
-
-        if (nearbyJellies >= 5 && StickyResourcesConfig.JELLY_SWARMS_ACTIVE.get() == true) {
-
+        if (nearbyJellies >= 5 && StickyResourcesConfig.JELLY_SWARMS_ACTIVE.get()) {
             this.goalSelector.addGoal(2, new JellyGrazeGoal(this));
             this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
             this.goalSelector.addGoal(4, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
             this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
-            this.goalSelector.addGoal(6, new JellySwarmGoal(this, 1.2D)); // Add the swarm goal
+            this.goalSelector.addGoal(6, new JellySwarmGoal(this, 1.2D));
             this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 2.0F));
-            this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.35D));
+            this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D));
             this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
-
         } else {
             // Individual behavior:
             this.goalSelector.addGoal(2, new JellyGrazeGoal(this));
@@ -116,7 +109,7 @@ public class JellyEntity extends Animal {
             this.goalSelector.addGoal(4, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
             this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
             this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 2.0F));
-            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 0.35D));
+            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
             this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         }
     }
@@ -125,32 +118,27 @@ public class JellyEntity extends Animal {
     protected SoundEvent getHurtSound(DamageSource damageSource) {
         return SoundEvents.SLIME_HURT;
     }
-
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.SLIME_DEATH;
     }
-
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         // Cast the other parent to JellyEntity
         JellyEntity other = (JellyEntity) otherParent;
-
-        // If either parent is a water jelly, produce an obsidian jelly baby.
+        // If parents are a water jelly and a lava jelly, produce an obsidian jelly baby.
         if (this.getJellyType() == ModEntities.JellyType.WATER && other.getJellyType() == ModEntities.JellyType.LAVA ||
                 this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.WATER) {
-            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.OBSIDIAN).get().create(level);
-        }
+            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.OBSIDIAN).get().create(level);        }
+        // If parents are a sand jelly and a lava jelly, produce an obsidian jelly baby.
         else if (this.getJellyType() == ModEntities.JellyType.SAND && other.getJellyType() == ModEntities.JellyType.LAVA ||
                 this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.SAND) {
             return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.GLASS).get().create(level);
         }
-
         // Otherwise, default to producing offspring of this parent's type.
         return ModEntities.JELLY_ENTITIES.get(this.getJellyType()).get().create(level);
     }
-
     @Override
     public boolean isFood(ItemStack stack) {
         return stack.is(Items.SLIME_BALL);

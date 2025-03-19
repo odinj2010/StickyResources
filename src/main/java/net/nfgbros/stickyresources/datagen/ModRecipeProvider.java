@@ -38,6 +38,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModBlocks.SAPPHIRE_BLOCK.get()), has(ModBlocks.SAPPHIRE_BLOCK.get()))
                 .save(pWriter);
 
+
+        //
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.STICKY_CATALYST.get())
+                .pattern("SSS")
+                .pattern("S S")
+                .define('S', ModItems.SAPPHIRE.get())
+                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+                .save(pWriter);
+
         //Sapphire Armor
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SAPPHIRE_HELMET.get())
                 .pattern("SSS")

@@ -65,8 +65,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STICKY_RAW_SAPPHIRE, "sticky_resources:item/raw_sapphire", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_RED_MUSHROOM, "block/red_mushroom", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_REDSTONE_DUST, "item/redstone", "item/sticky/jelly_slime_ball");
-        simpleItem(ModItems.STICKY_WATER_BUCKET, "item/water_bucket", "item/sticky/jelly_slime_ball");
-        simpleItem(ModItems.STICKY_LAVA_BUCKET, "item/lava_bucket", "item/sticky/jelly_slime_ball");
 
         simpleItem(ModItems.SAPPHIRE, "sticky_resources:item/sapphire");
         simpleItem(ModItems.RAW_SAPPHIRE, "sticky_resources:item/raw_sapphire");
