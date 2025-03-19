@@ -39,14 +39,12 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                         ModItems.STICKY_EMERALD.get(),
                         ModItems.STICKY_ENDER_PEARL.get(),
                         ModItems.STICKY_LAPIS_LAZULI.get(),
-                        ModItems.STICKY_LAVA_BUCKET.get(),
                         ModItems.STICKY_PRISMERINE_CRYSTALS.get(),
                         ModItems.STICKY_RAW_COPPER.get(),
                         ModItems.STICKY_RAW_GOLD.get(),
                         ModItems.STICKY_RAW_IRON.get(),
                         ModItems.STICKY_RAW_SAPPHIRE.get(),
-                        ModItems.STICKY_REDSTONE_DUST.get(),
-                        ModItems.STICKY_WATER_BUCKET.get()
+                        ModItems.STICKY_REDSTONE_DUST.get()
                 );
 
 

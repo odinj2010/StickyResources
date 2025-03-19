@@ -48,7 +48,7 @@ public class ModEntities {
         REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f), // Adjusted size
         REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f), // Adjusted size
         SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f), // Adjusted size
-        SAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f), // Adjusted size
+        RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f), // Adjusted size
         STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f),
         WATER(WaterJellyEntity::new, "water_jelly", 0.5f, 0.5f); // Adjusted size
 

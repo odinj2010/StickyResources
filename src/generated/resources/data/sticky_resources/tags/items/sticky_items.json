@@ -8,13 +8,11 @@
     "sticky_resources:sticky_emerald",
     "sticky_resources:sticky_ender_pearl",
     "sticky_resources:sticky_lapis_lazuli",
-    "sticky_resources:sticky_lava_bucket",
     "sticky_resources:sticky_prismerine_crystals",
     "sticky_resources:sticky_raw_copper",
     "sticky_resources:sticky_raw_gold",
     "sticky_resources:sticky_raw_iron",
     "sticky_resources:sticky_raw_sapphire",
-    "sticky_resources:sticky_redstone_dust",
-    "sticky_resources:sticky_water_bucket"
+    "sticky_resources:sticky_redstone_dust"
   ]
 }

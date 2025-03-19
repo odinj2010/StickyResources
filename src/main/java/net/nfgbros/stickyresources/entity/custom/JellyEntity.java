@@ -17,8 +17,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.entity.ai.goal.JellyGrazeGoal;
+import net.nfgbros.stickyresources.entity.ai.goal.JellySwarmGoal;
 import net.nfgbros.stickyresources.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,9 +39,9 @@ public class JellyEntity extends Animal {
 
     public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 8.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.1D)
-                .add(Attributes.ATTACK_DAMAGE, 1.0D);
+                .add(Attributes.MAX_HEALTH, 10D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.ATTACK_DAMAGE, 1D);
     }
 
     public ModEntities.JellyType getJellyType() {
@@ -49,15 +52,46 @@ public class JellyEntity extends Animal {
                 .orElse(ModEntities.JellyType.DEFAULT);
     }
 
+    private JellyEntity swarmLeader; // Store the leader
+
+    public JellyEntity getSwarmLeader() {
+        return swarmLeader;
+    }
+
+    public void setSwarmLeader(JellyEntity leader) {
+        this.swarmLeader = leader;
+    }
+
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.15D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
-        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 2.0F));
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(7, new FollowParentGoal(this, 1.1D));
+
+        int nearbyJellies = countNearbyJellies();
+
+
+
+        if (nearbyJellies >= 5 && StickyResourcesConfig.JELLY_SWARMS_ACTIVE.get() == true) {
+
+            this.goalSelector.addGoal(2, new JellyGrazeGoal(this));
+            this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
+            this.goalSelector.addGoal(4, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
+            this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
+            this.goalSelector.addGoal(6, new JellySwarmGoal(this, 1.2D)); // Add the swarm goal
+            this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 2.0F));
+            this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.35D));
+            this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+
+        } else {
+            // Individual behavior:
+            this.goalSelector.addGoal(2, new JellyGrazeGoal(this));
+            this.goalSelector.addGoal(3, new BreedGoal(this, 1.15D));
+            this.goalSelector.addGoal(4, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
+            this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
+            this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 2.0F));
+            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 0.35D));
+            this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        }
     }
 
     @Override
@@ -97,7 +131,7 @@ public class JellyEntity extends Animal {
         if (this.isBaby()) return;
 
         dropItemTickCounter++;
-        if (dropItemTickCounter >= 200) {
+        if (dropItemTickCounter >= 1200) {
             dropJellyItem();
             dropItemTickCounter = 0;
         }
@@ -105,8 +139,21 @@ public class JellyEntity extends Animal {
         if (absorbItemTickCounter >= 20) {
             absorbNearbyItems();
         }
-    }
 
+        // 🛠 Check if Jelly needs to switch to swarm behavior dynamically
+        if (StickyResourcesConfig.JELLY_SWARMS_ACTIVE.get() == true) {
+
+            int nearbyJellies = countNearbyJellies();
+            boolean isSwarming = this.goalSelector.getRunningGoals()
+                    .anyMatch(goal -> goal.getGoal() instanceof JellySwarmGoal);
+
+            if (nearbyJellies >= 5 && !isSwarming) {
+                this.goalSelector.addGoal(2, new JellySwarmGoal(this, 1.2D));
+            } else if (nearbyJellies < 5 && isSwarming) {
+                this.goalSelector.removeGoal(new JellySwarmGoal(this, 1.2D)); // Remove swarm goal
+            }
+        };
+    }
     // Transform Jelly into Electric Jelly when struck by lightning
     private void transformIntoElectricJelly() {
         if (!level().isClientSide) {
@@ -118,7 +165,6 @@ public class JellyEntity extends Animal {
             }
         }
     }
-
     private void dropJellyItem() {
         Level world = this.level();
         ItemStack dropStack = ItemStack.EMPTY;
@@ -190,7 +236,7 @@ public class JellyEntity extends Animal {
         else if (type == ModEntities.JellyType.SAND) {
             dropStack = new ItemStack(ModBlocks.STICKY_SAND.get());
         }
-        else if (type == ModEntities.JellyType.SAPPHIRE) {
+        else if (type == ModEntities.JellyType.RAWSAPPHIRE) {
             dropStack = new ItemStack(ModItems.STICKY_RAW_SAPPHIRE.get());
         }
         else if (type == ModEntities.JellyType.STONE) {
@@ -205,17 +251,57 @@ public class JellyEntity extends Animal {
     private void absorbNearbyItems() {
         Level world = this.level();
         ModEntities.JellyType jellyType = this.getJellyType();
-        // Absorption check for Cobblestone Jelly (only absorbs Raw Iron)
-        if (jellyType == ModEntities.JellyType.COBBLESTONE) {
+        // Absorption check for stone Jelly (only absorbs Raw Iron)
+        if (jellyType == ModEntities.JellyType.STONE) {
             world.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.2D)).forEach(itemEntity -> {
                 ItemStack stack = itemEntity.getItem();
-                // Check if the absorbed item is Raw Iron, and if so, transform the jelly
-                if (stack.getItem() == Items.RAW_IRON) {
+
+                // Absorb Coal
+                if (stack.getItem() == Items.COAL) {
+                    absorptionCount.put(ModEntities.JellyType.COAL, absorptionCount.getOrDefault(ModEntities.JellyType.COAL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met
+                    if (absorptionCount.get(ModEntities.JellyType.COAL) >= 64) {
+                        transformInto(ModEntities.JellyType.COAL);
+                    }
+                }
+                else if (stack.getItem() == Items.RAW_IRON) {
                     absorptionCount.put(ModEntities.JellyType.RAWIRON, absorptionCount.getOrDefault(ModEntities.JellyType.RAWIRON, 0) + stack.getCount());
                     itemEntity.discard();
                     // Check if the absorption threshold is met (e.g., 20 items)
                     if (absorptionCount.get(ModEntities.JellyType.RAWIRON) >= 64) {
                         transformInto(ModEntities.JellyType.RAWIRON);
+                    }
+                }
+                // Absorb Lapis
+                else if (stack.getItem() == Items.LAPIS_LAZULI) {
+                    absorptionCount.put(ModEntities.JellyType.LAPIS, absorptionCount.getOrDefault(ModEntities.JellyType.LAPIS, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.LAPIS) >= 64) {
+                        transformInto(ModEntities.JellyType.LAPIS);
+                    }
+                }
+                // Absorb Redstone
+                else if (stack.getItem() == Items.REDSTONE) {
+                    absorptionCount.put(ModEntities.JellyType.REDSTONEDUST, absorptionCount.getOrDefault(ModEntities.JellyType.REDSTONEDUST, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.REDSTONEDUST) >= 64) {
+                        transformInto(ModEntities.JellyType.REDSTONEDUST);
+                    }
+                }
+                else if (stack.getItem() == Items.EMERALD) {
+                    absorptionCount.put(ModEntities.JellyType.EMERALD, absorptionCount.getOrDefault(ModEntities.JellyType.EMERALD, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.EMERALD) >= 32) {
+                        transformInto(ModEntities.JellyType.EMERALD);
+                    }
+                }
+                // Absorb Sapphire (if custom item exists)
+                else if (stack.getItem() == ModItems.SAPPHIRE.get()) {
+                    absorptionCount.put(ModEntities.JellyType.RAWSAPPHIRE, absorptionCount.getOrDefault(ModEntities.JellyType.RAWSAPPHIRE, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.RAWSAPPHIRE) >= 64) {
+                        transformInto(ModEntities.JellyType.RAWSAPPHIRE);
                     }
                 }
             });
@@ -225,12 +311,12 @@ public class JellyEntity extends Animal {
             world.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.2D)).forEach(itemEntity -> {
                 ItemStack stack = itemEntity.getItem();
                 // Check if the absorbed item is Cobblestone, and if so, transform the jelly
-                if (stack.getItem() == Items.STONE) {
-                    absorptionCount.put(ModEntities.JellyType.STONE, absorptionCount.getOrDefault(ModEntities.JellyType.STONE, 0) + stack.getCount());
+                if (stack.getItem() == Items.COBBLESTONE) {
+                    absorptionCount.put(ModEntities.JellyType.COBBLESTONE, absorptionCount.getOrDefault(ModEntities.JellyType.COBBLESTONE, 0) + stack.getCount());
                     itemEntity.discard();
                     // Check if the absorption threshold is met (e.g., 20 items)
-                    if (absorptionCount.get(ModEntities.JellyType.STONE) >= 128) {
-                        transformInto(ModEntities.JellyType.STONE);
+                    if (absorptionCount.get(ModEntities.JellyType.COBBLESTONE) >= 128) {
+                        transformInto(ModEntities.JellyType.COBBLESTONE);
                     }
                 }
                 // Absorb Dirt
@@ -242,78 +328,12 @@ public class JellyEntity extends Animal {
                         transformInto(ModEntities.JellyType.DIRT);
                     }
                 }
-                // Absorb Bone
-                else if (stack.getItem() == Items.BONE) {
-                    absorptionCount.put(ModEntities.JellyType.BONE, absorptionCount.getOrDefault(ModEntities.JellyType.BONE, 0) + stack.getCount());
-                    itemEntity.discard();
-                    // Check if the absorption threshold is met (e.g., 2 items)
-                    if (absorptionCount.get(ModEntities.JellyType.BONE) >= 128) {
-                        transformInto(ModEntities.JellyType.BONE);
-                    }
-                }
-                // Absorb Coal
-                else if (stack.getItem() == Items.COAL) {
-                    absorptionCount.put(ModEntities.JellyType.COAL, absorptionCount.getOrDefault(ModEntities.JellyType.COAL, 0) + stack.getCount());
-                    itemEntity.discard();
-                    // Check if the absorption threshold is met
-                    if (absorptionCount.get(ModEntities.JellyType.COAL) >= 64) {
-                        transformInto(ModEntities.JellyType.COAL);
-                    }
-                }
-                // Absorb Emerald
-                else if (stack.getItem() == Items.EMERALD) {
-                    absorptionCount.put(ModEntities.JellyType.EMERALD, absorptionCount.getOrDefault(ModEntities.JellyType.EMERALD, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.EMERALD) >= 24) {
-                        transformInto(ModEntities.JellyType.EMERALD);
-                    }
-                }
-                // Absorb Ender Pearl
-                else if (stack.getItem() == Items.ENDER_PEARL) {
-                    absorptionCount.put(ModEntities.JellyType.ENDERPEARL, absorptionCount.getOrDefault(ModEntities.JellyType.ENDERPEARL, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.ENDERPEARL) >= 24) {
-                        transformInto(ModEntities.JellyType.ENDERPEARL);
-                    }
-                }
-                // Absorb Glass
-                else if (stack.getItem() == Items.GLASS) {
-                    absorptionCount.put(ModEntities.JellyType.GLASS, absorptionCount.getOrDefault(ModEntities.JellyType.GLASS, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.GLASS) >= 64) {
-                        transformInto(ModEntities.JellyType.GLASS);
-                    }
-                }
                 // Absorb Gravel
                 else if (stack.getItem() == Items.GRAVEL) {
                     absorptionCount.put(ModEntities.JellyType.GRAVEL, absorptionCount.getOrDefault(ModEntities.JellyType.GRAVEL, 0) + stack.getCount());
                     itemEntity.discard();
                     if (absorptionCount.get(ModEntities.JellyType.GRAVEL) >= 128) {
                         transformInto(ModEntities.JellyType.GRAVEL);
-                    }
-                }
-                // Absorb Lapis
-                else if (stack.getItem() == Items.LAPIS_LAZULI) {
-                    absorptionCount.put(ModEntities.JellyType.LAPIS, absorptionCount.getOrDefault(ModEntities.JellyType.LAPIS, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.LAPIS) >= 64) {
-                        transformInto(ModEntities.JellyType.LAPIS);
-                    }
-                }
-                // Absorb Red Mushrooms
-                else if (stack.getItem() == Items.RED_MUSHROOM) {
-                    absorptionCount.put(ModEntities.JellyType.REDMUSHROOM, absorptionCount.getOrDefault(ModEntities.JellyType.REDMUSHROOM, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.REDMUSHROOM) >= 64) {
-                        transformInto(ModEntities.JellyType.REDMUSHROOM);
-                    }
-                }
-                // Absorb Redstone
-                else if (stack.getItem() == Items.REDSTONE) {
-                    absorptionCount.put(ModEntities.JellyType.REDSTONEDUST, absorptionCount.getOrDefault(ModEntities.JellyType.REDSTONEDUST, 0) + stack.getCount());
-                    itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.REDSTONEDUST) >= 64) {
-                        transformInto(ModEntities.JellyType.REDSTONEDUST);
                     }
                 }
                 // Absorb Sand
@@ -324,12 +344,12 @@ public class JellyEntity extends Animal {
                         transformInto(ModEntities.JellyType.SAND);
                     }
                 }
-                // Absorb Sapphire (if custom item exists)
-                else if (stack.getItem() == ModItems.SAPPHIRE.get()) {
-                    absorptionCount.put(ModEntities.JellyType.SAPPHIRE, absorptionCount.getOrDefault(ModEntities.JellyType.SAPPHIRE, 0) + stack.getCount());
+                // Absorb Red Mushrooms
+                else if (stack.getItem() == Items.RED_MUSHROOM) {
+                    absorptionCount.put(ModEntities.JellyType.REDMUSHROOM, absorptionCount.getOrDefault(ModEntities.JellyType.REDMUSHROOM, 0) + stack.getCount());
                     itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.SAPPHIRE) >= 64) {
-                        transformInto(ModEntities.JellyType.SAPPHIRE);
+                    if (absorptionCount.get(ModEntities.JellyType.REDMUSHROOM) >= 128) {
+                        transformInto(ModEntities.JellyType.REDMUSHROOM);
                     }
                 }
             });
@@ -344,5 +364,16 @@ public class JellyEntity extends Animal {
                 this.level().addFreshEntity(newJelly);
             }
         }
+    }
+
+    public int countNearbyJellies() {
+        final int[] count = {0};  // Use an array to allow modification inside lambda
+        this.level().getEntitiesOfClass(JellyEntity.class, this.getBoundingBox().inflate(10.0D))  // Adjust range as needed
+                .forEach(otherJelly -> {
+                    if (otherJelly != this) {
+                        count[0]++;
+                    }
+                });
+        return count[0];
     }
 }

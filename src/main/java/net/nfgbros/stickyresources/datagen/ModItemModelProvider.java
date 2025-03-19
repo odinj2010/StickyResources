@@ -79,6 +79,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CORN, "sticky_resources:item/corn");
         simpleItem(ModItems.CORN_SEEDS, "sticky_resources:item/corn_seeds");
 
+        simpleItem(ModItems.STICKY_CATALYST, "sticky_resources:item/sticky/sticky_catalyst_item");
+
         simpleItem(ModItems.BAR_BRAWL_MUSIC_DISC);
 
         simpleBlockItem(ModBlocks.SAPPHIRE_DOOR);

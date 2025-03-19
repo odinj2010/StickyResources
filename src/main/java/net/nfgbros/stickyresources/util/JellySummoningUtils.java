@@ -31,6 +31,7 @@ public class JellySummoningUtils {
                 ModItems.STICKY_CATALYST.get(),
                 null
         ));
+        /* Add More:
 
         SUMMONING_REQUIREMENTS.put(ModEntities.JellyType.AMETHYST, new SummoningRequirement(
                 Blocks.AMETHYST_BLOCK,
@@ -38,6 +39,7 @@ public class JellySummoningUtils {
                 ModItems.STICKY_AMETHYST.get(),
                 null
         ));
+         */
     }
 
     public static boolean isJellySummoningStructure(Level level, BlockPos pos, ItemStack catalyst) {

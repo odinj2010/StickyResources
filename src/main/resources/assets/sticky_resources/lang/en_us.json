@@ -1,29 +1,28 @@
 {
   "item.sticky_resources.catmint_seeds": "Catmint Seeds",
   "item.sticky_resources.catmint_seeds.desc": "Used to grow catmint.",
-  "item.sticky_resources.corn_seeds": "Corn Seeds",
-  "item.sticky_resources.corn_seeds.desc": "Used to grow corn.",
-  "item.sticky_resources.strawberry_seeds": "Strawberry Seeds",
-  "item.sticky_resources.strawberry_seeds.desc": "Used to grow strawberries.",
-  "item.sticky_resources.catmint": "Catmint",
-  "item.sticky_resources.catmint.desc": "A minty plant that cats love!",
-  "item.sticky_resources.corn": "Corn",
-  "item.sticky_resources.corn.desc": "A tasty and versatile vegetable.",
-  "item.sticky_resources.strawberry": "Strawberry",
-  "item.sticky_resources.strawberry.desc": "A sweet and juicy fruit.",
   "block.sticky_resources.catmint": "Catmint",
   "block.sticky_resources.catmint.desc": "A decorative plant that attracts cats.",
-  "block.sticky_resources.corn_crop": "Corn Crop",
-  "block.sticky_resources.corn_crop.desc": "Grows into corn.",
+  "item.sticky_resources.catmint": "Catmint",
+  "item.sticky_resources.catmint.desc": "A minty plant that cats love!",
+  "item.sticky_resources.strawberry_seeds": "Strawberry Seeds",
+  "item.sticky_resources.strawberry_seeds.desc": "Used to grow strawberries.",
   "block.sticky_resources.strawberry_crop": "Strawberry Crop",
-  "block.sticky_resources.strawberry_crop.desc": "Grows into strawberries.",
-
-
+  "block.sticky_resources.strawberry_crop.desc": "Grows into strawberry plant.",
+  "item.sticky_resources.strawberry": "Strawberry",
+  "item.sticky_resources.strawberry.desc": "A sweet and juicy fruit... Need some chocolate?",
+  "item.sticky_resources.corn_seeds": "Corn Seeds",
+  "item.sticky_resources.corn_seeds.desc": "Used to grow corn.",
+  "block.sticky_resources.corn_crop": "Corn Crop",
+  "block.sticky_resources.corn_crop.desc": "Grows into corn stalk.",
+  "item.sticky_resources.corn": "Corn",
+  "item.sticky_resources.corn.desc": "The infinite food hack.",
 
   "item.sticky_resources.raw_sapphire": "Raw Sapphire",
   "item.sticky_resources.raw_sapphire.desc": "An unrefined sapphire gem.",
   "item.sticky_resources.sapphire": "Sapphire",
   "item.sticky_resources.sapphire.desc": "A precious gemstone used for crafting and decoration.",
+
   "item.sticky_resources.sapphire_axe": "Sapphire Axe",
   "item.sticky_resources.sapphire_axe.desc": "An axe made from sapphire.",
   "item.sticky_resources.sapphire_hoe": "Sapphire Hoe",
@@ -36,28 +35,31 @@
   "item.sticky_resources.sapphire_sword.desc": "A sword made from sapphire.",
   "item.sticky_resources.sapphire_helmet": "Sapphire Helmet",
   "item.sticky_resources.sapphire_helmet.desc": "A helmet made from sapphire.",
+
   "item.sticky_resources.sapphire_chestplate": "Sapphire Chestplate",
   "item.sticky_resources.sapphire_chestplate.desc": "A chestplate made from sapphire.",
   "item.sticky_resources.sapphire_leggings": "Sapphire Leggings",
   "item.sticky_resources.sapphire_leggings.desc": "Leggings made from sapphire.",
   "item.sticky_resources.sapphire_boots": "Sapphire Boots",
   "item.sticky_resources.sapphire_boots.desc": "Boots made from sapphire.",
+
   "item.sticky_resources.sapphire_staff": "Sapphire Staff",
   "item.sticky_resources.sapphire_staff.desc": "A magical staff imbued with the power of sapphires.",
+
+
+  "block.sticky_resources.sapphire_ore": "Sapphire Ore",
+  "block.sticky_resources.sapphire_ore.desc": "A rare ore that contains sapphires.",
   "block.sticky_resources.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
   "block.sticky_resources.deepslate_sapphire_ore.desc": "A rare ore found in deepslate.",
   "block.sticky_resources.end_stone_sapphire_ore": "End Stone Sapphire Ore",
   "block.sticky_resources.end_stone_sapphire_ore.desc": "A rare ore found in the End.",
   "block.sticky_resources.nether_sapphire_ore": "Nether Sapphire Ore",
   "block.sticky_resources.nether_sapphire_ore.desc": "A rare ore found in the Nether.",
+
   "block.sticky_resources.raw_sapphire_block": "Raw Sapphire Block",
   "block.sticky_resources.raw_sapphire_block.desc": "A block of unrefined sapphires.",
   "block.sticky_resources.sapphire_block": "Sapphire Block",
   "block.sticky_resources.sapphire_block.desc": "A decorative block made from sapphires.",
-  "block.sticky_resources.sapphire_ore": "Sapphire Ore",
-  "block.sticky_resources.sapphire_ore.desc": "A rare ore that contains sapphires.",
-
-
 
   "item.sticky_resources.metal_detector": "Metal Detector",
   "item.sticky_resources.metal_detector.desc": "Detects valuable ores and treasures.",
@@ -92,8 +94,6 @@
   "item.sticky_resources.sticky_sand": "Sticky Sand",
   "item.sticky_resources.sticky_water_bucket": "Sticky Water Bucket",
   "item.sticky_resources.sticky_lava_bucket": "Sticky Lava Bucket",
-
-  "item.sticky_resources.sticky_catalyst": "Sticky Catalyst",
 
 
 
@@ -151,13 +151,17 @@
   "item.sticky_resources.jelly_water_spawn_egg": "Water Jelly Spawn Egg",
   "item.sticky_resources.rhino_spawn_egg": "Rhino Spawn Egg",
 
-  "creativetab.sticky_resources_sapphire_tab": "SR Sapphire",
-  "creativetab.sticky_resources_devices_tab": "SR Devices",
-  "creativetab.sticky_resources_food_tab": "SR Food",
-  "creativetab.sticky_resources_spawn_egg_tab": "SR Jelly Spawn Eggs",
-  "creativetab.sticky_resources_misc_tab": "SR Misc.",
+
+  "creativetab.sticky_resources_devices_tab": "Sticky Devices",
+  "creativetab.sticky_resources_food_tab": "Sticky Food",
+  "creativetab.sticky_resources_spawn_egg_tab": "Sticky Jelly Spawn Eggs",
+  "creativetab.sticky_resources_misc_tab": "Sticky Misc.",
+  "creativetab.sticky_resources_sapphire_tab": "Sticky Sapphire",
 
 
+
+  "item.sticky_resources.sticky_catalyst": "Heart of the Slime",
+  "item.sticky_resources.sticky_catalyst.desc": "Jelly catalyst",
   "tooltip.sticky_resources.sticky_catalyst.shift": "Must use the correct placement of blocks, in the world, to summon the jelly.",
   "tooltip.sticky_resources.sticky_catalyst.no_shift": "A Catalyst for summoning Jellies."
 
