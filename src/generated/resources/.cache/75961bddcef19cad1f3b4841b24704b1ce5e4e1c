@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-18T23:50:25.3856129	StickyResources Item Models
+// 1.20.1	2025-03-19T06:55:59.2487238	StickyResources Item Models
 a163c9ce1e63e428f3fa804b66e491b455f18540 assets/sticky_resources/models/item/bar_brawl_music_disc.json
 28d058cfaab441e68e3b7da92477c584b20a0eb1 assets/sticky_resources/models/item/catmint.json
 1ea7c748a3d0eea78f2c4b76a4dc89d641c23afb assets/sticky_resources/models/item/corn.json
@@ -14,6 +14,7 @@ a163c9ce1e63e428f3fa804b66e491b455f18540 assets/sticky_resources/models/item/bar
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_electric_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_emerald_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_enderpearl_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_fire_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_glass_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_gravel_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/sticky_resources/models/item/jelly_lapis_spawn_egg.json

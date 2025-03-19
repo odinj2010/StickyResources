@@ -1,11 +1,15 @@
 package net.nfgbros.stickyresources.entity.custom;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.nfgbros.stickyresources.entity.ModEntities;
 
 
 public class CobblestoneJellyEntity extends JellyEntity {
@@ -26,8 +30,31 @@ public class CobblestoneJellyEntity extends JellyEntity {
     }
 
     @Override
+    public boolean hurt(DamageSource source, float amount) {
+        // Check if the damage source is fire or lava
+        if (source.is(DamageTypes.ON_FIRE) || source.is(DamageTypes.LAVA)) {
+            if (!this.isRemoved()) { // Check if the entity is not already removed
+                transformIntoStoneJelly(); // Transform the entity into "XXXX" Jelly
+            }
+            return false; // Prevent the entity from taking damage or dying
+        }
+        return super.hurt(source, amount); // Allow other damage sources to proceed normally
+    }
+
+    @Override
     public void tick() {
         super.tick(); // Call super to handle base JellyEntity logic
 
+    }
+
+    private void transformIntoStoneJelly() {
+        if (!level().isClientSide) {
+            this.discard();  // Remove the current Jelly entity
+            JellyEntity stoneJelly = ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.STONE).get().create((ServerLevel) this.level());
+            if (stoneJelly != null) {
+                stoneJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                this.level().addFreshEntity(stoneJelly);  // Spawn in the new Jelly
+            }
+        }
     }
 }

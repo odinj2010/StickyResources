@@ -3,6 +3,7 @@ package net.nfgbros.stickyresources.entity.custom;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -31,7 +32,33 @@ import java.util.Map;
 public class JellyEntity extends Animal {
     private int dropItemTickCounter = 0;
     private int absorbItemTickCounter = 0;
+    private int oakSaplingGrazedCount = 0;
+    private int skeletonSkullGrazedCount = 0;
     private final Map<ModEntities.JellyType, Integer> absorptionCount = new HashMap<>();
+
+    public void incrementOakSaplingGrazedCount() {
+        oakSaplingGrazedCount++;
+    }
+
+    public int getOakSaplingGrazedCount() {
+        return oakSaplingGrazedCount;
+    }
+
+    public void incrementskeletonSkullGrazedCount() {
+        skeletonSkullGrazedCount++;
+    }
+
+    public int getskeletonSkullGrazedCount() {
+        return skeletonSkullGrazedCount;
+    }
+    public void incrementredMushroomGrazedCount() {
+        skeletonSkullGrazedCount++;
+    }
+
+    public int getredMushroomGrazedCount() {
+        return skeletonSkullGrazedCount;
+    }
+
 
     public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
@@ -107,6 +134,20 @@ public class JellyEntity extends Animal {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+        // Cast the other parent to JellyEntity
+        JellyEntity other = (JellyEntity) otherParent;
+
+        // If either parent is a water jelly, produce an obsidian jelly baby.
+        if (this.getJellyType() == ModEntities.JellyType.WATER && other.getJellyType() == ModEntities.JellyType.LAVA ||
+                this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.WATER) {
+            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.OBSIDIAN).get().create(level);
+        }
+        else if (this.getJellyType() == ModEntities.JellyType.SAND && other.getJellyType() == ModEntities.JellyType.LAVA ||
+                this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.SAND) {
+            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.GLASS).get().create(level);
+        }
+
+        // Otherwise, default to producing offspring of this parent's type.
         return ModEntities.JELLY_ENTITIES.get(this.getJellyType()).get().create(level);
     }
 
@@ -121,6 +162,24 @@ public class JellyEntity extends Animal {
         if (source.getMsgId().equals("lightningBolt")) {
             transformIntoElectricJelly();
             return true; // Entity has been transformed
+        }
+        else if (source.is(DamageTypes.ON_FIRE)) {
+            if (!this.isRemoved()) { // Check if the entity is not already removed
+                transformIntoFireJelly(); // Transform the entity into "XXXX" Jelly
+            }
+            return false; // Prevent the entity from taking damage or dying
+        }
+        else if (source.is(DamageTypes.DROWN)) {
+            if (!this.isRemoved()) { // Check if the entity is not already removed
+                transformIntoWaterJelly(); // Transform the entity into "XXXX" Jelly
+            }
+            return false; // Prevent the entity from taking damage or dying
+        }
+        else if (source.is(DamageTypes.LAVA)) {
+            if (!this.isRemoved()) { // Check if the entity is not already removed
+                transformIntoLavaJelly(); // Transform the entity into "XXXX" Jelly
+            }
+            return false; // Prevent the entity from taking damage or dying
         }
         return super.hurt(source, amount);
     }
@@ -162,6 +221,36 @@ public class JellyEntity extends Animal {
             if (electricJelly != null) {
                 electricJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
                 this.level().addFreshEntity(electricJelly);  // Spawn in the new Electric Jelly
+            }
+        }
+    }
+    private void transformIntoFireJelly() {
+        if (!level().isClientSide) {
+            this.discard();  // Remove the current Jelly entity
+            JellyEntity fireJelly = ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.FIRE).get().create((ServerLevel) this.level());
+            if (fireJelly != null) {
+                fireJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                this.level().addFreshEntity(fireJelly);  // Spawn in the new Electric Jelly
+            }
+        }
+    }
+    private void transformIntoLavaJelly() {
+        if (!level().isClientSide) {
+            this.discard();  // Remove the current Jelly entity
+            JellyEntity lavaJelly = ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.LAVA).get().create((ServerLevel) this.level());
+            if (lavaJelly != null) {
+                lavaJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                this.level().addFreshEntity(lavaJelly);  // Spawn in the new Electric Jelly
+            }
+        }
+    }
+    private void transformIntoWaterJelly() {
+        if (!level().isClientSide) {
+            this.discard();  // Remove the current Jelly entity
+            JellyEntity waterJelly = ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.WATER).get().create((ServerLevel) this.level());
+            if (waterJelly != null) {
+                waterJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+                this.level().addFreshEntity(waterJelly);  // Spawn in the new Electric Jelly
             }
         }
     }
@@ -265,6 +354,22 @@ public class JellyEntity extends Animal {
                         transformInto(ModEntities.JellyType.COAL);
                     }
                 }
+                else if (stack.getItem() == Items.RAW_COPPER) {
+                    absorptionCount.put(ModEntities.JellyType.RAWCOPPER, absorptionCount.getOrDefault(ModEntities.JellyType.RAWCOPPER, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met (e.g., 20 items)
+                    if (absorptionCount.get(ModEntities.JellyType.RAWCOPPER) >= 64) {
+                        transformInto(ModEntities.JellyType.RAWCOPPER);
+                    }
+                }
+                else if (stack.getItem() == Items.RAW_GOLD) {
+                    absorptionCount.put(ModEntities.JellyType.RAWGOLD, absorptionCount.getOrDefault(ModEntities.JellyType.RAWGOLD, 0) + stack.getCount());
+                    itemEntity.discard();
+                    // Check if the absorption threshold is met (e.g., 20 items)
+                    if (absorptionCount.get(ModEntities.JellyType.RAWGOLD) >= 64) {
+                        transformInto(ModEntities.JellyType.RAWGOLD);
+                    }
+                }
                 else if (stack.getItem() == Items.RAW_IRON) {
                     absorptionCount.put(ModEntities.JellyType.RAWIRON, absorptionCount.getOrDefault(ModEntities.JellyType.RAWIRON, 0) + stack.getCount());
                     itemEntity.discard();
@@ -292,7 +397,7 @@ public class JellyEntity extends Animal {
                 else if (stack.getItem() == Items.EMERALD) {
                     absorptionCount.put(ModEntities.JellyType.EMERALD, absorptionCount.getOrDefault(ModEntities.JellyType.EMERALD, 0) + stack.getCount());
                     itemEntity.discard();
-                    if (absorptionCount.get(ModEntities.JellyType.EMERALD) >= 32) {
+                    if (absorptionCount.get(ModEntities.JellyType.EMERALD) >= 64) {
                         transformInto(ModEntities.JellyType.EMERALD);
                     }
                 }
@@ -302,6 +407,13 @@ public class JellyEntity extends Animal {
                     itemEntity.discard();
                     if (absorptionCount.get(ModEntities.JellyType.RAWSAPPHIRE) >= 64) {
                         transformInto(ModEntities.JellyType.RAWSAPPHIRE);
+                    }
+                }
+                else if (stack.getItem() == Items.DIAMOND) {
+                    absorptionCount.put(ModEntities.JellyType.DIAMOND, absorptionCount.getOrDefault(ModEntities.JellyType.DIAMOND, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.DIAMOND) >= 64) {
+                        transformInto(ModEntities.JellyType.DIAMOND);
                     }
                 }
             });
@@ -315,7 +427,7 @@ public class JellyEntity extends Animal {
                     absorptionCount.put(ModEntities.JellyType.COBBLESTONE, absorptionCount.getOrDefault(ModEntities.JellyType.COBBLESTONE, 0) + stack.getCount());
                     itemEntity.discard();
                     // Check if the absorption threshold is met (e.g., 20 items)
-                    if (absorptionCount.get(ModEntities.JellyType.COBBLESTONE) >= 128) {
+                    if (absorptionCount.get(ModEntities.JellyType.COBBLESTONE) >= 256) {
                         transformInto(ModEntities.JellyType.COBBLESTONE);
                     }
                 }
@@ -352,10 +464,31 @@ public class JellyEntity extends Animal {
                         transformInto(ModEntities.JellyType.REDMUSHROOM);
                     }
                 }
+                else if (stack.getItem() == Items.ENDER_PEARL) {
+                    absorptionCount.put(ModEntities.JellyType.ENDERPEARL, absorptionCount.getOrDefault(ModEntities.JellyType.ENDERPEARL, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.ENDERPEARL) >= 64) {
+                        transformInto(ModEntities.JellyType.ENDERPEARL);
+                    }
+                }
+                else if (stack.getItem() == Items.AMETHYST_SHARD) {
+                    absorptionCount.put(ModEntities.JellyType.AMETHYST, absorptionCount.getOrDefault(ModEntities.JellyType.AMETHYST, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.AMETHYST) >= 64) {
+                        transformInto(ModEntities.JellyType.AMETHYST);
+                    }
+                }
+                else if (stack.getItem() == Items.PRISMARINE_SHARD) {
+                    absorptionCount.put(ModEntities.JellyType.PRISMERINE, absorptionCount.getOrDefault(ModEntities.JellyType.PRISMERINE, 0) + stack.getCount());
+                    itemEntity.discard();
+                    if (absorptionCount.get(ModEntities.JellyType.PRISMERINE) >= 64) {
+                        transformInto(ModEntities.JellyType.PRISMERINE);
+                    }
+                }
             });
         }
     }
-    private void transformInto(ModEntities.JellyType newType) {
+    public void transformInto(ModEntities.JellyType newType) {
         if (!level().isClientSide) {
             this.discard();
             JellyEntity newJelly = ModEntities.JELLY_ENTITIES.get(newType).get().create((ServerLevel) this.level());

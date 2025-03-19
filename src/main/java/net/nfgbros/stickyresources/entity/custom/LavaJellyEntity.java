@@ -17,6 +17,8 @@ public class LavaJellyEntity extends JellyEntity {
 
     private int cobblestoneDropDelay = 0;
     private static final int COBBLESTONE_DELAY = 60; // Ticks
+    private int glassDropDelay = 0;
+    private static final int GLASS_DELAY = 60; // Ticks
 
     public LavaJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
@@ -28,6 +30,10 @@ public class LavaJellyEntity extends JellyEntity {
         checkWaterJellyCollision();
         if (cobblestoneDropDelay > 0) {
             cobblestoneDropDelay--;
+        }
+        checkSandJellyCollision();
+        if (glassDropDelay > 0) {
+            glassDropDelay--;
         }
     }
 
@@ -63,10 +69,31 @@ public class LavaJellyEntity extends JellyEntity {
             }
         }
     }
+    private void checkSandJellyCollision() {
+        if (!this.level().isClientSide) {
+            for (Entity entity : this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox().inflate(0.5D))) {
+                if (entity instanceof SandJellyEntity) {
+                    if (glassDropDelay == 0 && this.level().dimension() == Level.OVERWORLD) {
+                        dropGlassItem((ServerLevel) this.level(), this.getOnPos());
+                        glassDropDelay = GLASS_DELAY;
+                    }
+                    return;
+                }
+            }
+        }
+    }
 
     private void dropCobblestoneItem(ServerLevel level, BlockPos pos) {
         ItemStack cobblestone = new ItemStack(Blocks.COBBLESTONE);
         ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, cobblestone);
         level.addFreshEntity(itemEntity);
+    }
+    private void dropGlassItem(ServerLevel level, BlockPos pos) {
+        ItemStack glass = new ItemStack(Blocks.GLASS_PANE);
+        ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, glass);
+        level.addFreshEntity(itemEntity);
+    }
+    private boolean isFireImmune() {
+        return true;
     }
 }

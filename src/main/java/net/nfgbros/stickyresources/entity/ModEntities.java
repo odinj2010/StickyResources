@@ -34,6 +34,7 @@ public class ModEntities {
         ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 0.5f, 0.5f), // Adjusted size
         EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 0.5f, 0.5f), // Adjusted size
         ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 0.5f, 0.5f), // Adjusted size
+        FIRE(FireJellyEntity::new, "fire_jelly", 0.5f, 0.5f), // Adjusted size
         GLASS(GlassJellyEntity::new, "glass_jelly", 0.5f, 0.5f), // Adjusted size
         GRAVEL(GravelJellyEntity::new, "gravel_jelly", 0.5f, 0.5f), // Adjusted size
         LAPIS(LapisJellyEntity::new, "lapis_jelly", 0.5f, 0.5f), // Adjusted size

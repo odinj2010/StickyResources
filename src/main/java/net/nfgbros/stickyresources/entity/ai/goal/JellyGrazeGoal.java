@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 import net.minecraft.core.particles.ParticleTypes;
 
@@ -27,11 +28,12 @@ public class JellyGrazeGoal extends Goal {
     private static final Map<String, Block> GRAZEABLE_BLOCKS = new HashMap<>();
 
     static {
-        GRAZEABLE_BLOCKS.put("DEFAULT", Blocks.RED_MUSHROOM);
         GRAZEABLE_BLOCKS.put("SAND", Blocks.SAND);
         GRAZEABLE_BLOCKS.put("GRAVEL", Blocks.GRAVEL);
         GRAZEABLE_BLOCKS.put("DIRT", Blocks.DIRT);
-        GRAZEABLE_BLOCKS.put("GRASS", Blocks.GRASS_BLOCK);
+        GRAZEABLE_BLOCKS.put("DEFAULT", Blocks.OAK_SAPLING);
+        GRAZEABLE_BLOCKS.put("DEFAULT", Blocks.SKELETON_SKULL);
+
     }
 
     public JellyGrazeGoal(JellyEntity jelly) {
@@ -91,8 +93,45 @@ public class JellyGrazeGoal extends Goal {
             }
 
             if (grazeTime >= GRAZE_DURATION) {
-                jelly.level().removeBlock(targetBlock, false); // Remove block
+                // Before removing the block, check if it’s an oak sapling
+                if (jelly.getJellyType() == ModEntities.JellyType.DEFAULT
+                        && jelly.level().getBlockState(targetBlock).is(Blocks.OAK_SAPLING)) {
+                    jelly.incrementOakSaplingGrazedCount();
 
+                    // Define the threshold for transformation (change 10 to whatever number you want)
+                    if (jelly.getOakSaplingGrazedCount() >= 1) {
+                        jelly.transformInto(ModEntities.JellyType.LOGOAK);
+                        // Exit early if transformation occurs
+                        stop();
+                        return;
+                    }
+                }
+                if (jelly.getJellyType() == ModEntities.JellyType.DEFAULT
+                        && jelly.level().getBlockState(targetBlock).is(Blocks.SKELETON_SKULL)) {
+                    jelly.incrementskeletonSkullGrazedCount();
+
+                    // Define the threshold for transformation (change 10 to whatever number you want)
+                    if (jelly.getskeletonSkullGrazedCount() >= 1) {
+                        jelly.transformInto(ModEntities.JellyType.BONE);
+                        // Exit early if transformation occurs
+                        stop();
+                        return;
+                    }
+                }
+                if (jelly.getJellyType() == ModEntities.JellyType.DEFAULT
+                        && jelly.level().getBlockState(targetBlock).is(Blocks.RED_MUSHROOM)) {
+                    jelly.incrementredMushroomGrazedCount();
+
+                    // Define the threshold for transformation (change 10 to whatever number you want)
+                    if (jelly.getredMushroomGrazedCount() >= 1) {
+                        jelly.transformInto(ModEntities.JellyType.REDMUSHROOM);
+                        // Exit early if transformation occurs
+                        stop();
+                        return;
+                    }
+                }
+
+                jelly.level().removeBlock(targetBlock, false); // Remove block
                 // Small healing effect when grazing is complete
                 jelly.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 0)); // Heals over 3 seconds
 
