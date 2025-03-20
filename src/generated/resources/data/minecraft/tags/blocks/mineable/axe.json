@@ -1,5 +1,6 @@
 {
   "values": [
-    "sticky_resources:sticky_log_oak"
+    "sticky_resources:sticky_log_oak",
+    "sticky_resources:sticky_pumpkin"
   ]
 }

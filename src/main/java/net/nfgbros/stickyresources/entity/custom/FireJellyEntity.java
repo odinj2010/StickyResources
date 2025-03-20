@@ -17,7 +17,7 @@ public class FireJellyEntity extends JellyEntity {
         super.tick();
 
         // Force the entity to appear as if it's always on fire.
-        this.setSecondsOnFire(1);  // Resets the fire ticks every tick
+        this.setSecondsOnFire(2000);  // Resets the fire ticks every tick
 
         // Damage from rain: if it’s raining and the sky is visible, apply custom damage.
         if (this.level().isRaining() && this.level().canSeeSky(this.blockPosition())) {
@@ -36,8 +36,6 @@ public class FireJellyEntity extends JellyEntity {
             this.setDeltaMovement(this.getDeltaMovement().x, 0.1, this.getDeltaMovement().z);
         }
     }
-
-
     private boolean isFireImmune() {
         return true;
     }

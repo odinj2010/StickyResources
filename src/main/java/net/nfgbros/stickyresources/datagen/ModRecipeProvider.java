@@ -40,11 +40,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         //
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.STICKY_CATALYST.get())
-                .pattern("SSS")
-                .pattern("S S")
-                .define('S', ModItems.SAPPHIRE.get())
-                .unlockedBy(getHasName(ModItems.SAPPHIRE.get()), has(ModItems.SAPPHIRE.get()))
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.STICKY_CATALYST.get())
+                .pattern("EPE")
+                .pattern("PSP")
+                .pattern("EPE")
+                .define('E', Items.ECHO_SHARD)
+                .define('S', Items.SLIME_BALL)
+                .define('P', Items.PRISMARINE_SHARD)
+                .unlockedBy(getHasName(Items.SLIME_BALL), has(Items.SLIME_BALL))
                 .save(pWriter);
 
         //Sapphire Armor

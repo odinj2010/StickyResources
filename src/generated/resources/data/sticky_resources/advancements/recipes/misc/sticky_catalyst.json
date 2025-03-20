@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sapphire": {
+    "has_slime_ball": {
       "conditions": {
         "items": [
           {
             "items": [
-              "sticky_resources:sapphire"
+              "minecraft:slime_ball"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_sapphire",
+      "has_slime_ball",
       "has_the_recipe"
     ]
   ],

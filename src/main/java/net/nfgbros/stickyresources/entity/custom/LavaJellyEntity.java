@@ -1,6 +1,8 @@
 package net.nfgbros.stickyresources.entity.custom;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -17,20 +19,27 @@ import net.minecraft.world.level.block.Blocks;
 public class LavaJellyEntity extends JellyEntity {
 
     private int cobblestoneDropDelay = 0;
-    private static final int COBBLESTONE_DELAY = 60; // Ticks
+    private static final int COBBLESTONE_DELAY = 120; // Ticks
     private int glassDropDelay = 0;
-    private static final int GLASS_DELAY = 60; // Ticks
+    private static final int GLASS_DELAY = 120; // Ticks
     private int copperIngotDropDelay = 0;
-    private static final int COPPERINGOT_DELAY = 60; // Ticks
+    private static final int COPPERINGOT_DELAY = 120; // Ticks
     private int goldIngotDropDelay = 0;
-    private static final int GOLDINGOT_DELAY = 60; // Ticks
+    private static final int GOLDINGOT_DELAY = 120; // Ticks
     private int ironIngotDropDelay = 0;
-    private static final int IRONINGOT_DELAY = 60; // Ticks
+    private static final int IRONINGOT_DELAY = 120; // Ticks
 
     public LavaJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
     }
-
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        // Check if the damage source is fire or lava
+        if (source.is(DamageTypes.ON_FIRE) || source.is(DamageTypes.LAVA)) {
+            return false; // Prevent the entity from taking damage or dying
+        }
+        return super.hurt(source, amount); // Allow other damage sources to proceed normally
+    }
     @Override
     public void tick() {
         super.tick();

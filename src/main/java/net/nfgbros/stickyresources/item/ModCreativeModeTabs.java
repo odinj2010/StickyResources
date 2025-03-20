@@ -27,8 +27,11 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.STICKY_DIRT.get());
                         pOutput.accept(ModBlocks.STICKY_GLASS.get());
                         pOutput.accept(ModBlocks.STICKY_GRAVEL.get());
+                        pOutput.accept(ModBlocks.JELLY_HONEY.get());
+                        pOutput.accept(ModBlocks.STICKY_ICE.get());
                         pOutput.accept(ModBlocks.STICKY_LOG_OAK.get());
                         pOutput.accept(ModBlocks.STICKY_OBSIDIAN.get());
+                        pOutput.accept(ModBlocks.STICKY_PUMPKIN.get());
                         pOutput.accept(ModBlocks.STICKY_SAND.get());
                         pOutput.accept(ModBlocks.STICKY_STONE.get());
                     }).build()

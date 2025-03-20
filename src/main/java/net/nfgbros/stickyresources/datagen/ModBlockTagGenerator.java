@@ -25,7 +25,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(
-                        ModBlocks.STICKY_LOG_OAK.get()
+                        ModBlocks.STICKY_LOG_OAK.get(),
+                        ModBlocks.STICKY_PUMPKIN.get()
                 )
         ;
 
@@ -34,8 +35,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.SAPPHIRE_BLOCK.get(),
 
                         ModBlocks.STICKY_COBBLESTONE.get(),
+                        ModBlocks.STICKY_ICE.get(),
                         ModBlocks.STICKY_OBSIDIAN.get(),
                         ModBlocks.STICKY_STONE.get(),
+
+
 
                         ModBlocks.RAW_SAPPHIRE_BLOCK.get(),
                         ModBlocks.SAPPHIRE_ORE.get(),
@@ -47,7 +51,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(
                         ModBlocks.STICKY_SAND.get(),
                         ModBlocks.STICKY_DIRT.get(),
-                        ModBlocks.STICKY_GRAVEL.get()
+                        ModBlocks.STICKY_GRAVEL.get(),
+                        ModBlocks.JELLY_HONEY.get()
                 )
         ;
 

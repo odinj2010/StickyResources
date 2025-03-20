@@ -2,6 +2,7 @@
   "values": [
     "sticky_resources:sticky_sand",
     "sticky_resources:sticky_dirt",
-    "sticky_resources:sticky_gravel"
+    "sticky_resources:sticky_gravel",
+    "sticky_resources:jelly_honey"
   ]
 }

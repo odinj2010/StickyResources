@@ -1,12 +1,12 @@
 package net.nfgbros.stickyresources.recipe;
 
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.item.ModItems;
 import net.minecraft.world.item.Items;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,11 +14,14 @@ public enum GemPolishingRecipe {
 
     STICKY_AMETHYST(ModItems.STICKY_AMETHYST.get(), new ItemStack(Items.AMETHYST_SHARD)),
     STICKY_BONE_MEAL(ModItems.STICKY_BONE_MEAL.get(), new ItemStack(Items.BONE_MEAL)),
+    STICKY_CAKE(ModItems.JELLY_CAKE.get(), new ItemStack(Items.CAKE)),
     STICKY_CHARCOAL(ModItems.STICKY_CHARCOAL.get(), new ItemStack(Items.CHARCOAL)),
     STICKY_COAL(ModItems.STICKY_COAL.get(), new ItemStack(Items.COAL)),
+    STICKY_BEEF(ModItems.STICKY_BEEF.get(), new ItemStack(Items.BEEF)),
     STICKY_DIAMOND(ModItems.STICKY_DIAMOND.get(), new ItemStack(Items.DIAMOND)),
     STICKY_EMERALD(ModItems.STICKY_EMERALD.get(), new ItemStack(Items.EMERALD)),
     STICKY_ENDER_PEARL(ModItems.STICKY_ENDER_PEARL.get(), new ItemStack(Items.ENDER_PEARL)),
+    STICKY_GRASS(ModItems.STICKY_GRASS.get(), new ItemStack(Items.GRASS)),
     STICKY_RAW_COPPER(ModItems.STICKY_RAW_COPPER.get(), new ItemStack(Items.RAW_COPPER)),
     STICKY_RAW_GOLD(ModItems.STICKY_RAW_GOLD.get(), new ItemStack(Items.RAW_GOLD)),
     STICKY_RAW_IRON(ModItems.STICKY_RAW_IRON.get(), new ItemStack(Items.RAW_IRON)),
@@ -33,6 +36,7 @@ public enum GemPolishingRecipe {
     STICKY_GRAVEL(ModBlocks.STICKY_GRAVEL.get().asItem(), new ItemStack(Blocks.GRAVEL)),
     STICKY_OAK_LOG(ModBlocks.STICKY_LOG_OAK.get().asItem(), new ItemStack(Blocks.OAK_LOG)),
     STICKY_OBSIDIAN(ModBlocks.STICKY_OBSIDIAN.get().asItem(), new ItemStack(Blocks.OBSIDIAN)),
+    STICKY_PUMPKIN(ModBlocks.STICKY_PUMPKIN.get().asItem(),  new ItemStack(Blocks.PUMPKIN)),
     STICKY_SAND(ModBlocks.STICKY_SAND.get().asItem(), new ItemStack(Blocks.SAND)),
     STICKY_STONE(ModBlocks.STICKY_STONE.get().asItem(), new ItemStack(Blocks.STONE))
     ;

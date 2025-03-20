@@ -12,6 +12,8 @@ import java.util.Comparator;
 
 public class JellySwarmGoal extends Goal {
 
+    private static final double LEADER_HEALTH_BONUS = 5;
+    private static final double LEADER_SPEED_BONUS = 0.2f;
     private final JellyEntity jelly;
     private double speedModifier;
     private JellyEntity swarmLeader;

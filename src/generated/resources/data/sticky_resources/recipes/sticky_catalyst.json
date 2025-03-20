@@ -1,14 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "equipment",
+  "category": "misc",
   "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "P": {
+      "item": "minecraft:prismarine_shard"
+    },
     "S": {
-      "item": "sticky_resources:sapphire"
+      "item": "minecraft:slime_ball"
     }
   },
   "pattern": [
-    "SSS",
-    "S S"
+    "EPE",
+    "PSP",
+    "EPE"
   ],
   "result": {
     "item": "sticky_resources:sticky_catalyst"

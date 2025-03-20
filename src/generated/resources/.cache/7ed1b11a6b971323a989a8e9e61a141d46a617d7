@@ -1,10 +1,10 @@
-// 1.20.1	2025-03-16T23:00:29.7005852	Tags for minecraft:block mod id sticky_resources
+// 1.20.1	2025-03-19T18:29:19.6982003	Tags for minecraft:block mod id sticky_resources
 ad70a019fde319239ccc917ad9141391c197ecc1 data/forge/tags/blocks/needs_netherite_tool.json
 26271f66a8e539e606843cdd8806285223d25329 data/minecraft/tags/blocks/fences.json
 031a5340217584aa3f46b1d3c1f6e404e83e2aa1 data/minecraft/tags/blocks/fence_gates.json
-11f6356546e4cfabfc03ec1d6d8650ad5834184c data/minecraft/tags/blocks/mineable/axe.json
-c6072517f2cf61fef1c675e6aa45230ab6c992b7 data/minecraft/tags/blocks/mineable/pickaxe.json
-e49c7cf07c4549f6841d1fe05560c92e492d8339 data/minecraft/tags/blocks/mineable/shovel.json
+856ac0b72f1ed691ca9711c9ac6343ff86561482 data/minecraft/tags/blocks/mineable/axe.json
+f53e0a12f36698b751fa87d212615de30ffad3c5 data/minecraft/tags/blocks/mineable/pickaxe.json
+8c7ab47b40a4e89ffe22c5983c1c749caedc869a data/minecraft/tags/blocks/mineable/shovel.json
 b11349721bdd17e4fb3c43c22728ab5f72274837 data/minecraft/tags/blocks/needs_diamond_tool.json
 cdfbc8aa1ab7108eda96b8287a316d9beb2e693c data/minecraft/tags/blocks/needs_iron_tool.json
 dee4d92a0cf92f14c163caf068e9537cc2dc3e13 data/minecraft/tags/blocks/needs_stone_tool.json

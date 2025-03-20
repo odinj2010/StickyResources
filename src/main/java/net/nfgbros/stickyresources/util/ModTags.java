@@ -6,6 +6,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.ModBlocks;
 import net.nfgbros.stickyresources.item.ModItems;
@@ -44,8 +45,12 @@ public class ModTags {
         public static Item getNonStickyItem(Item item) {
             if (item == ModItems.STICKY_AMETHYST.get()) {
                 return net.minecraft.world.item.Items.AMETHYST_SHARD;
-            } else if (item == ModItems.STICKY_BONE_MEAL.get()) {
+            } else if (item == ModItems.STICKY_BEEF.get()) {
+                return net.minecraft.world.item.Items.BEEF;
+            }  else if (item == ModItems.STICKY_BONE_MEAL.get()) {
                 return net.minecraft.world.item.Items.BONE_MEAL;
+            }  else if (item == ModItems.JELLY_CAKE.get()) {
+                return net.minecraft.world.item.Items.CAKE;
             }  else if (item == ModItems.STICKY_CHARCOAL.get()) {
                 return net.minecraft.world.item.Items.CHARCOAL;
             }else if (item == ModItems.STICKY_COAL.get()) {
@@ -62,8 +67,12 @@ public class ModTags {
                 return net.minecraft.world.item.Items.ENDER_PEARL;
             } else if (item == ModBlocks.STICKY_GLASS.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.GLASS.asItem();
-            } else if (item == ModBlocks.STICKY_GRAVEL.get().asItem()) {
+            } else if (item == ModItems.STICKY_GRASS.get()) {
+                return net.minecraft.world.item.Items.GRASS;
+            }  else if (item == ModBlocks.STICKY_GRAVEL.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.GRAVEL.asItem();
+            } else if (item == ModBlocks.STICKY_ICE.get().asItem()) {
+                return net.minecraft.world.level.block.Blocks.ICE.asItem();
             } else if (item == ModItems.STICKY_LAPIS_LAZULI.get()) {
                 return net.minecraft.world.item.Items.LAPIS_LAZULI;
             } else if (item == ModBlocks.STICKY_LOG_OAK.get().asItem()) {
@@ -72,6 +81,8 @@ public class ModTags {
                 return net.minecraft.world.level.block.Blocks.OBSIDIAN.asItem();
             } else if (item == ModItems.STICKY_PRISMERINE_CRYSTALS.get()) {
                 return net.minecraft.world.item.Items.PRISMARINE_CRYSTALS;
+            } else if (item == ModBlocks.STICKY_PUMPKIN.get().asItem()) {
+                return net.minecraft.world.level.block.Blocks.PUMPKIN.asItem();
             } else if (item == ModItems.STICKY_RAW_COPPER.get()) {
                 return net.minecraft.world.item.Items.RAW_COPPER;
             } else if (item == ModItems.STICKY_RAW_GOLD.get()) {
@@ -84,10 +95,14 @@ public class ModTags {
                 return net.minecraft.world.item.Items.RED_MUSHROOM;
             } else if (item == ModItems.STICKY_REDSTONE_DUST.get()) {
                 return net.minecraft.world.item.Items.REDSTONE;
+            } else if (item == ModItems.STICKY_ROTTON_FLESH.get()) {
+                return net.minecraft.world.item.Items.ROTTEN_FLESH;
             } else if (item == ModBlocks.STICKY_SAND.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.SAND.asItem();
             } else if (item == ModBlocks.STICKY_STONE.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.STONE.asItem();
+            } else if (item == ModItems.STICKY_STRAWBERRY.get()) {
+                return ModItems.STRAWBERRY.get();
             }
             return item; // If it's not a sticky item, return the item itself
         }

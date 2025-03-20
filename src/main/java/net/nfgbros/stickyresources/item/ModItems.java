@@ -32,7 +32,11 @@ public class ModItems {
     // Sticky Items
     public static final RegistryObject<Item> STICKY_AMETHYST = ITEMS.register("sticky_amethyst",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_BEEF = ITEMS.register("sticky_beef",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_BONE_MEAL = ITEMS.register("sticky_bone_meal",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> JELLY_CAKE = ITEMS.register("jelly_cake",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_COAL = ITEMS.register("sticky_coal",
             () -> new Item(new Item.Properties()));
@@ -43,6 +47,8 @@ public class ModItems {
     public static final RegistryObject<Item> STICKY_EMERALD = ITEMS.register("sticky_emerald",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_ENDER_PEARL = ITEMS.register("sticky_ender_pearl",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_GRASS = ITEMS.register("sticky_grass",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_LAPIS_LAZULI = ITEMS.register("sticky_lapis_lazuli",
             () -> new Item(new Item.Properties()));
@@ -59,6 +65,10 @@ public class ModItems {
     public static final RegistryObject<Item> STICKY_RED_MUSHROOM = ITEMS.register("sticky_red_mushroom",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_REDSTONE_DUST = ITEMS.register("sticky_redstone_dust",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_ROTTON_FLESH = ITEMS.register("sticky_rotton_flesh",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STICKY_STRAWBERRY = ITEMS.register("sticky_strawberry",
             () -> new Item(new Item.Properties()));
 
     // Utility Items
@@ -112,35 +122,43 @@ public class ModItems {
     private static final Map<ModEntities.JellyType, Integer[]> JELLY_SPAWN_EGG_COLORS = new EnumMap<>(ModEntities.JellyType.class);
     static {
         //Jelly Spawn Eggs                             //Jelly Type             //Color Codes
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.AMETHYST, new Integer[]{0xeeeeee, 0xcccccc}); // Off-white
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.BONE, new Integer[]{0xeeeeee, 0xcccccc}); // Off-white
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.CHARCOAL, new Integer[]{0x222222, 0x444444}); // Dark grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.COAL, new Integer[]{0x111111, 0x222222}); // Very dark grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.COBBLESTONE, new Integer[]{0x999999, 0x777777}); // Grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.DEFAULT, new Integer[]{0x00ff00, 0x008000}); // Greenish
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.AMETHYST, new Integer[]{0x9966cc, 0x663399}); // Purple
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.BONE, new Integer[]{0xf2f2f2, 0xd9d9d9}); // Bone white
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.CAKE, new Integer[]{0xffe5b4, 0xd2691e}); // Cake-like colors
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.CHARCOAL, new Integer[]{0x3c3c3c, 0x262626}); // Dark grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.COAL, new Integer[]{0x1c1c1c, 0x0d0d0d}); // Black
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.COBBLESTONE, new Integer[]{0x7d7d7d, 0x5c5c5c}); // Stone grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.COW, new Integer[]{0x4c322e, 0x8b5a2b}); // Cowhide brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.DEFAULT, new Integer[]{0x00ff00, 0x008000}); // Green
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.DIAMOND, new Integer[]{0x5decf4, 0x2ab5e4}); // Light blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.DIRT, new Integer[]{0x9b7653, 0x745637}); // Brown
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ELECTRIC, new Integer[]{0xffff00, 0xffd700}); // Yellow, gold
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.EMERALD, new Integer[]{0x17f275, 0x0fb058}); // Bright green
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ENDERPEARL, new Integer[]{0x160f29, 0xbb64d1}); // Dark purple with lighter purple
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.FIRE, new Integer[]{0xcc4633, 0x9e3526}); // Red
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GLASS, new Integer[]{0xcfdbe6, 0xa1b3ba}); // Light blue-grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ELECTRIC, new Integer[]{0xffff00, 0xffd700}); // Bright yellow
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.EMERALD, new Integer[]{0x17f275, 0x0fb058}); // Green
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ENDERPEARL, new Integer[]{0x160f29, 0x4b0082}); // Deep purple
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.FIRE, new Integer[]{0xff4500, 0xff0000}); // Fiery red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GLASS, new Integer[]{0xcfdbe6, 0xa1b3ba}); // Light transparent blue
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GRASS, new Integer[]{0x228B22, 0x6B8E23}); // Green
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.GRAVEL, new Integer[]{0xa39d93, 0x827e76}); // Grey-brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.HONEY, new Integer[]{0xffc30f, 0xffa500}); // Honey yellow
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ICE, new Integer[]{0xa0e9ff, 0x6fcff7}); // Icy blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LAPIS, new Integer[]{0x2661c2, 0x1e4599}); // Blue
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LAVA, new Integer[]{0xff4500, 0xd43c00}); // Red-orange
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LOGOAK, new Integer[]{0x694e27, 0x513c1c}); // Darker brown
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.MAGNET, new Integer[]{0x555555, 0x666666}); // Darker grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.OBSIDIAN, new Integer[]{0x14141e, 0x292944}); // Very dark bluish grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LAVA, new Integer[]{0xff4500, 0xd43c00}); // Molten red-orange
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.LOGOAK, new Integer[]{0x8B4513, 0x5A3E1A}); // Oak brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.MAGNET, new Integer[]{0x555555, 0xff0000}); // Grey and red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.OBSIDIAN, new Integer[]{0x1c1b29, 0x3b3a4b}); // Deep purple-black
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.PUMPKIN, new Integer[]{0xff7518, 0xffa500}); // Pumpkin orange
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.PRISMERINE, new Integer[]{0x69a49b, 0x4fa194}); // Greenish blue
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWCOPPER, new Integer[]{0xeca674, 0xd38b4b}); // Orange-ish
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWGOLD, new Integer[]{0xe5be76, 0xd1a555}); // Yellow-ish
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWIRON, new Integer[]{0xe0a8a1, 0xc98d85}); // Light reddish grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWSAPPHIRE, new Integer[]{0x89cff0, 0x5cb3e4}); // Lighter blue
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDMUSHROOM, new Integer[]{0xcc4633, 0x9e3526}); // Red
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDSTONEDUST, new Integer[]{0xcc4633, 0x9e3526}); // Red
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAND, new Integer[]{0xe0cd98, 0xcbbba7}); // Light yellowish brown
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STONE, new Integer[]{0x999999, 0x777777}); // Grey
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.WATER, new Integer[]{0x3dd5ff, 0x39a7e1});// Bright blue
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWCOPPER, new Integer[]{0xe67300, 0xc06000}); // Copper orange
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWGOLD, new Integer[]{0xffd700, 0xe5be76}); // Gold yellow
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWIRON, new Integer[]{0xd1a382, 0xb87333}); // Iron brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWSAPPHIRE, new Integer[]{0x4169e1, 0x4682b4}); // Deep blue
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDMUSHROOM, new Integer[]{0xff0000, 0xb22222}); // Mushroom red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDSTONEDUST, new Integer[]{0xff0000, 0xcc0000}); // Bright red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ROTTONFLESH, new Integer[]{0x556b2f, 0x6b8e23}); // Greenish brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAND, new Integer[]{0xf4a460, 0xffd27f}); // Sandy tan
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STONE, new Integer[]{0x7d7d7d, 0x5c5c5c}); // Stone grey
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STRAWBERRY, new Integer[]{0xff4c4c, 0xd62d2d}); // Strawberry red
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.WATER, new Integer[]{0x3dd5ff, 0x0077be}); // Ocean blue
         // Add other JellyTypes and their colors here...
     }
     //Register spawn eggs as items

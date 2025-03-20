@@ -25,9 +25,11 @@ public class ModEntities {
 
         AMETHYST(BoneJellyEntity::new, "amethyst_jelly", 0.5f, 0.5f), // Adjusted size
         BONE(BoneJellyEntity::new, "bone_jelly", 0.5f, 0.5f), // Adjusted size
+        CAKE(CakeJellyEntity::new, "cake_jelly", 0.5f, 0.5f), // Adjusted size
         CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 0.5f, 0.5f), // Adjusted size
         COAL(CoalJellyEntity::new, "coal_jelly", 0.5f, 0.5f), // Adjusted size
         COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 0.5f, 0.5f), // Adjusted size
+        COW(CowJellyEntity::new, "cow_jelly", 0.5f, 0.5f), // Adjusted size
         DEFAULT(JellyEntity::new, "default_jelly", 0.5f, 0.5f), // Adjusted size
         DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 0.5f, 0.5f), // Adjusted size
         DIRT(DirtJellyEntity::new, "dirt_jelly", 0.5f, 0.5f), // Adjusted size
@@ -36,21 +38,27 @@ public class ModEntities {
         ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 0.5f, 0.5f), // Adjusted size
         FIRE(FireJellyEntity::new, "fire_jelly", 0.5f, 0.5f), // Adjusted size
         GLASS(GlassJellyEntity::new, "glass_jelly", 0.5f, 0.5f), // Adjusted size
+        GRASS(GrassJellyEntity::new, "grass_jelly", 0.5f, 0.5f), // Adjusted size
         GRAVEL(GravelJellyEntity::new, "gravel_jelly", 0.5f, 0.5f), // Adjusted size
+        HONEY(HoneyJellyEntity::new, "honey_jelly", 0.5f, 0.5f), // Adjusted size
+        ICE(IceJellyEntity::new, "ice_jelly", 0.5f, 0.5f), // Adjusted size
         LAPIS(LapisJellyEntity::new, "lapis_jelly", 0.5f, 0.5f), // Adjusted size
         LAVA(LavaJellyEntity::new, "lava_jelly", 0.5f, 0.5f), // Adjusted size
         MAGNET(MagnetJellyEntity::new, "magnet_jelly", 0.5f, 0.5f), // Adjusted size
         LOGOAK(LogOakJellyEntity::new, "logoak_jelly", 0.5f, 0.5f), // Adjusted size
         OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 0.5f, 0.5f), // Adjusted size
         PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 0.5f, 0.5f), // Adjusted size
+        PUMPKIN(PumpkinJellyEntity::new, "pumpkin_jelly", 0.5f, 0.5f), // Adjusted size
         RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 0.5f, 0.5f), // Adjusted size
         RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 0.5f, 0.5f), // Adjusted size
         RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f), // Adjusted size
         REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f), // Adjusted size
         REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f), // Adjusted size
+        ROTTONFLESH(RottonFleshJellyEntity::new, "rotton_flesh_jelly", 0.5f, 0.5f), // Adjusted size
         SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f), // Adjusted size
         RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f), // Adjusted size
         STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f),
+        STRAWBERRY(StrawberryJellyEntity::new, "strawberry_jelly", 0.5f, 0.5f), // Adjusted size
         WATER(WaterJellyEntity::new, "water_jelly", 0.5f, 0.5f); // Adjusted size
 
 

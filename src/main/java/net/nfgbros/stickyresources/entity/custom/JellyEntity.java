@@ -84,7 +84,7 @@ public class JellyEntity extends Animal {
     public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D)
+                .add(Attributes.MOVEMENT_SPEED, 0.35D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
@@ -100,7 +100,7 @@ public class JellyEntity extends Animal {
             this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
             this.goalSelector.addGoal(6, new JellySwarmGoal(this, 1.2D));
             this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 2.0F));
-            this.goalSelector.addGoal(8, new RandomStrollGoal(this, 1.0D));
+            this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.35D));
             this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         } else {
             // Individual behavior:
@@ -109,7 +109,7 @@ public class JellyEntity extends Animal {
             this.goalSelector.addGoal(4, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
             this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
             this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 2.0F));
-            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+            this.goalSelector.addGoal(7, new RandomStrollGoal(this, 0.35D));
             this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         }
     }
@@ -147,25 +147,35 @@ public class JellyEntity extends Animal {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         // Check if the damage source is lightning or shock damage
-        if (source.getMsgId().equals("lightningBolt")) {
-            transformIntoElectricJelly();
+        if (source.is(DamageTypes.LIGHTNING_BOLT)) {
+            if (!this.isRemoved()) {
+                if (this.getJellyType() == ModEntities.JellyType.DEFAULT) {
+                    transformIntoElectricJelly();
+                }
+            }
             return true; // Entity has been transformed
         }
         else if (source.is(DamageTypes.ON_FIRE)) {
-            if (!this.isRemoved()) { // Check if the entity is not already removed
-                transformIntoFireJelly(); // Transform the entity into "XXXX" Jelly
+            if (!this.isRemoved()) {
+                if (this.getJellyType() == ModEntities.JellyType.DEFAULT) {
+                    transformIntoFireJelly();
+                }
             }
-            return false; // Prevent the entity from taking damage or dying
+            return true; // Prevent the entity from taking damage or dying
         }
         else if (source.is(DamageTypes.DROWN)) {
             if (!this.isRemoved()) { // Check if the entity is not already removed
-                transformIntoWaterJelly(); // Transform the entity into "XXXX" Jelly
+                if (this.getJellyType() == ModEntities.JellyType.DEFAULT) {
+                    transformIntoWaterJelly(); // Transform the entity into "XXXX" Jelly
+                }
             }
-            return false; // Prevent the entity from taking damage or dying
+            return true; // Prevent the entity from taking damage or dying
         }
         else if (source.is(DamageTypes.LAVA)) {
             if (!this.isRemoved()) { // Check if the entity is not already removed
-                transformIntoLavaJelly(); // Transform the entity into "XXXX" Jelly
+                if (this.getJellyType() == ModEntities.JellyType.DEFAULT) {
+                    transformIntoLavaJelly(); // Transform the entity into "XXXX" Jelly
+                }
             }
             return false; // Prevent the entity from taking damage or dying
         }
@@ -256,11 +266,17 @@ public class JellyEntity extends Animal {
         else if (type == ModEntities.JellyType.CHARCOAL) {
             dropStack = new ItemStack(ModItems.STICKY_CHARCOAL.get());
         }
+        else if (type == ModEntities.JellyType.CAKE) {
+            dropStack = new ItemStack(ModItems.JELLY_CAKE.get());
+        }
         else if (type == ModEntities.JellyType.COAL) {
             dropStack = new ItemStack(ModItems.STICKY_COAL.get());
         }
         else if (type == ModEntities.JellyType.COBBLESTONE) {
             dropStack = new ItemStack(ModBlocks.STICKY_COBBLESTONE.get());
+        }
+        else if (type == ModEntities.JellyType.COW) {
+            dropStack = new ItemStack(ModItems.STICKY_BEEF.get());
         }
         else if (type == ModEntities.JellyType.DEFAULT) {
             dropStack = new ItemStack(Items.SLIME_BALL);
@@ -280,8 +296,17 @@ public class JellyEntity extends Animal {
         else if (type == ModEntities.JellyType.GLASS) {
             dropStack = new ItemStack(ModBlocks.STICKY_GLASS.get());
         }
+        else if (type == ModEntities.JellyType.GRASS) {
+            dropStack = new ItemStack(Items.GRASS);
+        }
         else if (type == ModEntities.JellyType.GRAVEL) {
             dropStack = new ItemStack(ModBlocks.STICKY_GRAVEL.get());
+        }
+        else if (type == ModEntities.JellyType.HONEY) {
+            dropStack = new ItemStack(ModBlocks.JELLY_HONEY.get());
+        }
+        else if (type == ModEntities.JellyType.ICE) {
+            dropStack = new ItemStack(ModBlocks.STICKY_ICE.get());
         }
         else if (type == ModEntities.JellyType.LAPIS) {
             dropStack = new ItemStack(ModItems.STICKY_LAPIS_LAZULI.get());
@@ -295,6 +320,9 @@ public class JellyEntity extends Animal {
         else if (type == ModEntities.JellyType.PRISMERINE) {
             dropStack = new ItemStack(ModItems.STICKY_PRISMERINE_CRYSTALS.get());
         }
+        else if (type == ModEntities.JellyType.PUMPKIN) {
+            dropStack = new ItemStack(ModBlocks.STICKY_PUMPKIN.get());
+        }
         else if (type == ModEntities.JellyType.RAWCOPPER) {
             dropStack = new ItemStack(ModItems.STICKY_RAW_COPPER.get());
         }
@@ -307,6 +335,9 @@ public class JellyEntity extends Animal {
         else if (type == ModEntities.JellyType.REDSTONEDUST) {
             dropStack = new ItemStack(ModItems.STICKY_REDSTONE_DUST.get());
         }
+        else if (type == ModEntities.JellyType.ROTTONFLESH) {
+            dropStack = new ItemStack(ModItems.STICKY_ROTTON_FLESH.get());
+        }
         else if (type == ModEntities.JellyType.REDMUSHROOM) {
             dropStack = new ItemStack(ModItems.STICKY_RED_MUSHROOM.get());
         }
@@ -318,6 +349,9 @@ public class JellyEntity extends Animal {
         }
         else if (type == ModEntities.JellyType.STONE) {
             dropStack = new ItemStack(ModBlocks.STICKY_STONE.get());
+        }
+        else if (type == ModEntities.JellyType.STRAWBERRY) {
+            dropStack = new ItemStack(ModItems.STICKY_STRAWBERRY.get());
         }
         if (!dropStack.isEmpty()) {
             ItemEntity itemEntity = new ItemEntity(world, this.getX(), this.getY(), this.getZ(), dropStack);
