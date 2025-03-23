@@ -12,10 +12,10 @@ loaderVersion="[47,)" #mandatory This is typically bumped every Minecraft versio
 
 # The license for your mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
-license="MIT" # Change this if you use a different license.
+license="All Rights Reserved" # Change this if you use a different license.
 
 # A URL to refer people to when problems occur with this mod
-#issueTrackerURL="https://your.issue.tracker.url/" #optional
+issueTrackerURL="https://github.com/odinj2010/StickyResources/issues" #optional
 
 # If your mod is purely client-side and has no multiplayer functionality (be it dedicated servers or Open to LAN),
 # set this to true, and Forge will set the correct displayTest for you and skip loading your mod on dedicated servers.
@@ -57,7 +57,30 @@ authors="NFGOdin, NFGAnarchy, narutodin" #optional
 #displayTest="MATCH_VERSION" # if nothing is specified, MATCH_VERSION is the default when clientSideOnly=false, otherwise IGNORE_ALL_VERSION when clientSideOnly=true (#optional)
 
 # The description text for the mod (multi-line!) (#mandatory)
-description='''This mod introduces sticky, jelly-like creatures into Minecraft, adding new mechanics and interactions!'''
+description = """
+Prepare to experience Minecraft in a whole new, *stickier* way! The **Sticky Resources** mod introduces the **Jellies**, a diverse and dynamic ecosystem of gelatinous creatures that will reshape your world. These aren't just passive mobs; Jellies are living, breathing (sort of!), and decidedly sticky entities that interact with the environment and other creatures in surprising and engaging ways.
+
+**Key Features:**
+
+*   **The Jelly Ecosystem:** Discover a variety of Jelly types, each with unique appearances, behaviors, and preferences. From the common **Slime Jellies** that leave a trail of slime to the rare **Amber Jellies** that are incredibly sticky, each type offers a distinct challenge and reward. Other types include **Bouncy Jellies**, **Toxic Jellies**, and **Crystal Jellies**, each with their own special properties.
+*   **Sticky Mechanics:** Jellies are defined by their inherent stickiness. Contact with a Jelly will temporarily adhere you to it, slowing you down or even trapping you! The degree of stickiness varies by Jelly type, creating a dynamic and unpredictable experience.
+*   **Grazing Behavior:** Jellies have a unique grazing behavior, consuming specific blocks to sustain themselves. Each Jelly type has its own dietary preferences, from common blocks like dirt and sand to more exotic materials like amethyst and raw resources. Watch as they slowly consume the environment around them!
+*   **Jelly Resources:** Defeating Jellies yields valuable resources like **Jelly Slime** and **Amber Jelly**. These materials can be used to craft new items, tools, and blocks with unique properties.
+*   **Crafting and Utility:** Harness the power of stickiness! Craft **Sticky Boots** to walk on walls and ceilings, create **Jelly Traps** to ensnare mobs, or brew **Jelly Potions** for temporary stickiness or immunity. You can also craft **Jelly Glass**, a new type of glass that is more durable and can be colored.
+*   **Swarm Behavior (WIP):** Some Jellies can form swarms, exhibiting complex group behaviors. Swarms have a leader with enhanced abilities, and the group can react to threats and opportunities as a collective. (Note: Swarm behavior is still under development.)
+*   **Configurability:** Fine-tune your Jelly experience! The mod offers extensive configuration options, allowing you to adjust Jelly behavior, health, movement, grazing, and more. Customize the mod to fit your playstyle.
+*   **Environmental Interaction:** Jellies interact with the world in unique ways. They can leave sticky residue on blocks, creating temporary climbing surfaces or traps. They also interact with other mobs and the environment, creating a more dynamic and living world.
+* **Jelly AI:** The Jellies have a complex AI that allows them to do many things, such as grazing, swarming, migrating, and more!
+* **Jelly Diversity:** The Jellies come in many different types, each with its own unique properties and behaviors.
+* **Jelly Movement:** The Jellies can move in many different ways, such as jumping, swimming, and more!
+* **Jelly Health:** The Jellies have a unique health system that allows them to regenerate health.
+* **Jelly Interaction:** The Jellies can interact with each other and the environment in many different ways.
+* **Jelly Environmental:** The Jellies are affected by the environment, such as weather and temperature.
+
+**A World Transformed:**
+
+The **Sticky Resources** mod isn't just about adding new mobs; it's about fundamentally changing how you interact with the Minecraft world. Prepare to adapt your strategies, explore new possibilities, and embrace the sticky side of survival! Download now and experience the gelatinous revolution!
+"""
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.sticky_resources]] #optional

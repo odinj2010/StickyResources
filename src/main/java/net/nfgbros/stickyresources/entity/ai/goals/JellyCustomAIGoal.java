@@ -58,7 +58,7 @@ public class JellyCustomAIGoal extends Goal {
             customGoals.add(new PriorityGoal(new JellyCuriosityGoal(jellyEntity), 8));
         }
         if (StickyResourcesConfig.JELLY_BREEDING_ACTIVE.get()) {
-            customGoals.add(new PriorityGoal(new JellyBreedGoal(jellyEntity, 1, 1), 9)); // Priority 9 (after nesting and breeding ritual)
+            customGoals.add(new PriorityGoal(new JellyBreedGoal(jellyEntity, 1, 10), 9)); // Priority 9 (after nesting and breeding ritual)
         }
         if (StickyResourcesConfig.JELLY_RESOURCE_ACTIVE.get()) {
             customGoals.add(new PriorityGoal(new JellyResourceGoal(jellyEntity), 9));
