@@ -1,4 +1,4 @@
-package net.nfgbros.stickyresources.entity.ai.goals.customaigoals;
+package net.nfgbros.stickyresources.entity.ai.goals.customaigoals.social;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

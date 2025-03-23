@@ -1,4 +1,4 @@
-package net.nfgbros.stickyresources.entity.ai.goals.customaigoals;
+package net.nfgbros.stickyresources.entity.ai.goals.customaigoals.social;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -8,8 +8,6 @@ import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.entity.ModEntities.JellyType;
 
 import java.util.EnumSet;
-
-import static net.nfgbros.stickyresources.entity.custom.JellyEntity.HUNGER_THRESHOLD;
 
 public class JellyBreedGoal extends Goal {
     private final JellyEntity jelly;

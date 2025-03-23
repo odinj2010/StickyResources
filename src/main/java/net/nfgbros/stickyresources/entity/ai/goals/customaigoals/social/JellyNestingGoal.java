@@ -1,4 +1,4 @@
-package net.nfgbros.stickyresources.entity.ai.goals.customaigoals;
+package net.nfgbros.stickyresources.entity.ai.goals.customaigoals.social;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;

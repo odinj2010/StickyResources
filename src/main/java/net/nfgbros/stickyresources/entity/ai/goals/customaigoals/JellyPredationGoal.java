@@ -8,11 +8,20 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for Jelly entities to hunt and consume nearby living entities.
+ * This goal is only applicable to Lava and Water Jellies.
+ */
 public class JellyPredationGoal extends Goal {
     private final JellyEntity jelly;
     private LivingEntity target;
     private final TargetingConditions targetingConditions;
 
+    /**
+     * Constructs a new JellyPredationGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyPredationGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -21,7 +30,7 @@ public class JellyPredationGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (jelly.getJellyType() != ModEntities.JellyType.LAVA || jelly.getJellyType() != ModEntities.JellyType.WATER) {
+        if (jelly.getJellyType() != ModEntities.JellyType.LAVA && jelly.getJellyType() != ModEntities.JellyType.WATER) {
             return false; // Only Lava and Water Jellies hunt
         }
 

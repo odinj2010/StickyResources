@@ -1,4 +1,4 @@
-package net.nfgbros.stickyresources.entity.ai.goals.customaigoals;
+package net.nfgbros.stickyresources.entity.ai.goals.customaigoals.social;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -38,7 +38,7 @@ public class JellyCommunicationGoal extends Goal {
 
             // Play the communication sound
             SoundEvent sound = ModSounds.JELLY_COMMUNICATE.get();
-            serverLevel.playSound(null, jelly.getX(), jelly.getY(), jelly.getZ(), sound, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            serverLevel.playSound(null, jelly.getX(), jelly.getY(), jelly.getZ(), sound, SoundSource.NEUTRAL, 2.0F, 1.0F);
         }
         communicationCooldown = 200; // 10-second cooldown
     }

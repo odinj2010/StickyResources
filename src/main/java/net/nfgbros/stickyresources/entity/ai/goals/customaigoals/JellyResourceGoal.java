@@ -9,10 +9,21 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the JellyEntity, which allows the jelly to collect nearby resources (water or lava).
+ *
+ * @author NFGBros
+ * @since 1.0.0
+ */
 public class JellyResourceGoal extends Goal {
     private final JellyEntity jelly;
     private BlockPos resourcePos;
 
+    /**
+     * Constructs a new JellyResourceGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyResourceGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
