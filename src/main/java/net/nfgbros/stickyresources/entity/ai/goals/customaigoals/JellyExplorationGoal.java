@@ -8,10 +8,21 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the JellyEntity that allows it to explore random locations within a 20x20 area around its current position.
+ *
+ * @author NFGBros
+ * @since 1.0.0
+ */
 public class JellyExplorationGoal extends Goal {
     private final JellyEntity jelly;
     private BlockPos explorationTarget;
 
+    /**
+     * Constructs a new JellyExplorationGoal for the given JellyEntity.
+     *
+     * @param jelly The JellyEntity that this goal is associated with.
+     */
     public JellyExplorationGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

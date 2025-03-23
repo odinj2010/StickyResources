@@ -6,10 +6,20 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the Jelly entity to migrate to a random location during the day and clear weather.
+ *
+ * @author NFGbros
+ */
 public class JellyMigrationGoal extends Goal {
     private final JellyEntity jelly;
     private int migrationCooldown = 0;
 
+    /**
+     * Constructs a new JellyMigrationGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyMigrationGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));

@@ -8,11 +8,22 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the JellyEntity that handles defense against nearby threats.
+ *
+ * @author NFGBros
+ * @since 1.0.0
+ */
 public class JellyDefenseGoal extends Goal {
     private final JellyEntity jelly;
     private LivingEntity threat;
     private final TargetingConditions targetingConditions;
 
+    /**
+     * Constructs a new instance of JellyDefenseGoal.
+     *
+     * @param jelly The JellyEntity that this goal belongs to.
+     */
     public JellyDefenseGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

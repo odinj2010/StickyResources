@@ -13,9 +13,11 @@ public class JellyBreedGoal extends Goal {
     private final JellyEntity jelly;
     private JellyEntity partner;
     private int breedingCooldown;
+    private final JellyJointNestingGoal jointNestingGoal;
 
     public JellyBreedGoal(JellyEntity jelly, int i, int i1) {
         this.jelly = jelly;
+        this.jointNestingGoal = new JellyJointNestingGoal(jelly);
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -57,6 +59,10 @@ public class JellyBreedGoal extends Goal {
             jelly.setMate(partner);
             partner.setMate(jelly); // Set the mate for the partner as well
         }
+        // Start the joint nesting goal
+        if(jelly.getMate() != null){
+            jelly.goalSelector.addGoal(0, jointNestingGoal);
+        }
     }
 
     @Override
@@ -65,6 +71,8 @@ public class JellyBreedGoal extends Goal {
         if (partner != null && partner != jelly.getMate()) {
             this.partner = null;
         }
+        // Stop the joint nesting goal
+        jelly.goalSelector.removeGoal(jointNestingGoal);
     }
 
     @Override
@@ -154,6 +162,8 @@ public class JellyBreedGoal extends Goal {
             baby.setBaby(true);
             baby.moveTo(jelly.getX(), jelly.getY(), jelly.getZ(), 0.0F, 0.0F);
             jelly.level().addFreshEntity(baby);
+            jelly.addFamilyMember(baby);
+            partner.addFamilyMember(baby);
         }
     }
 

@@ -15,12 +15,22 @@ import net.nfgbros.stickyresources.item.ModItems;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A custom goal for jelly entities that handles jelly transformations based on damage and item absorption.
+ *
+ * @author YourName
+ */
 public class JellyEvolutionGoal extends Goal {
 
     private final JellyEntity jelly;
     private final Map<ModEntities.JellyType, Integer> absorptionCount = new HashMap<>();
     private JellyEntity jellyEntity;
 
+    /**
+     * Constructs a new instance of JellyEvolutionGoal.
+     *
+     * @param jelly The jelly entity that this goal is associated with.
+     */
     public JellyEvolutionGoal(JellyEntity jelly) {
         this.jelly = jelly;
     }
@@ -36,6 +46,9 @@ public class JellyEvolutionGoal extends Goal {
         handleItemAbsorption();
     }
 
+    /**
+     * Handles jelly transformations based on damage received.
+     */
     private void handleDamageTransformations() {
         DamageSource source = jelly.getLastDamageSource();
         /// Makes sure source is not null and the jelly is in its default state
@@ -52,12 +65,18 @@ public class JellyEvolutionGoal extends Goal {
         }
     }
 
+    /**
+     * Handles jelly transformations based on items absorbed.
+     */
     public void handleItemAbsorption() {
         if (jelly.tickCount % 20 == 0) { // Check every 20 ticks
             absorbNearbyItems();
         }
     }
 
+    /**
+     * Absorbs nearby items and triggers jelly transformations based on the absorbed items.
+     */
     private void absorbNearbyItems() {
         Level world = jelly.level();
         ModEntities.JellyType jellyType = jelly.getJellyType();
@@ -69,6 +88,11 @@ public class JellyEvolutionGoal extends Goal {
         }
     }
 
+    /**
+     * Absorbs nearby items for stone jelly entities and triggers jelly transformations based on the absorbed items.
+     *
+     * @param itemEntity The item entity to absorb.
+     */
     private void absorbStoneJellyItems(ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         if (stack.getItem() == Items.COAL) {
@@ -134,6 +158,11 @@ public class JellyEvolutionGoal extends Goal {
         }
     }
 
+    /**
+     * Absorbs nearby items for default jelly entities and triggers jelly transformations based on the absorbed items.
+     *
+     * @param itemEntity The item entity to absorb.
+     */
     private void absorbDefaultJellyItems(ItemEntity itemEntity) {
         ItemStack stack = itemEntity.getItem();
         if (stack.getItem() == Items.COBBLESTONE) {
@@ -195,6 +224,11 @@ public class JellyEvolutionGoal extends Goal {
         }
     }
 
+    /**
+     * Transforms the jelly entity into a new jelly entity of the specified type.
+     *
+     * @param newType The type of the new jelly entity.
+     */
     private void transformJelly(ModEntities.JellyType newType) {
         if (!jelly.level().isClientSide) {
             jelly.discard();
@@ -206,9 +240,22 @@ public class JellyEvolutionGoal extends Goal {
         }
     }
 
+    /**
+     * Increases the absorption count for the specified jelly type.
+     *
+     * @param type The jelly type.
+     * @param count The amount to increase the absorption count by.
+     */
     private void increaseAbsorptionCount(ModEntities.JellyType type, int count) {
         absorptionCount.put(type, absorptionCount.getOrDefault(type, 0) + count);
     }
+
+    /**
+     * Returns the absorption count for the specified jelly type.
+     *
+     * @param type The jelly type.
+     * @return The absorption count.
+     */
     private int getAbsorptionCount(ModEntities.JellyType type) {
         return absorptionCount.getOrDefault(type, 0);
     }

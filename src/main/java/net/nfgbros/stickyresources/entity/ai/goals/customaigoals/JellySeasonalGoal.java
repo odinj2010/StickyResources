@@ -6,9 +6,20 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * Custom AI goal for the Jelly entity, which handles seasonal behaviors.
+ *
+ * @author NFGbros
+ * @since 1.0.0
+ */
 public class JellySeasonalGoal extends Goal {
     private final JellyEntity jelly;
 
+    /**
+     * Constructs a new JellySeasonalGoal instance.
+     *
+     * @param jelly The Jelly entity for which this goal is created.
+     */
     public JellySeasonalGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
@@ -37,11 +48,23 @@ public class JellySeasonalGoal extends Goal {
         }
     }
 
+    /**
+     * Checks if the current biome is considered winter.
+     *
+     * @param world The world in which the Jelly entity is located.
+     * @return True if the biome is considered winter, false otherwise.
+     */
     private boolean isWinter(Level world) {
         // Check if it's winter (e.g., based on biome or custom logic)
         return world.getBiome(jelly.blockPosition()).get().getBaseTemperature() < 0.15F;
     }
 
+    /**
+     * Checks if the current biome is considered spring.
+     *
+     * @param world The world in which the Jelly entity is located.
+     * @return True if the biome is considered spring, false otherwise.
+     */
     private boolean isSpring(Level world) {
         // Check if it's spring (e.g., based on biome or custom logic)
         return world.getBiome(jelly.blockPosition()).get().getBaseTemperature() > 0.7F;

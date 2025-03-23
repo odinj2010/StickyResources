@@ -11,11 +11,21 @@ import net.nfgbros.stickyresources.entity.ModEntities;
 import java.util.EnumSet;
 import java.util.Set;
 
+/**
+ * A custom AI goal for jelly entities to find and consume food.
+ * The jelly will move towards nearby food items and consume them to increase its hunger level.
+ * The jelly will only consider consuming food items that match its defined food preferences.
+ */
 public class JellyHungerGoal extends Goal {
     private final JellyEntity jelly;
     private int hungerCheckCooldown = 0;
     private final Set<Item> foodItems;
 
+    /**
+     * Constructs a new JellyHungerGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyHungerGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.foodItems = getFoodItemsForJellyType(jelly.getJellyType());

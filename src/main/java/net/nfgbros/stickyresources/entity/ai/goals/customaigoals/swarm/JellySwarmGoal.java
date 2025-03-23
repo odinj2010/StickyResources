@@ -12,7 +12,7 @@ public class JellySwarmGoal extends Goal {
     private final JellyEntity jelly;
     private final double speedModifier;
     private final SwarmState swarmState;
-    private final SwarmLeaderManager leaderManager;
+    private final SwarmCenterManager centerManager;
     private final SwarmMovementManager movementManager;
     private final SwarmPanicManager panicManager;
 
@@ -20,43 +20,38 @@ public class JellySwarmGoal extends Goal {
         this.jelly = jelly;
         this.speedModifier = speedModifier;
         this.swarmState = new SwarmState();
-        this.leaderManager = new SwarmLeaderManager(jelly, swarmState);
-        this.movementManager = new SwarmMovementManager(jelly, swarmState);
+        this.centerManager = new SwarmCenterManager(jelly, swarmState);
+        this.movementManager = new SwarmMovementManager(jelly, swarmState, centerManager);
         this.panicManager = new SwarmPanicManager(jelly, swarmState);
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
     @Override
     public boolean canUse() {
-        if (swarmState.isPanicking) {
-            return true;
-        }
-
         List<JellyEntity> nearby = jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(StickyResourcesConfig.JELLY_SWARM_MERGE_RADIUS.get()));
         if (nearby.size() < StickyResourcesConfig.JELLY_SWARM_MIN_SIZE.get()) {
             return false;
         }
-
-        leaderManager.updateSwarm(nearby); // Update the swarm and choose a new leader if necessary
-        return leaderManager.isLeaderValid(nearby);
+        centerManager.updateSwarmCenter(nearby);
+        return true;
     }
-
-
 
     @Override
     public void tick() {
+        List<JellyEntity> nearby = jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(StickyResourcesConfig.JELLY_SWARM_MERGE_RADIUS.get()));
+        centerManager.updateSwarmCenter(nearby);
+
         if (swarmState.isPanicking) {
             panicManager.handlePanic(speedModifier);
             return;
         }
 
-        List<JellyEntity> nearby = jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(StickyResourcesConfig.JELLY_SWARM_MERGE_RADIUS.get()));
-        if (!leaderManager.isLeaderValid(nearby) || panicManager.shouldRetreat()) { // Pass nearby jellies to isLeaderValid
+        if (panicManager.shouldRetreat()) {
             panicManager.startPanic();
             return;
         }
 
-        movementManager.moveSwarm(speedModifier);
+        movementManager.moveSwarm(speedModifier, nearby);
     }
 
     @Override
@@ -66,16 +61,14 @@ public class JellySwarmGoal extends Goal {
         }
 
         List<JellyEntity> nearby = jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(StickyResourcesConfig.JELLY_SWARM_MERGE_RADIUS.get()));
-        return leaderManager.isLeaderValid(nearby) && // Pass nearby jellies to isLeaderValid
-                nearby.size() >= StickyResourcesConfig.JELLY_SWARM_MIN_SIZE.get();
+        return nearby.size() >= StickyResourcesConfig.JELLY_SWARM_MIN_SIZE.get();
     }
-
 
     @Override
     public void stop() {
         if (swarmState.swarmLeader != null) {
             swarmState.swarmLeader.removeEffect(MobEffects.GLOWING);
         }
-        swarmState.swarmLeader = null;
+        swarmState.reset();
     }
 }

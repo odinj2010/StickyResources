@@ -9,10 +9,21 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the JellyEntity. This goal allows the jelly to explore its surroundings by moving to a nearby block and investigating it.
+ *
+ * @author NFGBros
+ * @since 1.0.0
+ */
 public class JellyCuriosityGoal extends Goal {
     private final JellyEntity jelly;
     private BlockPos targetPos;
 
+    /**
+     * Constructs a new JellyCuriosityGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyCuriosityGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

@@ -7,11 +7,22 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for the JellyEntity that causes the jelly to panic and run away from nearby threats (skeletons and creepers).
+ *
+ * @author NFGBros
+ * @since 1.0.0
+ */
 public class JellyPanicGoal extends Goal {
     private final JellyEntity jelly;
     private LivingEntity threat;
     private final TargetingConditions targetingConditions;
 
+    /**
+     * Constructs a new JellyPanicGoal for the given jelly entity.
+     *
+     * @param jelly the jelly entity for which this goal is created
+     */
     public JellyPanicGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));

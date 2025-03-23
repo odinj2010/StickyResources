@@ -10,19 +10,37 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * Custom AI goal for Jelly entities. This goal handles environmental interactions, such as extinguishing fire for Water Jelly
+ * and melting ice for Lava Jelly.
+ */
 public class JellyEnvironmentGoal extends Goal {
     private final JellyEntity jelly;
 
+    /**
+     * Constructs a new JellyEnvironmentGoal for the given jelly entity.
+     *
+     * @param jelly The jelly entity for which this goal is created.
+     */
     public JellyEnvironmentGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
+    /**
+     * Determines whether this goal can be used at the moment.
+     *
+     * @return Always returns true, indicating that this goal is always active.
+     */
     @Override
     public boolean canUse() {
-        return true; // Always active
+        return true;
     }
 
+    /**
+     * Performs the logic of this goal. In this case, it checks the environment around the jelly entity and performs specific actions
+     * based on its type (Water or Lava).
+     */
     @Override
     public void tick() {
         BlockPos jellyPos = jelly.blockPosition();

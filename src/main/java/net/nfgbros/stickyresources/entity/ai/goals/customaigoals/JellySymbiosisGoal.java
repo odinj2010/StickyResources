@@ -10,11 +10,20 @@ import net.nfgbros.stickyresources.entity.custom.JellyEntity;
 
 import java.util.EnumSet;
 
+/**
+ * A custom AI goal for Jelly entities to seek and interact with symbiotic partners.
+ * Water Jelly entities will seek and heal nearby fish, while Honey Jelly entities will seek and feed nearby bees.
+ */
 public class JellySymbiosisGoal extends Goal {
     private final JellyEntity jelly;
     private LivingEntity symbioticPartner;
     private final TargetingConditions targetingConditions;
 
+    /**
+     * Constructs a new JellySymbiosisGoal for the given jelly entity.
+     *
+     * @param jelly The jelly entity for which this goal is created.
+     */
     public JellySymbiosisGoal(JellyEntity jelly) {
         this.jelly = jelly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

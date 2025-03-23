@@ -1,50 +1,70 @@
 package net.nfgbros.stickyresources.entity.ai.goals.customaigoals.social;
 
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.nfgbros.stickyresources.entity.custom.JellyEntity;
-import net.nfgbros.stickyresources.sound.ModSounds;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class JellyCommunicationGoal extends Goal {
     private final JellyEntity jelly;
+    private JellyEntity targetJelly;
     private int communicationCooldown = 0;
+    private static final int COMMUNICATION_COOLDOWN_MAX = 100; // 5 seconds
 
     public JellyCommunicationGoal(JellyEntity jelly) {
         this.jelly = jelly;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
-        if (communicationCooldown > 0) {
-            communicationCooldown--;
-            return false;
-        }
-
-        // Check if there are nearby jellies
-        return jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(10)).size() > 1;
-    }
-
-    @Override
-    public void start() {
-        if (jelly.level() instanceof ServerLevel serverLevel) {
-            // Emit particles to communicate
-            serverLevel.sendParticles(ParticleTypes.NOTE, jelly.getX(), jelly.getY() + 1, jelly.getZ(), 5, 0.5, 0.5, 0.5, 0.1);
-
-            // Play the communication sound
-            SoundEvent sound = ModSounds.JELLY_COMMUNICATE.get();
-            serverLevel.playSound(null, jelly.getX(), jelly.getY(), jelly.getZ(), sound, SoundSource.NEUTRAL, 2.0F, 1.0F);
-        }
-        communicationCooldown = 200; // 10-second cooldown
+        // Only communicate if the jelly is not a baby and communication is enabled
+        if (jelly.isBaby()) return false;
+        if (communicationCooldown > 0) return false;
+        // Find a nearby jelly to communicate with
+        this.targetJelly = findNearbyJelly();
+        return targetJelly != null;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return false; // One-time communication
+        // Continue communicating if the target jelly is still nearby and alive
+        return targetJelly != null && targetJelly.isAlive() && communicationCooldown > 0;
+    }
+
+    @Override
+    public void start() {
+        communicationCooldown = COMMUNICATION_COOLDOWN_MAX;
+    }
+
+    @Override
+    public void tick() {
+        if (targetJelly == null || !targetJelly.isAlive()) {
+            return;
+        }
+        // Look at the target jelly
+        jelly.getLookControl().setLookAt(targetJelly, 10.0F, jelly.getMaxHeadXRot());
+        // Move towards the target jelly
+        jelly.getNavigation().moveTo(targetJelly, 1.0);
+        // Decrease the communication cooldown
+        communicationCooldown--;
+    }
+
+    @Override
+    public void stop() {
+        communicationCooldown = 0;
+        targetJelly = null;
+    }
+
+    private JellyEntity findNearbyJelly() {
+        // Find nearby jellies to communicate with
+        List<JellyEntity> nearbyJellies = jelly.level().getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(8.0));
+        for (JellyEntity otherJelly : nearbyJellies) {
+            if (otherJelly != jelly) {
+                return otherJelly;
+            }
+        }
+        return null;
     }
 }

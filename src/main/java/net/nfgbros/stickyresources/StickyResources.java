@@ -40,6 +40,7 @@ public class StickyResources {
     private static final Logger LOGGER = LogUtils.getLogger(); // Logger for debugging
 
     public StickyResources() {
+        StickyResourcesConfig.register(ModLoadingContext.get());
         // Get the mod event bus for registering events
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
