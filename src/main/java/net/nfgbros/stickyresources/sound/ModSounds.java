@@ -32,6 +32,9 @@ public class ModSounds {
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(StickyResources.MOD_ID, name)));
     }
+    public static final RegistryObject<SoundEvent> JELLY_COMMUNICATE = SOUND_EVENTS.register("jelly_communicate",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("stickyresources", "jelly_communicate")));
+
 
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);

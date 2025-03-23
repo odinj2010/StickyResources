@@ -67,7 +67,9 @@ public class ModCreativeModeTabs {
                     .displayItems((pParameters, pOutput) -> {
                         //Sticky Items
                         pOutput.accept(ModItems.STICKY_AMETHYST.get());
+                        pOutput.accept(ModItems.STICKY_BEEF.get());
                         pOutput.accept(ModItems.STICKY_BONE_MEAL.get());
+                        pOutput.accept(ModItems.JELLY_CAKE.get());
                         pOutput.accept(ModItems.STICKY_COAL.get());
                         pOutput.accept(ModItems.STICKY_CHARCOAL.get());
                         pOutput.accept(ModItems.STICKY_RAW_COPPER.get());

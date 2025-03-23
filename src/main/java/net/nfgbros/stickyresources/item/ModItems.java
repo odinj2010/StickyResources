@@ -154,7 +154,7 @@ public class ModItems {
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.RAWSAPPHIRE, new Integer[]{0x4169e1, 0x4682b4}); // Deep blue
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDMUSHROOM, new Integer[]{0xff0000, 0xb22222}); // Mushroom red
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.REDSTONEDUST, new Integer[]{0xff0000, 0xcc0000}); // Bright red
-        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ROTTONFLESH, new Integer[]{0x556b2f, 0x6b8e23}); // Greenish brown
+        JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.ROTTENFLESH, new Integer[]{0x556b2f, 0x6b8e23}); // Greenish brown
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.SAND, new Integer[]{0xf4a460, 0xffd27f}); // Sandy tan
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STONE, new Integer[]{0x7d7d7d, 0x5c5c5c}); // Stone grey
         JELLY_SPAWN_EGG_COLORS.put(ModEntities.JellyType.STRAWBERRY, new Integer[]{0xff4c4c, 0xd62d2d}); // Strawberry red

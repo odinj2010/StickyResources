@@ -1,0 +1,18 @@
+{
+  "features": [
+    [
+      "sticky_resources:sticky_tree"
+    ]
+  ],
+  "spawners": {
+    "creature": [
+      {
+        "type": "sticky_resources:default_jelly",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ]
+  }
+}
+   

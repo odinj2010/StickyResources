@@ -50,8 +50,10 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 
         // Sticky Items
+        simpleItem(ModItems.JELLY_CAKE, "item/cake", "item/sticky/jelly_cake");
         simpleItem(ModItems.STICKY_AMETHYST, "item/amethyst_shard", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_BONE_MEAL, "item/bone_meal", "item/sticky/jelly_slime_ball");
+        simpleItem(ModItems.STICKY_BEEF, "item/beef", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_COAL, "item/coal", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_CHARCOAL, "item/charcoal", "item/sticky/jelly_slime_ball");
         simpleItem(ModItems.STICKY_RAW_COPPER, "item/raw_copper", "item/sticky/jelly_slime_ball");

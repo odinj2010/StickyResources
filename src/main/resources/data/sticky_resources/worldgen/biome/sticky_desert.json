@@ -1,0 +1,13 @@
+{
+  "spawners": {
+    "creature": [
+      {
+        "type": "sticky_resources:sand_jelly",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ]
+  }
+}
+   

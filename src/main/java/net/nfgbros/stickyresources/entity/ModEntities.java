@@ -1,7 +1,10 @@
 package net.nfgbros.stickyresources.entity;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,7 +57,7 @@ public class ModEntities {
         RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f), // Adjusted size
         REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f), // Adjusted size
         REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f), // Adjusted size
-        ROTTONFLESH(RottonFleshJellyEntity::new, "rotton_flesh_jelly", 0.5f, 0.5f), // Adjusted size
+        ROTTENFLESH(RottonFleshJellyEntity::new, "rotton_flesh_jelly", 0.5f, 0.5f), // Adjusted size
         SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f), // Adjusted size
         RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f), // Adjusted size
         STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f),

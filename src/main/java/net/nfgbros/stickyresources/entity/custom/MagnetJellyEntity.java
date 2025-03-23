@@ -1,13 +1,9 @@
 package net.nfgbros.stickyresources.entity.custom;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.nfgbros.stickyresources.entity.ai.goal.JellyGrazeGoal;
 import net.nfgbros.stickyresources.util.ModTags;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,17 +11,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-
-import java.util.EnumSet;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 
 public class MagnetJellyEntity extends JellyEntity {
 

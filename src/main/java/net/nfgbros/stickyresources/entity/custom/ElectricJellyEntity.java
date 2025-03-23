@@ -1,10 +1,8 @@
 package net.nfgbros.stickyresources.entity.custom;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,8 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.damagesource.DamageSource; // Import DamageSource
-import net.nfgbros.stickyresources.entity.ai.goal.JellyGrazeGoal;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
+import net.nfgbros.stickyresources.entity.ai.goals.customaigoals.graze.JellyGrazeGoal;
 
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class ElectricJellyEntity extends JellyEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, RawIronJellyEntity.class, 5.0F, 1.5D, 1.3D));
-        this.goalSelector.addGoal(3, new JellyGrazeGoal(this));
+        if (StickyResourcesConfig.JELLY_GRAZING_ACTIVE.get() == true) {this.goalSelector.addGoal(3, new JellyGrazeGoal(this));}
         this.goalSelector.addGoal(4, new BreedGoal(this, 1.15D));
         this.goalSelector.addGoal(5, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
         this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1D));
