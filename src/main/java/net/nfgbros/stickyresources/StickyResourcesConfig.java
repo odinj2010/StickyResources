@@ -117,7 +117,7 @@ public class StickyResourcesConfig {
     public static ForgeConfigSpec.IntValue JELLY_EXPLORATION_RADIUS;
 
     public static void register(final ModLoadingContext context) {
-        context.registerConfig(ModConfig.Type.COMMON, SPEC, "stickyresources-common.toml");
+        context.registerConfig(ModConfig.Type.COMMON, SPEC, "sticky_resources-common.toml");
     }
 
     public static final ForgeConfigSpec SPEC;

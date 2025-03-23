@@ -55,9 +55,6 @@ public class StickyResources {
         ModBlockEntities.register(modEventBus); // Block entities
         ModMenuTypes.register(modEventBus); // Menu types
 
-        // Register the mod's configuration
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StickyResourcesConfig.SPEC);
-
         // Register event listeners
         modEventBus.addListener(this::commonSetup); // Common setup (runs on both client and server)
         modEventBus.addListener(this::addCreative); // Add items to creative tabs
