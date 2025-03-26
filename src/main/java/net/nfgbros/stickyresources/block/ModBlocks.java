@@ -2,7 +2,7 @@ package net.nfgbros.stickyresources.block;
 
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.custom.CornCropBlock;
-import net.nfgbros.stickyresources.block.custom.GemPolishingStationBlock;
+import net.nfgbros.stickyresources.block.custom.WashingStationBlock;
 import net.nfgbros.stickyresources.block.custom.StrawberryCropBlock;
 import net.nfgbros.stickyresources.item.ModItems;
 import net.minecraft.sounds.SoundEvents;
@@ -108,8 +108,8 @@ public class ModBlocks {
             () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), ModBlocks.CATMINT,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM).noOcclusion()));
 
-    public static final RegistryObject<Block> GEM_POLISHING_STATION = registerBlock("gem_polishing_station",
-            () -> new GemPolishingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Block> WASHING_STATION = registerBlock("washing_station",
+            () -> new WashingStationBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

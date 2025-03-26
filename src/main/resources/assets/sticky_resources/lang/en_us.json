@@ -85,8 +85,8 @@
   "tooltip.sticky_resources.metal_detector.tooltip": "Helps find valuable ores and treasures.",
   "item.sticky_resources.pine_cone": "Pine Cone",
   "item.sticky_resources.pine_cone.desc": "A seed-bearing cone from a pine tree.",
-  "block.sticky_resources.gem_polishing_station": "Item Washing Station",
-  "block.sticky_resources.gem_polishing_station.desc": "Used to wash items that are sticky.",
+  "block.sticky_resources.washing_station": "Washing Station",
+  "block.sticky_resources.washing_station.desc": "Used to wash items that are sticky.",
   "block.sticky_resources.sound_block": "Sound Block",
   "block.sticky_resources.sound_block.desc": "Emits a sound when powered.",
 

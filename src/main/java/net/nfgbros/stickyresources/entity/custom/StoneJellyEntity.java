@@ -11,11 +11,7 @@ public class StoneJellyEntity extends JellyEntity {
     }
 
 
-    @Override
-    public void tick() {
-        super.tick(); // Call super to handle base JellyEntity logic
 
-    }
 
     private boolean isFireImmune() {
         return true;

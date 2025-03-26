@@ -2,24 +2,12 @@ package net.nfgbros.stickyresources.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.registries.RegistryObject;
-import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.ModBlocks;
-import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.item.ModItems;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
@@ -129,7 +117,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         //Utility
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GEM_POLISHING_STATION.get())///Item Washing Station**
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.WASHING_STATION.get())///Item Washing Station**
                 .pattern("OOO")
                 .pattern("SWS")
                 .pattern("I I")

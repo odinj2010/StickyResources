@@ -66,8 +66,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.POTTED_CATMINT.get(), models().singleTexture("potted_catmint", new ResourceLocation("flower_pot_cross"), "plant",
                 blockTexture(ModBlocks.CATMINT.get())).renderType("cutout"));
 
-        simpleBlockWithItem(ModBlocks.GEM_POLISHING_STATION.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/gem_polishing_station")));
+        simpleBlockWithItem(ModBlocks.WASHING_STATION.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/washing_station")));
     }
 
 

@@ -1,7 +1,7 @@
 package net.nfgbros.stickyresources.screen;
 
 import net.nfgbros.stickyresources.block.ModBlocks;
-import net.nfgbros.stickyresources.block.entity.GemPolishingStationBlockEntity;
+import net.nfgbros.stickyresources.block.entity.WashingStationBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +13,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class GemPolishingStationMenu extends AbstractContainerMenu {
-    public final GemPolishingStationBlockEntity blockEntity;
+    public final WashingStationBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
@@ -24,7 +24,7 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
     public GemPolishingStationMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.GEM_POLISHING_MENU.get(), pContainerId);
         checkContainerSize(inv, 2);
-        blockEntity = ((GemPolishingStationBlockEntity) entity);
+        blockEntity = ((WashingStationBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -104,7 +104,7 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.GEM_POLISHING_STATION.get());
+                pPlayer, ModBlocks.WASHING_STATION.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

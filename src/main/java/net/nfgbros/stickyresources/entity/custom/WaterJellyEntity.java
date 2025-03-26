@@ -22,16 +22,6 @@ public class WaterJellyEntity extends JellyEntity {
     public WaterJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
     }
-
-    @Override
-    public void tick() {
-        super.tick();
-        checkLavaSourceConversion(); // Check for lava source conversion every tick
-        if (cobblestoneDropDelay > 0) {
-            cobblestoneDropDelay--;
-        }
-    }
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
@@ -45,18 +35,5 @@ public class WaterJellyEntity extends JellyEntity {
             }
         }
         return super.mobInteract(player, hand);
-    }
-
-    private void checkLavaSourceConversion() {
-        if (!this.level().isClientSide) {
-            BlockPos pos = this.getOnPos();
-            BlockState state = this.level().getBlockState(pos);
-
-            if (state.is(Blocks.LAVA)) {
-                if (this.level().dimension() == Level.OVERWORLD) {
-                    this.level().setBlockAndUpdate(pos, Blocks.COBBLESTONE.defaultBlockState());
-                }
-            }
-        }
     }
 }

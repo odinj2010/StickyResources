@@ -23,18 +23,20 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> BAR_BRAWL = registerSoundEvents("bar_brawl");
 
+    public static final RegistryObject<SoundEvent> JELLY_SAD = registerSoundEvents("jelly/communication/jelly_sad");
+    public static final RegistryObject<SoundEvent> JELLY_HAPPY = registerSoundEvents("jelly/communication/jelly_happy");
+    public static final RegistryObject<SoundEvent> JELLY_NEUTRAL = registerSoundEvents("jelly/communication/jelly_neutral");
+    public static final RegistryObject<SoundEvent> JELLY_SCARED = registerSoundEvents("jelly/communication/jelly_scared");
+    public static final RegistryObject<SoundEvent> JELLY_ANGRY = registerSoundEvents("jelly/communication/jelly_angry");
+
 
     public static final ForgeSoundType SOUND_BLOCK_SOUNDS = new ForgeSoundType(1f, 1f,
             ModSounds.SOUND_BLOCK_BREAK, ModSounds.SOUND_BLOCK_STEP, ModSounds.SOUND_BLOCK_PLACE,
             ModSounds.SOUND_BLOCK_HIT, ModSounds.SOUND_BLOCK_FALL);
 
-
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(StickyResources.MOD_ID, name)));
     }
-    public static final RegistryObject<SoundEvent> JELLY_COMMUNICATE = SOUND_EVENTS.register("jelly_communicate",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("stickyresources", "jelly_communicate")));
-
 
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);

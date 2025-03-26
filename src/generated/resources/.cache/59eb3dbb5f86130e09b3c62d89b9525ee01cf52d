@@ -1,9 +1,8 @@
-// 1.20.1	2025-03-19T18:29:19.6982003	Loot Tables
+// 1.20.1	2025-03-25T14:22:47.8758708	Loot Tables
 6866e4887d305a91ea8cc0b2b6686858971407be data/sticky_resources/loot_tables/blocks/catmint.json
 3830029158c20f8a6925559c31269b2511fe4f35 data/sticky_resources/loot_tables/blocks/corn_crop.json
 cb026099a99669f7b4d386eaf0936ecf7e5cd016 data/sticky_resources/loot_tables/blocks/deepslate_sapphire_ore.json
 ba573ecc10448e11f8acd3423ce52a6cd5393652 data/sticky_resources/loot_tables/blocks/end_stone_sapphire_ore.json
-ed3f9b1c7b68c6fee95108488e997487cdb5d5be data/sticky_resources/loot_tables/blocks/gem_polishing_station.json
 757d4823562a6c11a57a66bacf116d492499e563 data/sticky_resources/loot_tables/blocks/jelly_honey.json
 9a6d586af4dbefbaf6424a02e2bf81c299d8a645 data/sticky_resources/loot_tables/blocks/nether_sapphire_ore.json
 bf58c94cce6a56e6bb90bf72931f675e7d62d263 data/sticky_resources/loot_tables/blocks/potted_catmint.json
@@ -30,3 +29,4 @@ e7666d8a148386371d42fe4e166446897b9b36f2 data/sticky_resources/loot_tables/block
 f808b5168a5911f09e3e952e3a567f6057402007 data/sticky_resources/loot_tables/blocks/sticky_sand.json
 048bbaafd5ae6c9bbc41c6a06bab8a2f40587282 data/sticky_resources/loot_tables/blocks/sticky_stone.json
 83975c0e2b9d93389778578724a6b1e897a5b107 data/sticky_resources/loot_tables/blocks/strawberry_crop.json
+a66a2d463c12bfd8722806ac1ccbef24362bcdfd data/sticky_resources/loot_tables/blocks/washing_station.json

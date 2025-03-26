@@ -43,7 +43,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.sticky_resources_devices_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.METAL_DETECTOR.get());
-                        pOutput.accept(ModBlocks.GEM_POLISHING_STATION.get());
+                        pOutput.accept(ModBlocks.WASHING_STATION.get());
                         pOutput.accept(ModItems.STICKY_CATALYST.get());
                     }).build()
     );

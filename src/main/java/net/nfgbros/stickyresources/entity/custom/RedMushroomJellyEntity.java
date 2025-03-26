@@ -9,10 +9,4 @@ public class RedMushroomJellyEntity extends JellyEntity {
     public RedMushroomJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
     }
-
-    @Override
-    public void tick() {
-        super.tick(); // Call super to handle base JellyEntity logic
-
-    }
 }

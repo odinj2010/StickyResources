@@ -10,9 +10,5 @@ public class RawGoldJellyEntity extends JellyEntity {
         super(entityType, level);
     }
 
-    @Override
-    public void tick() {
-        super.tick(); // Call super to handle base JellyEntity logic
 
-    }
 }

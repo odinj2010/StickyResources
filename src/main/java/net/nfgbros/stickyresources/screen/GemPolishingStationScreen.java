@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GemPolishingStationScreen extends AbstractContainerScreen<GemPolishingStationMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(StickyResources.MOD_ID, "textures/gui/gem_polishing_station_gui.png");
+            new ResourceLocation(StickyResources.MOD_ID, "textures/gui/washing_station_gui.png");
 
     public GemPolishingStationScreen(GemPolishingStationMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);

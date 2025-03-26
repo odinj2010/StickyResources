@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "S": {
+      "item": "sticky_resources:sapphire"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "OOO",
+    "SWS",
+    "I I"
+  ],
+  "result": {
+    "item": "sticky_resources:washing_station"
+  },
+  "show_notification": true
+}

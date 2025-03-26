@@ -64,7 +64,6 @@ public class LavaJellyEntity extends JellyEntity {
             ironIngotDropDelay--;
         }
     }
-
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {

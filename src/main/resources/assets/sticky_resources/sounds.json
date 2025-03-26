@@ -42,5 +42,17 @@
         "stream": true
       }
     ]
+  },
+  "jelly_neutral": {
+    "subtitle": "sounds.sticky_resources.jelly_neutral",
+    "sounds": [
+      "sticky_resources:jelly/communication/jelly_neutral"
+    ]
+  },
+  "jelly_happy": {
+    "subtitle": "sounds.sticky_resources.jelly_happy",
+    "sounds": [
+      "sticky_resources:jelly/communication/jelly_happy"
+    ]
   }
 }

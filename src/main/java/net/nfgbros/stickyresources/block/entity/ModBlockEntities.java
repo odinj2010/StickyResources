@@ -12,10 +12,10 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, StickyResources.MOD_ID);
 
-    public static final RegistryObject<BlockEntityType<GemPolishingStationBlockEntity>> GEM_POLISHING_BE =
-            BLOCK_ENTITIES.register("gem_polishing_be", () ->
-                    BlockEntityType.Builder.of(GemPolishingStationBlockEntity::new,
-                            ModBlocks.GEM_POLISHING_STATION.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WashingStationBlockEntity>> WASHING_STATION_BE =
+            BLOCK_ENTITIES.register("washing_station_be", () ->
+                    BlockEntityType.Builder.of(WashingStationBlockEntity::new,
+                            ModBlocks.WASHING_STATION.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

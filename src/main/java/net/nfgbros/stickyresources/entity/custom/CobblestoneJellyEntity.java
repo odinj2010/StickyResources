@@ -41,11 +41,7 @@ public class CobblestoneJellyEntity extends JellyEntity {
         return super.hurt(source, amount); // Allow other damage sources to proceed normally
     }
 
-    @Override
-    public void tick() {
-        super.tick(); // Call super to handle base JellyEntity logic
 
-    }
 
     private void transformIntoStoneJelly() {
         if (!level().isClientSide) {
