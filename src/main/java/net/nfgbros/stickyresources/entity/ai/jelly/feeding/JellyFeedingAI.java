@@ -1,21 +1,23 @@
 package net.nfgbros.stickyresources.entity.ai.jelly.feeding;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
-import net.nfgbros.stickyresources.entity.custom.JellyEntity;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.entity.custom.JellyEntity;
+
+import java.util.Optional;
 
 public class JellyFeedingAI {
     private final JellyEntity jelly;
     private final Level level;
+    private int cooldown = 0;
 
     public JellyFeedingAI(JellyEntity jelly) {
         this.jelly = jelly;
@@ -23,130 +25,102 @@ public class JellyFeedingAI {
     }
 
     public void tick() {
-        if (!level.isClientSide) {
-            // Check for nearby food items
-            level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(5), entity -> isPreferredFood(entity.getItem()) || isLoveFood(entity.getItem()))
-                    .forEach(this::consumeFood);
+        if (level.isClientSide) return;
+        
+        // Performance Optimization: Only scan every 20 ticks
+        if (cooldown > 0) {
+            cooldown--;
+            return;
+        }
+        cooldown = 20;
 
-            // Check for nearby food blocks
+        ModEntities.JellyType type = jelly.getJellyType();
+
+        // 1. Scan for Items (Food or Transformation)
+        level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(2.0), entity -> {
+            ItemStack stack = entity.getItem();
+            return !stack.isEmpty() && (type.isPreferredFood(stack) || type.isLoveFood(stack) || type.getTransformation(stack.getItem()).isPresent());
+        }).stream().findFirst().ifPresent(this::consumeItem);
+
+        // 2. Scan for Blocks (Grazing)
+        if (!jelly.isBaby()) { // Babies shouldn't graze blocks
             BlockPos jellyPos = jelly.blockPosition();
             BlockState blockState = level.getBlockState(jellyPos);
-            if (isPreferredBlock(blockState)) {
+            if (type.isPreferredBlock(blockState)) {
                 consumeBlock(jellyPos, blockState);
             }
-
-            // Check if the player is holding preferred or love food
-            followPlayerIfHoldingFood();
         }
+
+        followPlayerIfHoldingFood();
     }
+
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (isPreferredFood(itemStack) || isLoveFood(itemStack)) {
+        ModEntities.JellyType type = jelly.getJellyType();
+
+        if (type.isPreferredFood(itemStack) || type.isLoveFood(itemStack)) {
             if (!player.getAbilities().instabuild) {
-                itemStack.shrink(1); // Reduce the item stack size by 1
+                itemStack.shrink(1);
             }
 
-            if (isLoveFood(itemStack)) {
-                jelly.setInLove(player); // Trigger love mode
+            if (type.isLoveFood(itemStack)) {
+                jelly.setInLove(player);
+                jelly.spawnHeartParticles();
             } else {
-                // TODO: Add logic to satisfy the jelly's hunger (to be implemented in the survival AI class)
+                // TODO: Heal or satisfy hunger
+                jelly.heal(2.0f);
             }
-
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         }
-        return mobInteract(player, hand);
+        return InteractionResult.PASS;
     }
 
-    private boolean isPreferredFood(ItemStack itemStack) {
+    private void consumeItem(ItemEntity itemEntity) {
+        ItemStack stack = itemEntity.getItem();
         ModEntities.JellyType type = jelly.getJellyType();
-        // Define preferred food for each jelly type
-        switch (type) {
-            case AMETHYST -> {
-                return itemStack.is(Items.AMETHYST_SHARD);
+
+        // 1. Try Transformation
+        Optional<ModEntities.JellyType.TransformationData> transformation = type.getTransformation(stack.getItem());
+        if (transformation.isPresent()) {
+            ModEntities.JellyType.TransformationData data = transformation.get();
+            // Check Age Requirement: Must be Adult to transform
+            if (!jelly.isBaby() && stack.getCount() >= data.cost()) {
+                stack.shrink(data.cost());
+                jelly.transformToJelly(data.result());
+                if (stack.isEmpty()) itemEntity.discard();
+                return;
             }
-            case BONE -> {
-                return itemStack.is(Items.BONE_MEAL);
-            }
-            case CHARCOAL -> {
-                return itemStack.is(Items.CHARCOAL);
-            }
-            // Add more cases for other jelly types
-            default -> {
-                return false;
-            }
+        }
+
+        // 2. Try Love Food
+        if (type.isLoveFood(stack)) {
+            stack.shrink(1);
+            jelly.setInLove(null);
+            jelly.spawnHeartParticles();
+            if (stack.isEmpty()) itemEntity.discard();
+            return;
+        }
+
+        // 3. Try Preferred Food
+        if (type.isPreferredFood(stack)) {
+            stack.shrink(1);
+            jelly.heal(2.0f); // Simple healing for now
+            if (stack.isEmpty()) itemEntity.discard();
         }
     }
 
-    private boolean isLoveFood(ItemStack itemStack) {
-        ModEntities.JellyType type = jelly.getJellyType();
-        // Define the love food for each jelly type
-        switch (type) {
-            case AMETHYST -> {
-                return itemStack.is(Items.AMETHYST_SHARD); // Amethyst Jelly loves amethyst shards
-            }
-            case BONE -> {
-                return itemStack.is(Items.BONE); // Bone Jelly loves bones
-            }
-            case CHARCOAL -> {
-                return itemStack.is(Items.CHARCOAL); // Charcoal Jelly loves charcoal
-            }
-            case CAKE -> {
-                return itemStack.is(Items.CAKE); // Cake Jelly loves cake
-            }
-            case LOGOAK -> {
-                return itemStack.is(Items.OAK_LOG); // Logoak Jelly loves oak logs
-            }
-            // Add more cases for other jelly types
-            default -> {
-                return false;
-            }
-        }
-    }
-    private boolean isPreferredBlock(BlockState blockState) {
-        ModEntities.JellyType type = jelly.getJellyType();
-        // Define preferred blocks for each jelly type
-        switch (type) {
-            case BONE -> {
-                return blockState.is(Blocks.BONE_BLOCK);
-            }
-            case CAKE -> {
-                return blockState.is(Blocks.CAKE);
-            }
-            case LOGOAK -> {
-                return blockState.is(Blocks.OAK_LOG);
-            }
-            // Add more cases for other jelly types
-            default -> {
-                return false;
-            }
-        }
-    }
-    private void consumeFood(ItemEntity itemEntity) {
-        ItemStack itemStack = itemEntity.getItem();
-        if (!itemStack.isEmpty()) {
-            // Check if the item is the love food
-            if (isLoveFood(itemStack)) {
-                jelly.setInLove(null); // Trigger love mode
-            } else if (isPreferredFood(itemStack)) {
-                // Reduce the item stack size by 1
-                itemStack.shrink(1);
-                // TODO: Add logic to satisfy the jelly's hunger (to be implemented in the survival AI class)
-            }
-        }
-    }
     private void consumeBlock(BlockPos pos, BlockState blockState) {
-        // Remove the block
         level.destroyBlock(pos, false);
-        // TODO: Add logic to satisfy the jelly's hunger (to be implemented in the survival AI class)
+        jelly.heal(1.0f);
     }
 
     private void followPlayerIfHoldingFood() {
-        Player player = level.getNearestPlayer(jelly, 8); // Adjust the range as needed
+        Player player = level.getNearestPlayer(jelly, 8);
         if (player != null) {
             ItemStack heldItem = player.getMainHandItem();
-            if (isPreferredFood(heldItem) || isLoveFood(heldItem)) {
-                // Add a temporary follow goal
-                jelly.getNavigation().moveTo(player, 0.3); // Adjust the speed as needed
+            ModEntities.JellyType type = jelly.getJellyType();
+            if (type.isPreferredFood(heldItem) || type.isLoveFood(heldItem)) {
+                jelly.getNavigation().moveTo(player, StickyResourcesConfig.JELLY_FOLLOW_SPEED.get());
             }
         }
     }

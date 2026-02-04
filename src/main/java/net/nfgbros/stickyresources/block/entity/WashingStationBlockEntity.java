@@ -140,13 +140,21 @@ public class WashingStationBlockEntity extends BlockEntity implements MenuProvid
 
         if (!output.isEmpty()) {
             itemHandler.extractItem(INPUT_SLOT, 1, false);
-            itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(output.getItem(),
-                    itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + output.getCount()));
+            itemHandler.insertItem(OUTPUT_SLOT, output.copy(), false);
         }
     }
 
     private boolean hasRecipe() {
-        return !WashingStationRecipe.getOutputForInput(itemHandler.getStackInSlot(INPUT_SLOT)).isEmpty();
+        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
+        ItemStack output = WashingStationRecipe.getOutputForInput(input);
+
+        if (output.isEmpty()) {
+            return false;
+        }
+
+        // Simulate insertion to see if it fits
+        ItemStack remainder = itemHandler.insertItem(OUTPUT_SLOT, output.copy(), true);
+        return remainder.isEmpty();
     }
 
     private boolean hasProgressFinished() {

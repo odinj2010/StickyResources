@@ -25,9 +25,17 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> JELLY_SAD = registerSoundEvents("jelly/communication/jelly_sad");
     public static final RegistryObject<SoundEvent> JELLY_HAPPY = registerSoundEvents("jelly/communication/jelly_happy");
+    public static final RegistryObject<SoundEvent> JELLY_HORNY = registerSoundEvents("jelly/communication/jelly_horny");
     public static final RegistryObject<SoundEvent> JELLY_NEUTRAL = registerSoundEvents("jelly/communication/jelly_neutral");
-    public static final RegistryObject<SoundEvent> JELLY_SCARED = registerSoundEvents("jelly/communication/jelly_scared");
     public static final RegistryObject<SoundEvent> JELLY_ANGRY = registerSoundEvents("jelly/communication/jelly_angry");
+    public static final RegistryObject<SoundEvent> JELLY_BORED = registerSoundEvents("jelly/communication/jelly_bored");
+    public static final RegistryObject<SoundEvent> JELLY_CALM = registerSoundEvents("jelly/communication/jelly_calm");
+    public static final RegistryObject<SoundEvent> JELLY_CONFUSION = registerSoundEvents("jelly/communication/jelly_confusion");
+    public static final RegistryObject<SoundEvent> JELLY_EXCITEMENT = registerSoundEvents("jelly/communication/jelly_excitement");
+    public static final RegistryObject<SoundEvent> JELLY_FEAR = registerSoundEvents("jelly/communication/jelly_fear");
+    public static final RegistryObject<SoundEvent> JELLY_JEALOUSY = registerSoundEvents("jelly/communication/jelly_jealousy");
+    public static final RegistryObject<SoundEvent> JELLY_LOVE = registerSoundEvents("jelly/communication/jelly_love");
+    public static final RegistryObject<SoundEvent> JELLY_SURPRISE = registerSoundEvents("jelly/communication/jelly_surprise");
 
 
     public static final ForgeSoundType SOUND_BLOCK_SOUNDS = new ForgeSoundType(1f, 1f,

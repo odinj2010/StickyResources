@@ -1,27 +1,30 @@
 package net.nfgbros.stickyresources.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.nfgbros.stickyresources.entity.custom.JellyEntity;
+import net.nfgbros.stickyresources.entity.custom.MagnetJellyEntity;
+import net.nfgbros.stickyresources.entity.ModEntities; // Add import
 
 import java.util.Random;
 
 public class Magnetism {
-    private static final double ATTRACTION_FORCE = 0.05; // Adjust as needed
-    private static final double REPULSION_FORCE = 0.1;  // Adjust as needed
-    private static final double IRON_ABOVE_PULL_FORCE = 0.1; // Adjust this to control the pull strength
+    private static final double ATTRACTION_FORCE = 0.08;
+    private static final double REPULSION_FORCE = 0.15;
     private static final int SEARCH_COOLDOWN_TICKS = 20;
+    private static final int MAGNETIC_RANGE = 2;
 
     private final JellyEntity jelly;
     private final Level level;
-    private final Random random = new Random(); // Create your own Random instance
+    private final Random random = new Random();
     private int searchCooldown = 0;
 
     public Magnetism(JellyEntity jelly) {
@@ -46,16 +49,11 @@ public class Magnetism {
         for (int x = -range; x <= range; x++) {
             for (int y = -range; y <= range; y++) {
                 for (int z = -range; z <= range; z++) {
-                    BlockPos offsetPos = jelly.getOnPos().offset(x, y, z);
+                    BlockPos offsetPos = jelly.blockPosition().offset(x, y, z);
                     BlockState state = level.getBlockState(offsetPos);
                     if (isValuableBlock(state)) {
                         level.playSound(null, jelly.getX(), jelly.getY(), jelly.getZ(),
-                                SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.AMBIENT, 1f, 1f);
-                        level.addParticle(ParticleTypes.HAPPY_VILLAGER,
-                                offsetPos.getX() + random.nextDouble(), // Use your own Random instance
-                                offsetPos.getY() + random.nextDouble(),
-                                offsetPos.getZ() + random.nextDouble(),
-                                0, 0, 0);
+                                SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.AMBIENT, 0.5f, 1.2f);
                         searchCooldown = SEARCH_COOLDOWN_TICKS;
                         return;
                     }
@@ -65,97 +63,117 @@ public class Magnetism {
     }
 
     private void magneticTick() {
-        // Attraction to metal items
-        level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(5), entity -> entity instanceof ItemEntity).forEach(entity -> {
-            ItemEntity itemEntity = (ItemEntity) entity;
-            if (itemEntity.getItem().is(ModTags.Items.STICKY_ITEMS)) {
-                Vec3 direction = jelly.position().subtract(entity.position()).normalize();
-                jelly.setDeltaMovement(jelly.getDeltaMovement().add(direction.scale(ATTRACTION_FORCE)));
+        boolean isAttracting = true;
+        if (jelly instanceof MagnetJellyEntity magnetJelly) {
+            isAttracting = magnetJelly.isAttracting();
+        }
+
+        handleItemMagnetism(isAttracting);
+        handleBlockMagnetism(isAttracting);
+        handleEntityMagnetism(isAttracting);
+    }
+
+    private void handleEntityMagnetism(boolean isAttracting) {
+        level.getEntitiesOfClass(JellyEntity.class, jelly.getBoundingBox().inflate(MAGNETIC_RANGE), 
+            other -> other != jelly && isMetallicJelly(other)).forEach(other -> {
+                Vec3 direction = jelly.position().subtract(other.position()).normalize();
+                double force = isAttracting ? ATTRACTION_FORCE : -REPULSION_FORCE;
+                // Apply force to BOTH entities (Newton's 3rd Lawish)
+                other.setDeltaMovement(other.getDeltaMovement().add(direction.scale(force)));
+                // Jelly itself is anchored by its own AI mostly, but we could pull it too
+        });
+    }
+
+    private boolean isMetallicJelly(JellyEntity entity) {
+        ModEntities.JellyType type = entity.getJellyType();
+        return type == ModEntities.JellyType.RAWIRON || 
+               type == ModEntities.JellyType.RAWGOLD || 
+               type == ModEntities.JellyType.RAWCOPPER || 
+               type == ModEntities.JellyType.MAGNET;
+               //type == ModEntities.JellyType.IRON_GOLEM; // Fun easter egg? No, JellyType doesn't have Golem.
+    }
+
+    private void handleItemMagnetism(boolean isAttracting) {
+        level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(MAGNETIC_RANGE)).forEach(item -> {
+            if (item.getItem().is(ModTags.Items.MAGNETIC_ITEMS)) {
+                Vec3 direction = jelly.position().add(0, jelly.getBbHeight() / 2, 0).subtract(item.position()).normalize();
+                double force = isAttracting ? ATTRACTION_FORCE : -REPULSION_FORCE;
+                item.setDeltaMovement(item.getDeltaMovement().add(direction.scale(force)));
             }
         });
+    }
 
-        // Repulsion and levitation from iron blocks
-        int entityX = (int) Math.floor(jelly.getX());
-        int entityY = (int) Math.floor(jelly.getY() - 0.5);
-        int entityZ = (int) Math.floor(jelly.getZ());
+    private void handleBlockMagnetism(boolean isAttracting) {
+        Entity affectedEntity = jelly;
+        if (jelly.getVehicle() != null) affectedEntity = jelly.getVehicle();
+
+        int entityX = (int) Math.floor(affectedEntity.getX());
+        int entityY = (int) Math.floor(affectedEntity.getY() - 0.5);
+        int entityZ = (int) Math.floor(affectedEntity.getZ());
         int checkRadius = 1;
 
-        boolean ironBlockFoundBelow = false;
-        boolean ironBlockFoundAbove = false;
+        boolean blockFoundBelow = false;
+        boolean blockFoundAbove = false;
 
-        // Check for iron blocks below
+        // Search logic
         for (int x = -checkRadius; x <= checkRadius; x++) {
             for (int z = -checkRadius; z <= checkRadius; z++) {
-                BlockPos checkPos = new BlockPos(entityX + x, entityY, entityZ + z);
-                BlockState state = level.getBlockState(checkPos);
-                if (state.is(Blocks.IRON_BLOCK)) {
-                    ironBlockFoundBelow = true;
-                    break;
+                if (level.getBlockState(new BlockPos(entityX + x, entityY, entityZ + z)).is(ModTags.Blocks.MAGNETIC_BLOCKS)) {
+                    blockFoundBelow = true;
                 }
-            }
-            if (ironBlockFoundBelow) {
-                break;
+                if (level.getBlockState(new BlockPos(entityX + x, entityY + 2, entityZ + z)).is(ModTags.Blocks.MAGNETIC_BLOCKS)) {
+                    blockFoundAbove = true;
+                }
             }
         }
 
-        // Check for iron blocks above
-        for (int x = -checkRadius; x <= checkRadius; x++) {
-            for (int z = -checkRadius; z <= checkRadius; z++) {
-                BlockPos checkPos = new BlockPos(entityX + x, entityY + 2, entityZ + z); // Checking 2 blocks above
-                BlockState state = level.getBlockState(checkPos);
-                if (state.is(Blocks.IRON_BLOCK)) {
-                    ironBlockFoundAbove = true;
-                    break;
-                }
+        Vec3 movement = affectedEntity.getDeltaMovement();
+        
+        if (isAttracting) {
+            // ATTRACT MODE: Stick to surfaces
+            if (blockFoundBelow) {
+                movement = new Vec3(movement.x * 0.5, -0.1, movement.z * 0.5); // Snap to floor
+                affectedEntity.setNoGravity(true);
+            } else if (blockFoundAbove) {
+                movement = new Vec3(movement.x * 0.5, 0.15, movement.z * 0.5); // Snap to ceiling
+                affectedEntity.setNoGravity(true);
+            } else {
+                affectedEntity.setNoGravity(false);
+                movement = movement.add(0, -0.04, 0); // Normal gravity
             }
-            if (ironBlockFoundAbove) {
-                break;
-            }
-        }
-
-        Vec3 currentMovement = jelly.getDeltaMovement();
-        Vec3 newMovement = currentMovement;
-
-        if (ironBlockFoundBelow) {
-            // Levitation - consistent upward force
-            newMovement = newMovement.add(0, 0.1, 0); // Adjust this value for hover height
-
-            // Repulsion - reduced strength
-            Vec3 repulsionDirection = new Vec3(0, 1, 0);
-            double totalRepulsion = 0;
-            for (int x = -checkRadius; x <= checkRadius; x++) {
-                for (int z = -checkRadius; z <= checkRadius; z++) {
-                    BlockPos checkPos = new BlockPos(entityX + x, entityY, entityZ + z);
-                    BlockState state = level.getBlockState(checkPos);
-                    if (state.is(Blocks.IRON_BLOCK)) {
-                        Vec3 blockRepulsion = jelly.position().subtract(Vec3.atCenterOf(checkPos)).normalize();
-                        repulsionDirection = repulsionDirection.add(blockRepulsion).normalize();
-                        totalRepulsion += 1;
-                    }
-                }
-            }
-            newMovement = newMovement.add(repulsionDirection.scale(REPULSION_FORCE / totalRepulsion * 0.25)); // Reduced repulsion
-
-            // Apply strong damping to horizontal movement
-            newMovement = new Vec3(newMovement.x() * 1.1, newMovement.y(), newMovement.z() * 1.1);
-
         } else {
-            // Apply damping even when not over iron to stop residual movement
-            newMovement = new Vec3(newMovement.x() * 0.7, newMovement.y(), newMovement.z() * 0.7);
+            // REPEL MODE: Floating
+            if (blockFoundBelow) {
+                // FORCE HOVER
+                affectedEntity.setNoGravity(true); // Disable gravity so we control Y
+                
+                // If we are close to the block (Y difference is small), push up
+                double heightAboveBlock = affectedEntity.getY() - (entityY + 1.0); // +1.0 is top of block
+                
+                if (heightAboveBlock < 1.5) {
+                    movement = new Vec3(movement.x * 1.1, 0.1, movement.z * 1.1); // Rise
+                } else {
+                    movement = new Vec3(movement.x * 1.1, 0.0, movement.z * 1.1); // Hover steady
+                }
+            } else {
+                affectedEntity.setNoGravity(false); // Fall normally if no block
+                movement = new Vec3(movement.x * 0.9, movement.y - 0.04, movement.z * 0.9);
+            }
+
+            if (blockFoundAbove) {
+                movement = movement.add(0, -0.2, 0); // Strong push down from ceiling
+            }
         }
 
-        if (ironBlockFoundAbove) {
-            // Consistent downward force to pull towards iron above
-            newMovement = newMovement.add(0, -IRON_ABOVE_PULL_FORCE, 0);
-        }
+        affectedEntity.setDeltaMovement(movement);
+    }
 
-        // Damping for vertical movement
-        newMovement = new Vec3(newMovement.x(), newMovement.y() * 0.8, newMovement.z()); // Vertical damping
+    private void applyAttraction(Vec3 direction, double distSq) {
+        // Obsolete, merged into handleBlockMagnetism
+    }
 
-        jelly.setDeltaMovement(newMovement);
-
-        // Constant gravity (if you still want some gravity influence)
-        jelly.setDeltaMovement(jelly.getDeltaMovement().add(0, -0.008, 0));
+    private void applyRepulsion(Vec3 direction, double distSq) {
+        // Obsolete, merged into handleBlockMagnetism
     }
 
     private boolean isValuableBlock(BlockState state) {

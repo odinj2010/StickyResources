@@ -1,43 +1,50 @@
 package net.nfgbros.stickyresources.entity.custom;
 
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
+import net.nfgbros.stickyresources.entity.JellyDropManagement;
 import net.nfgbros.stickyresources.entity.ModEntities;
 import net.nfgbros.stickyresources.entity.ai.jelly.JellyCustomAI;
-import net.nfgbros.stickyresources.entity.JellyDropManagement;
-import net.nfgbros.stickyresources.sound.ModSounds;
+import net.nfgbros.stickyresources.entity.ai.jelly.emotion.Emotions;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class JellyEntity extends Animal {
     private int dropItemTickCounter = 0;
+    private int submergedTicks = 0;
     private final JellyCustomAI customAI;
     private final JellyDropManagement dropManagement;
-    private String emotion;
+    private Emotions.Emotion emotion = Emotions.Emotion.NEUTRAL;
+    private JellyEntity mate;
 
     public JellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
         this.customAI = new JellyCustomAI(this);
         this.dropManagement = new JellyDropManagement(this);
-        this.emotion = "NEUTRAL"; // Default emotion.  Initialize here.
     }
 
     public ModEntities.JellyType getJellyType() {
@@ -50,103 +57,241 @@ public class JellyEntity extends Animal {
 
     public static AttributeSupplier.Builder createAttributes(ModEntities.JellyType type) {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10D)
-                .add(Attributes.ATTACK_DAMAGE, 1D);
+                .add(Attributes.MAX_HEALTH, type.maxHealth * StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_HEALTH_MULTIPLIER, 1.0D))
+                .add(Attributes.ATTACK_DAMAGE, type.attackDamage * StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DAMAGE_MULTIPLIER, 1.0D))
+                .add(Attributes.MOVEMENT_SPEED, type.movementSpeed * StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_SPEED_MULTIPLIER, 1.0D));
     }
 
     @Override
     protected void registerGoals() {
-        if (StickyResourcesConfig.JELLY_CUSTOM_AI_ACTIVE.get() == false) {
-            // Register AI goals here if needed
+        if (!StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_CUSTOM_AI_ACTIVE, true)) {
             this.goalSelector.addGoal(1, new FloatGoal(this));
             this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 2.5F));
             this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-            if (StickyResourcesConfig.JELLY_RESOURCE_ONLY_MODE.get() == false) {
+            if (!StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_RESOURCE_ONLY_MODE, false)) {
                 this.goalSelector.addGoal(2, new BreedGoal(this, 1.15D));
                 this.goalSelector.addGoal(3, new TemptGoal(this, 1.15D, Ingredient.of(Items.SLIME_BALL), false));
                 this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
                 this.goalSelector.addGoal(6, new RandomStrollGoal(this, 0.35D));
             }
         }
-        // Enable jumping for the jelly's navigation system
         this.getNavigation().setCanFloat(true);
     }
 
-    public boolean isHappy() {
-        return "Happy".equals(this.emotion);
+    @Override
+    public boolean canBreatheUnderwater() {
+        return true;
     }
 
-    public boolean isHorny() {
-        return "Horny".equals(this.emotion);
+    @Override
+    public void thunderHit(ServerLevel pLevel, LightningBolt pLightning) {
+        if (!this.level().isClientSide && !this.isBaby() && this.getJellyType() != ModEntities.JellyType.ELECTRIC) {
+            this.transformToJelly(ModEntities.JellyType.ELECTRIC);
+        } else {
+            super.thunderHit(pLevel, pLightning);
+        }
     }
 
-    public void playHappySound() {
-        // Play the happy sound
-        this.playSound(ModSounds.JELLY_HAPPY.get(), 1.0F, 1.0F);
+    @Override
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        ItemStack stack = pPlayer.getItemInHand(pHand);
+        ModEntities.JellyType type = this.getJellyType();
+        
+        if (!this.level().isClientSide && !this.isBaby() && StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_PLAYER_TRANSFORMATIONS, true)) {
+            Optional<ModEntities.JellyType.TransformationData> transformation = type.getTransformation(stack.getItem());
+            if (transformation.isPresent()) {
+                ModEntities.JellyType.TransformationData data = transformation.get();
+                if (stack.getCount() >= data.cost()) {
+                    if (!pPlayer.getAbilities().instabuild) {
+                        stack.shrink(data.cost());
+                    }
+                    this.transformToJelly(data.result());
+                    return InteractionResult.SUCCESS;
+                }
+            }
+        }
+
+        return super.mobInteract(pPlayer, pHand);
     }
 
-    public void playNeutralSound() {
-        // Play the neutral sound
-        this.playSound(ModSounds.JELLY_NEUTRAL.get(), 1.0F, 1.0F);
+    public void transformToJelly(ModEntities.JellyType newType) {
+        if (this.level().isClientSide) return;
+        
+        JellyEntity newJelly = ModEntities.JELLY_ENTITIES.get(newType).get().create(this.level());
+        if (newJelly != null) {
+            newJelly.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
+            newJelly.setHealth(this.getHealth());
+            newJelly.setCustomName(this.getCustomName());
+            if (this.hasCustomName()) newJelly.setCustomNameVisible(this.isCustomNameVisible());
+            
+            if (this.isBaby()) {
+                newJelly.setAge(this.getAge());
+            }
+
+            this.level().addFreshEntity(newJelly);
+            this.discard();
+            
+            ((ServerLevel)this.level()).sendParticles(ParticleTypes.EXPLOSION, this.getX(), this.getY() + 0.5, this.getZ(), 5, 0.5, 0.5, 0.5, 0);
+        }
     }
 
-    public void setEmotion(String emotion) {
+    public boolean isEmotion(Emotions.Emotion targetEmotion) {
+        return this.emotion == targetEmotion;
+    }
+
+    public void playEmotionSound() {
+        if (this.emotion.getSound() != null && this.emotion.getSound().get() != null) {
+            this.playSound(this.emotion.getSound().get(), 1.0F, 1.0F);
+        }
+    }
+
+    public void setEmotion(Emotions.Emotion emotion) {
         this.emotion = emotion;
     }
 
-    public String getEmotion() {
+    public Emotions.Emotion getEmotion() {
         return emotion;
+    }
+
+    public void setMate(JellyEntity mate) {
+        this.mate = mate;
+    }
+
+    public JellyEntity getMate() {
+        return mate;
+    }
+
+    public void spawnHeartParticles() {
+        if (this.level().isClientSide) {
+            double offsetX = (this.getRandom().nextDouble() - 0.5D) * this.getBbWidth();
+            double offsetY = this.getRandom().nextDouble() * this.getBbHeight();
+            double offsetZ = (this.getRandom().nextDouble() - 0.5D) * this.getBbWidth();
+            this.level().addParticle(ParticleTypes.HEART, this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ, 0.0D, 0.1D, 0.0D);
+        }
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        // Cast the other parent to JellyEntity
+    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob otherParent) {
         JellyEntity other = (JellyEntity) otherParent;
-        // If parents are a water jelly and a lava jelly, produce an obsidian jelly baby.
-        if (this.getJellyType() == ModEntities.JellyType.WATER && other.getJellyType() == ModEntities.JellyType.LAVA ||
-                this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.WATER) {
-            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.OBSIDIAN).get().create(level);
+        ModEntities.JellyType type1 = this.getJellyType();
+        ModEntities.JellyType type2 = other.getJellyType();
+        
+        ModEntities.JellyType offspringType = getHybridOffspring(type1, type2);
+        
+        if (offspringType == null) {
+            offspringType = this.random.nextBoolean() ? type1 : type2;
         }
-        // If parents are a sand jelly and a lava jelly, produce an obsidian jelly baby.
-        else if (this.getJellyType() == ModEntities.JellyType.SAND && other.getJellyType() == ModEntities.JellyType.LAVA ||
-                this.getJellyType() == ModEntities.JellyType.LAVA && other.getJellyType() == ModEntities.JellyType.SAND) {
-            return ModEntities.JELLY_ENTITIES.get(ModEntities.JellyType.GLASS).get().create(level);
+
+        JellyEntity offspring = ModEntities.JELLY_ENTITIES.get(offspringType).get().create(level);
+        if (offspring != null) {
+            offspring.setBaby(true);
         }
-        // Otherwise, default to producing offspring of this parent's type.
-        return ModEntities.JELLY_ENTITIES.get(this.getJellyType()).get().create(level);
+        return offspring;
+    }
+
+    private ModEntities.JellyType getHybridOffspring(ModEntities.JellyType t1, ModEntities.JellyType t2) {
+        if (match(t1, t2, ModEntities.JellyType.WATER, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.OBSIDIAN;
+        if (match(t1, t2, ModEntities.JellyType.SAND, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.GLASS;
+        if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.COAL)) return ModEntities.JellyType.RAWIRON;
+        if (match(t1, t2, ModEntities.JellyType.LOGOAK, ModEntities.JellyType.COAL)) return ModEntities.JellyType.CHARCOAL;
+        if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.SAND)) return ModEntities.JellyType.COBBLESTONE;
+        if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.WATER)) return ModEntities.JellyType.DIRT;
+        if (match(t1, t2, ModEntities.JellyType.DIRT, ModEntities.JellyType.WATER)) return ModEntities.JellyType.GRASS;
+        if (match(t1, t2, ModEntities.JellyType.RAWIRON, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.RAWGOLD;
+        if (match(t1, t2, ModEntities.JellyType.RAWIRON, ModEntities.JellyType.WATER)) return ModEntities.JellyType.RAWCOPPER;
+        if (match(t1, t2, ModEntities.JellyType.RAWGOLD, ModEntities.JellyType.WATER)) return ModEntities.JellyType.LAPIS;
+        if (match(t1, t2, ModEntities.JellyType.COAL, ModEntities.JellyType.OBSIDIAN)) return ModEntities.JellyType.DIAMOND;
+        if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.GRASS)) return ModEntities.JellyType.EMERALD;
+        if (match(t1, t2, ModEntities.JellyType.LAPIS, ModEntities.JellyType.RAWGOLD)) return ModEntities.JellyType.RAWSAPPHIRE;
+        if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.OBSIDIAN)) return ModEntities.JellyType.AMETHYST;
+        if (match(t1, t2, ModEntities.JellyType.OBSIDIAN, ModEntities.JellyType.ENDERPEARL)) return ModEntities.JellyType.ENDERPEARL;
+
+        return null;
+    }
+
+    private boolean match(ModEntities.JellyType t1, ModEntities.JellyType t2, ModEntities.JellyType target1, ModEntities.JellyType target2) {
+        return (t1 == target1 && t2 == target2) || (t1 == target2 && t2 == target1);
+    }
+
+    @Override
+    public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
+        return false;
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (StickyResourcesConfig.JELLY_CUSTOM_AI_ACTIVE.get()) {
-            List<JellyEntity> nearbyJellies = getNearbyJellies(); // Get nearby jellies
-            customAI.tick(nearbyJellies); // Pass the list to the custom AI
+        if (StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_CUSTOM_AI_ACTIVE, true)) {
+            customAI.tick();
         }
-        // If this is a baby, do not drop items
+        
+        if (!this.level().isClientSide) {
+            handleEnvironmentalTransformations();
+        }
+
         if (this.isBaby()) return;
-        // Drop a jelly item every 20 ticks (10 seconds) when this is a regular jelly entity
         dropItemTickCounter++;
-        if (dropItemTickCounter >= 600 + random.nextInt(600)) {
+        if (dropItemTickCounter >= StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MIN_TICKS, 600) + random.nextInt(StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MAX_TICKS, 600))) {
             dropManagement.dropJellyItem();
             dropItemTickCounter = 0;
         }
     }
 
-    private List<JellyEntity> getNearbyJellies() {
-        List<JellyEntity> nearbyJellies = new ArrayList<>();
-        // Get all entities within a 10-block radius
-        for (JellyEntity otherJelly : this.level().getEntitiesOfClass(JellyEntity.class, this.getBoundingBox().inflate(10.0))) {
-            if (otherJelly != this) { // Exclude itself
-                nearbyJellies.add(otherJelly);
+    private void handleEnvironmentalTransformations() {
+        if (this.isBaby() || !StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ENVIRONMENTAL_TRANSFORMATIONS, true)) return;
+
+        ModEntities.JellyType currentType = this.getJellyType();
+        BlockPos pos = this.blockPosition();
+        BlockState blockBelow = this.level().getBlockState(pos.below());
+
+        if (currentType == ModEntities.JellyType.WATER) {
+            if (this.level().getBiome(pos).value().coldEnoughToSnow(pos) || blockBelow.is(Blocks.ICE) || blockBelow.is(Blocks.PACKED_ICE) || blockBelow.is(Blocks.BLUE_ICE)) {
+                if (this.random.nextInt(100) == 0) {
+                    this.transformToJelly(ModEntities.JellyType.ICE);
+                }
+            }
+        } else if (currentType == ModEntities.JellyType.DEFAULT) {
+            if (this.level().dimension() == Level.NETHER) {
+                 if (this.random.nextInt(200) == 0) {
+                     this.transformToJelly(ModEntities.JellyType.FIRE);
+                 }
+            }
+            if (this.isInWater()) {
+                submergedTicks++;
+                if (submergedTicks >= 100) {
+                    this.transformToJelly(ModEntities.JellyType.WATER);
+                }
+            } else {
+                submergedTicks = 0;
             }
         }
-        return nearbyJellies;
+
+        if (blockBelow.is(Blocks.HONEY_BLOCK)) {
+            this.setDeltaMovement(this.getDeltaMovement().multiply(0.5D, 0.0D, 0.5D));
+            if (currentType != ModEntities.JellyType.HONEY && this.random.nextInt(100) == 0) {
+                this.transformToJelly(ModEntities.JellyType.HONEY);
+            }
+        }
+
+        if (blockBelow.is(Blocks.SLIME_BLOCK)) {
+            if (this.random.nextInt(10) == 0) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0, 1.5, 0));
+                this.playEmotionSound();
+            }
+        }
+
+        if (currentType == ModEntities.JellyType.LOGOAK && this.isOnFire()) {
+            this.clearFire();
+            this.transformToJelly(ModEntities.JellyType.CHARCOAL);
+        }
+    }
+
+    public List<JellyEntity> getNearbyJellies() {
+        return this.level().getEntitiesOfClass(JellyEntity.class, this.getBoundingBox().inflate(10.0), entity -> entity != this);
     }
 
     public JellyCustomAI getCommunicationAI() {
         return this.customAI;
     }
 }
-

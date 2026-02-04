@@ -68,6 +68,9 @@ public class StickyResources {
      * Use this for tasks that need to happen before the game starts.
      */
     private void commonSetup(final FMLCommonSetupEvent event) {
+        // Initialize Jelly foods and transformations safely after items are registered
+        ModEntities.initialize();
+
         // Add custom plants to the flower pot
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.CATMINT.getId(), ModBlocks.POTTED_CATMINT);
@@ -84,7 +87,26 @@ public class StickyResources {
         // Add items to the "Ingredients" tab
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.STICKY_AMETHYST);
+            event.accept(ModItems.STICKY_BEEF);
+            event.accept(ModItems.STICKY_BONE_MEAL);
+            event.accept(ModItems.STICKY_CATALYST);
             event.accept(ModItems.STICKY_COAL);
+            event.accept(ModItems.STICKY_CHARCOAL);
+            event.accept(ModItems.STICKY_DIAMOND);
+            event.accept(ModItems.STICKY_EMERALD);
+            event.accept(ModItems.STICKY_ENDER_PEARL);
+            event.accept(ModItems.STICKY_GRASS);
+            event.accept(ModItems.STICKY_LAPIS_LAZULI);
+            event.accept(ModItems.STICKY_PRISMERINE_CRYSTALS);
+            event.accept(ModItems.STICKY_RAW_COPPER);
+            event.accept(ModItems.STICKY_RAW_IRON);
+            event.accept(ModItems.STICKY_RAW_GOLD);
+            event.accept(ModItems.STICKY_RAW_SAPPHIRE);
+            event.accept(ModItems.STICKY_RED_MUSHROOM);
+            event.accept(ModItems.STICKY_REDSTONE_DUST);
+            event.accept(ModItems.STICKY_ROTTON_FLESH);
+            event.accept(ModItems.STICKY_STRAWBERRY);
+
             // Add more items as needed
         }
     }

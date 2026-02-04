@@ -178,4 +178,10 @@ public class JellySummoningUtils {
     public interface AdditionalStructureCheck {
         boolean check(Level level, BlockPos pos);
     }
+
+    /**
+     * NOTE: The current implementation of scheduleDelayedTick uses a busy-wait approach via server execution.
+     * This may lead to performance overhead on high-traffic servers and will not persist across server restarts.
+     * If targeting stable server environments, consider refactoring this to use a BlockEntity or a more robust tick-based system.
+     */
 }

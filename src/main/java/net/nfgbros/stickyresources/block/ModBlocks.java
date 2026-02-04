@@ -2,6 +2,7 @@ package net.nfgbros.stickyresources.block;
 
 import net.nfgbros.stickyresources.StickyResources;
 import net.nfgbros.stickyresources.block.custom.CornCropBlock;
+import net.nfgbros.stickyresources.block.custom.StickyBlock;
 import net.nfgbros.stickyresources.block.custom.WashingStationBlock;
 import net.nfgbros.stickyresources.block.custom.StrawberryCropBlock;
 import net.nfgbros.stickyresources.item.ModItems;
@@ -24,32 +25,31 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, StickyResources.MOD_ID);
 
+    // Sticky Blocks using the new StickyBlock class
     public static final RegistryObject<Block> STICKY_COBBLESTONE = registerBlock("sticky_cobblestone",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK), 0.4f));
     public static final RegistryObject<Block> STICKY_DIRT = registerBlock("sticky_dirt",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.ROOTED_DIRT).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.ROOTED_DIRT).sound(SoundType.SLIME_BLOCK), 0.5f));
     public static final RegistryObject<Block> STICKY_GLASS = registerBlock("sticky_glass",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.GLASS).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.GLASS).sound(SoundType.SLIME_BLOCK), 0.3f));
     public static final RegistryObject<Block> STICKY_GRAVEL = registerBlock("sticky_gravel",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.GRAVEL).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.GRAVEL).sound(SoundType.SLIME_BLOCK), 0.4f));
     public static final RegistryObject<Block> JELLY_HONEY = registerBlock("jelly_honey",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.HONEY_BLOCK).sound(SoundType.SLIME_BLOCK), 0.8f));
     public static final RegistryObject<Block> STICKY_ICE = registerBlock("sticky_ice",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.MUD_BRICKS).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.MUD_BRICKS).sound(SoundType.SLIME_BLOCK), 0.6f));
     public static final RegistryObject<Block> STICKY_LOG_OAK = registerBlock("sticky_log_oak",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.WOOD).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.WOOD).sound(SoundType.SLIME_BLOCK), 0.4f));
     public static final RegistryObject<Block> STICKY_OBSIDIAN = registerBlock("sticky_obsidian",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK), 0.7f));
     public static final RegistryObject<Block> STICKY_PUMPKIN = registerBlock("sticky_pumpkin",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK), 0.5f));
     public static final RegistryObject<Block> STICKY_SAND = registerBlock("sticky_sand",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.SAND).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.SAND).sound(SoundType.SLIME_BLOCK), 0.5f));
     public static final RegistryObject<Block> STICKY_STONE = registerBlock("sticky_stone",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK)));
+            () -> new StickyBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK).sound(SoundType.STONE).sound(SoundType.SLIME_BLOCK), 0.4f));
 
-
-
-
+    // Standard Blocks
     public static final RegistryObject<Block> SAPPHIRE_BLOCK = registerBlock("sapphire_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
     public static final RegistryObject<Block> RAW_SAPPHIRE_BLOCK = registerBlock("raw_sapphire_block",

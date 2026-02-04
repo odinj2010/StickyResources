@@ -17,6 +17,8 @@ public class ModTags {
                 = tag("needs_sapphire_tool");
         public static final net.minecraft.tags.TagKey<Block> METAL_DETECTOR_VALUABLES
                 = tag("metal_detector_valuables");
+        public static final net.minecraft.tags.TagKey<Block> MAGNETIC_BLOCKS
+                = tag("magnetic_blocks");
 
         private static net.minecraft.tags.TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(StickyResources.MOD_ID, name));
@@ -32,6 +34,7 @@ public class ModTags {
         public static final net.minecraft.tags.TagKey<Item> METAL_DETECTOR_VALUABLES = tag("metal_detector_valuables");
 
         public static final net.minecraft.tags.TagKey<Item> STICKY_ITEMS = tag("sticky_items"); // New tag for STICKY items
+        public static final net.minecraft.tags.TagKey<Item> MAGNETIC_ITEMS = tag("magnetic_items");
 
         private static net.minecraft.tags.TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(StickyResources.MOD_ID, name));
