@@ -15,10 +15,19 @@ public class BoneJellyEntity extends JellyEntity {
     }
 
     @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.AvoidEntityGoal<>(this, net.minecraft.world.entity.animal.Wolf.class, 10.0F, 1.2D, 1.5D));
+    }
+
+    @Override
     public void tick() {
         super.tick();
 
         if (!this.level().isClientSide && this.tickCount % 20 == 0 && !this.isBaby()) {
+            if (this.level().getEntitiesOfClass(net.minecraft.world.entity.animal.Wolf.class, this.getBoundingBox().inflate(6.0D)).size() > 0) {
+                this.setEmotion(net.nfgbros.stickyresources.entity.ai.jelly.emotion.Emotions.Emotion.FEAR);
+            }
             fertilizeCrops();
         }
     }

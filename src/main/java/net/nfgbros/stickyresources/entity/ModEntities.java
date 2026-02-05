@@ -128,17 +128,30 @@ public class ModEntities {
     }
 
     private static void initializeTransformations() {
+        // Base Transformations
         JellyType.DEFAULT.addTransformation(Items.MAGMA_CREAM, 1, JellyType.LAVA);
         JellyType.DEFAULT.addTransformation(Items.SAND, 32, JellyType.SAND);
         JellyType.DEFAULT.addTransformation(Items.DIRT, 32, JellyType.DIRT);
         JellyType.DEFAULT.addTransformation(Items.STONE, 32, JellyType.STONE);
         JellyType.DEFAULT.addTransformation(Items.OAK_LOG, 16, JellyType.LOGOAK);
         JellyType.DEFAULT.addTransformation(Items.REDSTONE, 16, JellyType.REDSTONEDUST);
+
+        // New Feeding Paths
+        JellyType.DEFAULT.addTransformation(Items.BONE, 16, JellyType.BONE);
+        JellyType.DEFAULT.addTransformation(Items.ROTTEN_FLESH, 32, JellyType.ROTTENFLESH);
+        JellyType.DEFAULT.addTransformation(Items.PUMPKIN, 16, JellyType.PUMPKIN);
+        JellyType.DEFAULT.addTransformation(Items.RED_MUSHROOM, 16, JellyType.REDMUSHROOM);
+        JellyType.DEFAULT.addTransformation(Items.ENDER_PEARL, 8, JellyType.ENDERPEARL);
+
+        // Specialized Evolutions
         JellyType.STONE.addTransformation(Items.IRON_NUGGET, 8, JellyType.RAWIRON);
         JellyType.STONE.addTransformation(Items.GOLD_NUGGET, 8, JellyType.RAWGOLD);
         JellyType.STONE.addTransformation(Items.COPPER_INGOT, 1, JellyType.RAWCOPPER);
         JellyType.STONE.addTransformation(Items.LAPIS_LAZULI, 4, JellyType.LAPIS);
         JellyType.STONE.addTransformation(Items.COAL, 4, JellyType.COAL);
+
+        JellyType.DIRT.addTransformation(Items.GRAVEL, 32, JellyType.GRAVEL);
+        JellyType.GRASS.addTransformation(ModItems.STRAWBERRY.get(), 32, JellyType.STRAWBERRY);
     }
     
     private static void initializeFoods() {

@@ -63,6 +63,37 @@ public class LavaJellyEntity extends JellyEntity {
         if (ironIngotDropDelay > 0) {
             ironIngotDropDelay--;
         }
+
+        if (!this.level().isClientSide && this.tickCount % 20 == 0) {
+            cookNearbyItems();
+        }
+    }
+
+    private void cookNearbyItems() {
+        java.util.List<ItemEntity> items = this.level().getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(1.5D));
+        for (ItemEntity itemEntity : items) {
+            ItemStack stack = itemEntity.getItem();
+            ItemStack cooked = getCookedVersion(stack);
+            if (!cooked.isEmpty() && this.random.nextFloat() < 0.2f) { // 20% chance to cook per second
+                ItemStack result = cooked.copy();
+                result.setCount(stack.getCount());
+                itemEntity.setItem(result);
+                ((ServerLevel)this.level()).sendParticles(net.minecraft.core.particles.ParticleTypes.SMOKE, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 5, 0.1, 0.1, 0.1, 0);
+                this.level().playSound(null, this.blockPosition(), net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH, net.minecraft.sounds.SoundSource.BLOCKS, 0.5f, 1f);
+            }
+        }
+    }
+
+    private ItemStack getCookedVersion(ItemStack stack) {
+        if (stack.is(Items.BEEF)) return new ItemStack(Items.COOKED_BEEF);
+        if (stack.is(Items.CHICKEN)) return new ItemStack(Items.COOKED_CHICKEN);
+        if (stack.is(Items.PORKCHOP)) return new ItemStack(Items.COOKED_PORKCHOP);
+        if (stack.is(Items.MUTTON)) return new ItemStack(Items.COOKED_MUTTON);
+        if (stack.is(Items.RABBIT)) return new ItemStack(Items.COOKED_RABBIT);
+        if (stack.is(Items.COD)) return new ItemStack(Items.COOKED_COD);
+        if (stack.is(Items.SALMON)) return new ItemStack(Items.COOKED_SALMON);
+        if (stack.is(Items.POTATO)) return new ItemStack(Items.BAKED_POTATO);
+        return ItemStack.EMPTY;
     }
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {

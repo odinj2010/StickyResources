@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -153,6 +154,13 @@ public class JellyEntity extends Animal {
         ItemStack stack = pPlayer.getItemInHand(pHand);
         ModEntities.JellyType type = this.getJellyType();
         
+        if (type == ModEntities.JellyType.COW && stack.is(Items.BUCKET) && !this.isBaby()) {
+            pPlayer.playSound(net.minecraft.sounds.SoundEvents.COW_MILK, 1.0F, 1.0F);
+            ItemStack milkBucket = ItemUtils.createFilledResult(stack, pPlayer, Items.MILK_BUCKET.getDefaultInstance());
+            pPlayer.setItemInHand(pHand, milkBucket);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        }
+
         if (!this.level().isClientSide && !this.isBaby() && StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_PLAYER_TRANSFORMATIONS, true)) {
             Optional<ModEntities.JellyType.TransformationData> transformation = type.getTransformation(stack.getItem());
             if (transformation.isPresent()) {
@@ -250,17 +258,25 @@ public class JellyEntity extends Animal {
     }
 
     private ModEntities.JellyType getHybridOffspring(ModEntities.JellyType t1, ModEntities.JellyType t2) {
+        // Elemental & Geological Hybrids
         if (match(t1, t2, ModEntities.JellyType.WATER, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.OBSIDIAN;
         if (match(t1, t2, ModEntities.JellyType.SAND, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.GLASS;
         if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.SAND)) return ModEntities.JellyType.COBBLESTONE;
         if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.WATER)) return ModEntities.JellyType.DIRT;
         if (match(t1, t2, ModEntities.JellyType.DIRT, ModEntities.JellyType.WATER)) return ModEntities.JellyType.GRASS;
+
+        // Resource Hybrids
         if (match(t1, t2, ModEntities.JellyType.RAWGOLD, ModEntities.JellyType.WATER)) return ModEntities.JellyType.LAPIS;
         if (match(t1, t2, ModEntities.JellyType.COAL, ModEntities.JellyType.OBSIDIAN)) return ModEntities.JellyType.DIAMOND;
         if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.GRASS)) return ModEntities.JellyType.EMERALD;
         if (match(t1, t2, ModEntities.JellyType.LAPIS, ModEntities.JellyType.RAWGOLD)) return ModEntities.JellyType.RAWSAPPHIRE;
         if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.OBSIDIAN)) return ModEntities.JellyType.AMETHYST;
         if (match(t1, t2, ModEntities.JellyType.OBSIDIAN, ModEntities.JellyType.ENDERPEARL)) return ModEntities.JellyType.ENDERPEARL;
+
+        // Biological & Sweet Hybrids
+        if (match(t1, t2, ModEntities.JellyType.GRASS, ModEntities.JellyType.REDMUSHROOM)) return ModEntities.JellyType.COW;
+        if (match(t1, t2, ModEntities.JellyType.WATER, ModEntities.JellyType.DIRT)) return ModEntities.JellyType.PRISMERINE;
+        if (match(t1, t2, ModEntities.JellyType.STRAWBERRY, ModEntities.JellyType.HONEY)) return ModEntities.JellyType.CAKE;
 
         return null;
     }
@@ -287,10 +303,20 @@ public class JellyEntity extends Animal {
 
         if (this.isBaby()) return;
         dropItemTickCounter++;
-        if (dropItemTickCounter >= StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MIN_TICKS, 600) + random.nextInt(StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MAX_TICKS, 600))) {
+        if (dropItemTickCounter >= StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MIN_TICKS, 900) + random.nextInt(StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_DROP_MAX_TICKS, 900))) {
             dropManagement.dropJellyItem();
             dropItemTickCounter = 0;
         }
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, net.minecraft.world.damagesource.DamageSource source) {
+        if (!this.level().isClientSide && fallDistance > 5.0F && this.getJellyType() == ModEntities.JellyType.GRAVEL) {
+            this.transformToJelly(ModEntities.JellyType.SAND);
+            this.playSound(net.minecraft.sounds.SoundEvents.GRAVEL_BREAK, 1.0F, 1.0F);
+            return false; 
+        }
+        return super.causeFallDamage(fallDistance, damageMultiplier, source);
     }
 
     private void handleEnvironmentalTransformations() {
@@ -319,6 +345,25 @@ public class JellyEntity extends Animal {
                 }
             } else {
                 submergedTicks = 0;
+            }
+        } else if (currentType == ModEntities.JellyType.STONE) {
+            if (this.level().isRainingAt(pos) || this.isInWater()) {
+                if (this.random.nextInt(200) == 0) {
+                    this.transformToJelly(ModEntities.JellyType.COBBLESTONE);
+                }
+            }
+        } else if (currentType == ModEntities.JellyType.SAND) {
+            if (this.isOnFire()) {
+                if (this.random.nextInt(50) == 0) {
+                    this.clearFire();
+                    this.transformToJelly(ModEntities.JellyType.GLASS);
+                }
+            }
+        } else if (currentType == ModEntities.JellyType.COBBLESTONE) {
+            if (blockBelow.is(Blocks.LAVA) || this.isInLava()) {
+                if (this.random.nextInt(200) == 0) {
+                    this.transformToJelly(ModEntities.JellyType.STONE);
+                }
             }
         }
 
