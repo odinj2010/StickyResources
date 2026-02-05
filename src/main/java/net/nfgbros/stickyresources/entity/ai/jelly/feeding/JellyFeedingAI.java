@@ -27,17 +27,17 @@ public class JellyFeedingAI {
     public void tick() {
         if (level.isClientSide) return;
         
-        // Performance Optimization: Only scan every 20 ticks
+        // Performance Optimization: Only scan every 10 ticks now for faster eating
         if (cooldown > 0) {
             cooldown--;
             return;
         }
-        cooldown = 20;
+        cooldown = 10;
 
         ModEntities.JellyType type = jelly.getJellyType();
 
-        // 1. Scan for Items (Food or Transformation)
-        level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(2.0), entity -> {
+        // 1. Scan for Items (Food or Transformation) - Increased range slightly for consumption
+        level.getEntitiesOfClass(ItemEntity.class, jelly.getBoundingBox().inflate(1.5), entity -> {
             ItemStack stack = entity.getItem();
             return !stack.isEmpty() && (type.isPreferredFood(stack) || type.isLoveFood(stack) || type.getTransformation(stack.getItem()).isPresent());
         }).stream().findFirst().ifPresent(this::consumeItem);
@@ -50,8 +50,6 @@ public class JellyFeedingAI {
                 consumeBlock(jellyPos, blockState);
             }
         }
-
-        followPlayerIfHoldingFood();
     }
 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -112,16 +110,5 @@ public class JellyFeedingAI {
     private void consumeBlock(BlockPos pos, BlockState blockState) {
         level.destroyBlock(pos, false);
         jelly.heal(1.0f);
-    }
-
-    private void followPlayerIfHoldingFood() {
-        Player player = level.getNearestPlayer(jelly, 8);
-        if (player != null) {
-            ItemStack heldItem = player.getMainHandItem();
-            ModEntities.JellyType type = jelly.getJellyType();
-            if (type.isPreferredFood(heldItem) || type.isLoveFood(heldItem)) {
-                jelly.getNavigation().moveTo(player, StickyResourcesConfig.JELLY_FOLLOW_SPEED.get());
-            }
-        }
     }
 }

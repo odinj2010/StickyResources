@@ -14,6 +14,13 @@ public class StickyResourcesConfig {
     public static ForgeConfigSpec.BooleanValue JELLY_ENVIRONMENTAL_TRANSFORMATIONS;
     public static ForgeConfigSpec.BooleanValue JELLY_PLAYER_TRANSFORMATIONS;
     public static ForgeConfigSpec.BooleanValue JELLY_EMOTION_TRIGGERS_ACTIVE;
+    public static ForgeConfigSpec.BooleanValue JELLY_EMOTION_PARTICLES;
+    public static ForgeConfigSpec.BooleanValue JELLY_CHIRPS_ENABLED;
+
+    // Social & Alpha Settings
+    public static ForgeConfigSpec.BooleanValue JELLY_ALPHA_DYNAMICS;
+    public static ForgeConfigSpec.BooleanValue JELLY_HERDING_ENABLED;
+    public static ForgeConfigSpec.DoubleValue JELLY_HERDING_RANGE;
 
     // Drop Settings
     public static ForgeConfigSpec.IntValue JELLY_DROP_MIN_TICKS;
@@ -54,18 +61,26 @@ public class StickyResourcesConfig {
         JELLY_CUSTOM_AI_ACTIVE = BUILDER.comment("Activate the jellies custom AI. Default: true").define("jelly_custom_ai_active", true);
         JELLY_RESOURCE_ONLY_MODE = BUILDER.comment("If true, jellies will not have complex behaviors and only drop items. Default: false").define("jelly_resources_only_mode", false);
         JELLY_EMOTION_TRIGGERS_ACTIVE = BUILDER.comment("Allow jellies to change emotions based on environment. Default: true").define("jelly_emotion_triggers_active", true);
+        JELLY_EMOTION_PARTICLES = BUILDER.comment("Show visual particles for jelly emotions. Default: true").define("jelly_emotion_particles", true);
+        JELLY_CHIRPS_ENABLED = BUILDER.comment("Allow jellies to make sounds/chirps. Default: true").define("jelly_chirps_enabled", true);
+        BUILDER.pop();
+
+        BUILDER.comment("Social & Herding Settings").push("social_herding");
+        JELLY_ALPHA_DYNAMICS = BUILDER.comment("Enable Alpha Jellies and their influence on others. Default: true").define("jelly_alpha_dynamics", true);
+        JELLY_HERDING_ENABLED = BUILDER.comment("Allow Jellies of the same type to follow an Alpha. Default: true").define("jelly_herding_enabled", true);
+        JELLY_HERDING_RANGE = BUILDER.comment("Distance (in blocks) Jellies will look for a herd leader. Default: 16.0").defineInRange("jelly_herding_range", 16.0, 1.0, 64.0);
         BUILDER.pop();
 
         BUILDER.comment("Breeding & Transformation Settings").push("breeding_and_transformation");
-        JELLY_AUTONOMOUS_BREEDING = BUILDER.comment("Allow jellies to breed on their own in the wild. Default: true").define("jelly_autonomous_breeding", true);
-        JELLY_WILD_BREED_CHANCE = BUILDER.comment("Chance per tick for a jelly to enter the 'Horny' state (1 in X). Default: 1200").defineInRange("jelly_wild_breed_chance", 1200, 1, 100000);
+        JELLY_AUTONOMOUS_BREEDING = BUILDER.comment("Allow jellies to breed on their own in the wild. Default: false").define("jelly_autonomous_breeding", false);
+        JELLY_WILD_BREED_CHANCE = BUILDER.comment("Chance per tick for a jelly to enter the 'Horny' state (1 in X). Default: 10200").defineInRange("jelly_wild_breed_chance", 10200, 1, 100000);
         JELLY_ENVIRONMENTAL_TRANSFORMATIONS = BUILDER.comment("Allow jellies to transform based on biome/blocks. Default: true").define("jelly_environmental_transformations", true);
         JELLY_PLAYER_TRANSFORMATIONS = BUILDER.comment("Allow players to transform jellies by feeding them items. Default: true").define("jelly_player_transformations", true);
         BUILDER.pop();
 
         BUILDER.comment("Drop Settings").push("drops");
-        JELLY_DROP_MIN_TICKS = BUILDER.comment("Minimum time between item drops (in ticks). Default: 600").defineInRange("jelly_drop_min_ticks", 600, 1, 100000);
-        JELLY_DROP_MAX_TICKS = BUILDER.comment("Maximum extra random time between item drops (in ticks). Default: 600").defineInRange("jelly_drop_max_ticks", 600, 1, 100000);
+        JELLY_DROP_MIN_TICKS = BUILDER.comment("Minimum time between item drops (in ticks). Default: 900").defineInRange("jelly_drop_min_ticks", 900, 1, 100000);
+        JELLY_DROP_MAX_TICKS = BUILDER.comment("Maximum extra random time between item drops (in ticks). Default: 900").defineInRange("jelly_drop_max_ticks", 900, 1, 100000);
         JELLY_DROP_CHANCE_MODIFIER = BUILDER.comment("Multiplier for drop rates. Default: 1.0").defineInRange("jelly_drop_chance_modifier", 1.0, 0.0, 100.0);
         BUILDER.pop();
 

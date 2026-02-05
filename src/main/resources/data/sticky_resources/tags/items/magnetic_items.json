@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:iron_ingot",
+    "minecraft:iron_nugget",
+    "minecraft:raw_iron",
+    "minecraft:gold_ingot",
+    "minecraft:gold_nugget",
+    "minecraft:raw_gold",
+    "minecraft:copper_ingot",
+    "minecraft:raw_copper",
+    "minecraft:compass",
+    "minecraft:bucket",
+    "minecraft:water_bucket",
+    "minecraft:lava_bucket",
+    "minecraft:milk_bucket",
+    "minecraft:minecart",
+    "minecraft:chest_minecart",
+    "minecraft:furnace_minecart",
+    "minecraft:tnt_minecart",
+    "minecraft:hopper_minecart",
+    "minecraft:iron_horse_armor",
+    "minecraft:golden_horse_armor",
+    "sticky_resources:sticky_raw_iron",
+    "sticky_resources:sticky_raw_gold",
+    "sticky_resources:sticky_raw_copper"
+  ]
+}

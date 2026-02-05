@@ -14,17 +14,11 @@ import java.util.Random;
 
 public class JellyMovement {
     private static final int JUMP_COOLDOWN = 20;
-    private static final int WANDER_COOLDOWN_MIN = 100;
-    private static final int WANDER_COOLDOWN_RANDOM = 100;
-    private static final int WANDER_RANGE = 10;
-    private static final double WANDER_SPEED = 0.25;
 
     private final JellyEntity jelly;
     private final Level level;
     private final PathNavigation navigation;
     private final Random random = new Random();
-    private BlockPos wanderTarget = null;
-    private int wanderCooldown = 0;
     private int jumpCooldown = 0;
 
     public JellyMovement(JellyEntity jelly) {
@@ -38,7 +32,6 @@ public class JellyMovement {
         if (jelly.isNoAi()) return;
 
         handleMovement();
-        wander();
         jumpOverObstacle();
     }
 
@@ -121,7 +114,7 @@ public class JellyMovement {
             jelly.getJumpControl().jump();
             BlockPos safePos = findSafeGround();
             if (safePos != null) {
-                navigation.moveTo(safePos.getX(), safePos.getY(), safePos.getZ(), WANDER_SPEED * 1.5);
+                navigation.moveTo(safePos.getX(), safePos.getY(), safePos.getZ(), 1.2);
             }
         }
     }
@@ -167,37 +160,10 @@ public class JellyMovement {
         return jelly.isInWater();
     }
 
-    private void wander() {
-        if (wanderCooldown > 0) {
-            wanderCooldown--;
-            return;
-        }
-
-        if (wanderTarget == null || jelly.distanceToSqr(Vec3.atCenterOf(wanderTarget)) < 2.0 || navigation.isDone()) {
-            wanderTarget = findRandomGroundTarget();
-            if (wanderTarget != null) {
-                navigation.moveTo(wanderTarget.getX(), wanderTarget.getY(), wanderTarget.getZ(), WANDER_SPEED);
-                wanderCooldown = WANDER_COOLDOWN_MIN + random.nextInt(WANDER_COOLDOWN_RANDOM);
-            }
-        }
-    }
-
-    private BlockPos findRandomGroundTarget() {
-        for (int i = 0; i < 10; i++) {
-            int x = jelly.blockPosition().getX() + random.nextInt(WANDER_RANGE * 2) - WANDER_RANGE;
-            int z = jelly.blockPosition().getZ() + random.nextInt(WANDER_RANGE * 2) - WANDER_RANGE;
-            BlockPos target = findGround(new BlockPos(x, jelly.blockPosition().getY(), z));
-            if (target != null) {
-                return target;
-            }
-        }
-        return null;
-    }
-
     private BlockPos findSafeGround() {
         for (int i = 0; i < 10; i++) {
-            int x = jelly.blockPosition().getX() + random.nextInt(WANDER_RANGE * 2) - WANDER_RANGE;
-            int z = jelly.blockPosition().getZ() + random.nextInt(WANDER_RANGE * 2) - WANDER_RANGE;
+            int x = jelly.blockPosition().getX() + random.nextInt(20) - 10;
+            int z = jelly.blockPosition().getZ() + random.nextInt(20) - 10;
             BlockPos target = findGround(new BlockPos(x, jelly.blockPosition().getY(), z));
             if (target != null && !level.getFluidState(target).is(FluidTags.WATER)) {
                 return target;
@@ -214,14 +180,6 @@ public class JellyMovement {
                 return mutable.immutable().above();
             }
             mutable.move(0, -1, 0);
-        }
-        // Reset and scan up
-        mutable.set(startPos);
-        for (int y = 0; y < 10; y++) {
-            if (level.getBlockState(mutable).isSolid() && level.getBlockState(mutable.above()).isAir()) {
-                 return mutable.immutable().above();
-            }
-            mutable.move(0, 1, 0);
         }
         return null;
     }

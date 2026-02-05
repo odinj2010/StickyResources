@@ -1,5 +1,7 @@
 package net.nfgbros.stickyresources.entity.ai.jelly.emotion;
 
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -30,6 +32,7 @@ public class Emotions {
     private final Surprise surprise;
 
     private int boredomTicks = 0;
+    private int moodDuration = 0;
     private Vec3 lastPos = Vec3.ZERO;
 
     public Emotions(JellyEntity jelly) {
@@ -53,6 +56,15 @@ public class Emotions {
         if (jelly.level().isClientSide) return;
 
         updateEmotionTriggers();
+        handleEmotionalContagion();
+        spawnEmotionParticles();
+
+        if (moodDuration > 0) {
+            moodDuration--;
+            if (moodDuration == 0 && currentEmotion != Emotion.NEUTRAL) {
+                this.setEmotion(Emotion.NEUTRAL);
+            }
+        }
 
         if (jelly.getEmotion() != this.currentEmotion) {
             this.setEmotion(jelly.getEmotion());
@@ -75,19 +87,87 @@ public class Emotions {
         }
     }
 
+    private void spawnEmotionParticles() {
+        if (!StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_EMOTION_PARTICLES, true)) return;
+
+        if (jelly.level() instanceof ServerLevel serverLevel) {
+            // Alpha always has a slight aura
+            if (StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ALPHA_DYNAMICS, true) && jelly.isAlpha() && jelly.getRandom().nextInt(20) == 0) {
+                serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, jelly.getX(), jelly.getY() + jelly.getBbHeight() + 0.2, jelly.getZ(), 1, 0.2, 0.1, 0.2, 0);
+            }
+
+            if (currentEmotion == Emotion.NEUTRAL) return;
+            if (jelly.getRandom().nextInt(15) != 0) return;
+
+            switch (currentEmotion) {
+                case HAPPY, EXCITEMENT -> serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, jelly.getX(), jelly.getY() + jelly.getBbHeight() + 0.2, jelly.getZ(), 1, 0.2, 0.1, 0.2, 0);
+                case ANGRY -> serverLevel.sendParticles(ParticleTypes.ANGRY_VILLAGER, jelly.getX(), jelly.getY() + jelly.getBbHeight() + 0.2, jelly.getZ(), 1, 0.2, 0.1, 0.2, 0);
+                case SAD -> serverLevel.sendParticles(ParticleTypes.DRIPPING_WATER, jelly.getX(), jelly.getY() + jelly.getBbHeight() / 2, jelly.getZ(), 1, 0.1, 0.1, 0.1, 0);
+                case FEAR -> serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, jelly.getX(), jelly.getY() + jelly.getBbHeight() / 2, jelly.getZ(), 1, 0.2, 0.2, 0.2, 0.05);
+                case LOVE, HORNY -> serverLevel.sendParticles(ParticleTypes.HEART, jelly.getX(), jelly.getY() + jelly.getBbHeight() + 0.2, jelly.getZ(), 1, 0.2, 0.1, 0.2, 0);
+            }
+        }
+    }
+
+    private void handleEmotionalContagion() {
+        if (jelly.getRandom().nextInt(100) != 0) return; // Only check contagion occasionally
+
+        List<JellyEntity> nearby = jelly.getNearbyJellies();
+        for (JellyEntity other : nearby) {
+            Emotion otherEmotion = other.getEmotion();
+            if (otherEmotion == Emotion.NEUTRAL || otherEmotion == currentEmotion) continue;
+
+            // Certain emotions are more contagious
+            float chance = switch (otherEmotion) {
+                case FEAR -> 0.4f;
+                case ANGRY -> 0.3f;
+                case HAPPY -> 0.2f;
+                case EXCITEMENT -> 0.25f;
+                default -> 0.05f;
+            };
+
+            if (jelly.getRandom().nextFloat() < chance) {
+                this.setEmotion(otherEmotion);
+                break;
+            }
+        }
+    }
+
     private void updateEmotionTriggers() {
         if (!StickyResourcesConfig.JELLY_EMOTION_TRIGGERS_ACTIVE.get()) return;
+
+        boolean alphaDynamics = StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ALPHA_DYNAMICS, true);
+
+        // Alpha Promotion Logic
+        if (alphaDynamics && !jelly.isAlpha() && !jelly.isBaby() && jelly.getRandom().nextInt(1000) == 0) {
+            List<JellyEntity> nearby = jelly.getNearbyJellies();
+            boolean alphaNearby = nearby.stream().anyMatch(JellyEntity::isAlpha);
+            if (!alphaNearby) {
+                jelly.setAlpha(true);
+            }
+        }
+        
+        // If we have a strong persistent mood, don't override it with random triggers
+        if (moodDuration > 400 && (currentEmotion == Emotion.FEAR || currentEmotion == Emotion.ANGRY)) return;
+
         if (jelly.isEmotion(Emotion.LOVE) || jelly.isEmotion(Emotion.SURPRISE)) return;
+
+        // Alpha influence: nearby jellies are less likely to be afraid or angry
+        boolean isCalmedByAlpha = alphaDynamics && !jelly.isAlpha() && jelly.getNearbyJellies().stream().anyMatch(JellyEntity::isAlpha);
 
         List<LivingEntity> enemies = jelly.level().getEntitiesOfClass(LivingEntity.class, jelly.getBoundingBox().inflate(8.0), entity -> entity instanceof Enemy);
         if (!enemies.isEmpty()) {
-            jelly.setEmotion(Emotion.FEAR);
-            return;
+            if (!isCalmedByAlpha || jelly.getRandom().nextFloat() < 0.3f) {
+                jelly.setEmotion(Emotion.FEAR);
+                return;
+            }
         }
 
         if (jelly.getHealth() < jelly.getMaxHealth() && jelly.getLastHurtByMob() != null) {
-            jelly.setEmotion(Emotion.ANGRY);
-            return;
+            if (!isCalmedByAlpha || jelly.getRandom().nextFloat() < 0.5f) {
+                jelly.setEmotion(Emotion.ANGRY);
+                return;
+            }
         }
 
         if (!jelly.isBaby() && jelly.getRandom().nextInt(StickyResourcesConfig.JELLY_WILD_BREED_CHANCE.get()) == 0 && jelly.getMate() == null) {
@@ -116,6 +196,18 @@ public class Emotions {
             exitCurrentEmotion();
             this.currentEmotion = emotion;
             jelly.setEmotion(emotion);
+            
+            // Set persistence duration
+            this.moodDuration = switch (emotion) {
+                case FEAR -> 600; // 30 seconds
+                case ANGRY -> 800;
+                case HAPPY, EXCITEMENT -> 400;
+                case BOREDOM, SAD -> 1000;
+                case SURPRISE -> 100;
+                case LOVE -> 1200;
+                default -> 0;
+            };
+            
             enterNewEmotion();
         }
     }
