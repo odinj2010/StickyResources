@@ -30,43 +30,43 @@ public class ModEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, StickyResources.MOD_ID);
 
     public enum JellyType {
-        AMETHYST(AmethystJellyEntity::new, "amethyst_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_AMETHYST.get(), 15.0D, 1.5D, 0.25D, false),
-        BONE(BoneJellyEntity::new, "bone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_BONE_MEAL.get(), 10.0D, 1.0D, 0.3D, false),
+        AMETHYST(AmethystJellyEntity::new, "amethyst_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_AMETHYST.get(), 15.0D, 1.5D, 0.15D, false),
+        BONE(BoneJellyEntity::new, "bone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_BONE_MEAL.get(), 10.0D, 1.0D, 0.2D, false),
         CAKE(CakeJellyEntity::new, "cake_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.JELLY_CAKE.get(), 12.0D, 0.5D, 0.2D, false),
-        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_CHARCOAL.get(), 10.0D, 1.0D, 0.25D, false),
-        COAL(CoalJellyEntity::new, "coal_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_COAL.get(), 10.0D, 1.0D, 0.25D, false),
-        COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_COBBLESTONE.get(), 20.0D, 2.0D, 0.15D, false),
-        COW(CowJellyEntity::new, "cow_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_BEEF.get(), 10.0D, 0.5D, 0.25D, false),
-        DEFAULT(JellyEntity::new, "default_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.SLIME_BALL, 10.0D, 1.0D, 0.25D, false),
-        DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_DIAMOND.get(), 30.0D, 3.0D, 0.2D, false),
-        DIRT(DirtJellyEntity::new, "dirt_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_DIRT.get(), 8.0D, 0.5D, 0.25D, false),
-        ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.SLIME_BALL, 12.0D, 2.5D, 0.35D, true),
-        EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_EMERALD.get(), 20.0D, 2.0D, 0.25D, false),
-        ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_ENDER_PEARL.get(), 15.0D, 1.0D, 0.4D, false),
-        FIRE(FireJellyEntity::new, "fire_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.SLIME_BALL, 12.0D, 3.0D, 0.3D, true),
-        GLASS(GlassJellyEntity::new, "glass_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_GLASS.get(), 5.0D, 0.5D, 0.3D, false),
-        GRASS(GrassJellyEntity::new, "grass_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.GRASS, 10.0D, 1.0D, 0.25D, false),
-        GRAVEL(GravelJellyEntity::new, "gravel_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_GRAVEL.get(), 12.0D, 1.2D, 0.22D, false),
-        HONEY(HoneyJellyEntity::new, "honey_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.JELLY_HONEY.get(), 10.0D, 0.2D, 0.1D, false),
-        ICE(IceJellyEntity::new, "ice_jelly", 0.5f, 0.5f, JellySwimBehavior.DOLPHIN, () -> ModBlocks.STICKY_ICE.get(), 12.0D, 1.0D, 0.28D, false),
-        LAPIS(LapisJellyEntity::new, "lapis_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_LAPIS_LAZULI.get(), 12.0D, 1.5D, 0.25D, false),
-        LAVA(LavaJellyEntity::new, "lava_jelly", 0.5f, 0.5f, JellySwimBehavior.WATER_LETHAL, () -> Items.SLIME_BALL, 25.0D, 4.0D, 0.15D, true),
-        MAGNET(MagnetJellyEntity::new, "magnet_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.SLIME_BALL, 15.0D, 1.0D, 0.25D, false),
-        LOGOAK(LogOakJellyEntity::new, "logoak_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_LOG_OAK.get(), 15.0D, 1.5D, 0.2D, false),
-        OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 0.5f, 0.5f, JellySwimBehavior.FLOATING, () -> ModBlocks.STICKY_OBSIDIAN.get(), 40.0D, 2.5D, 0.1D, true),
-        PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_PRISMERINE_CRYSTALS.get(), 15.0D, 2.0D, 0.3D, false),
-        PUMPKIN(PumpkinJellyEntity::new, "pumpkin_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_PUMPKIN.get(), 12.0D, 1.0D, 0.22D, false),
-        RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_COPPER.get(), 15.0D, 1.5D, 0.2D, false),
-        RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_GOLD.get(), 15.0D, 2.0D, 0.22D, false),
-        RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_IRON.get(), 20.0D, 2.0D, 0.2D, false),
-        REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RED_MUSHROOM.get(), 10.0D, 1.0D, 0.25D, false),
-        REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_REDSTONE_DUST.get(), 10.0D, 1.2D, 0.3D, false),
+        CHARCOAL(CharcoalJellyEntity::new, "charcoal_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_CHARCOAL.get(), 10.0D, 1.0D, 0.2D, false),
+        COAL(CoalJellyEntity::new, "coal_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_COAL.get(), 10.0D, 1.0D, 0.18D, false),
+        COBBLESTONE(CobblestoneJellyEntity::new, "cobblestone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_COBBLESTONE.get(), 20.0D, 2.0D, 0.1D, false),
+        COW(CowJellyEntity::new, "cow_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_BEEF.get(), 10.0D, 0.5D, 0.18D, false),
+        DEFAULT(JellyEntity::new, "default_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.SLIME_BALL, 10.0D, 1.0D, 0.2D, false),
+        DIAMOND(DiamondJellyEntity::new, "diamond_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_DIAMOND.get(), 30.0D, 3.0D, 0.12D, false),
+        DIRT(DirtJellyEntity::new, "dirt_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_DIRT.get(), 8.0D, 0.5D, 0.18D, false),
+        ELECTRIC(ElectricJellyEntity::new, "electric_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Blocks.AIR, 12.0D, 2.5D, 0.2D, true),
+        EMERALD(EmeraldJellyEntity::new, "emerald_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_EMERALD.get(), 20.0D, 2.0D, 0.12D, false),
+        ENDERPEARL(EnderPearlJellyEntity::new, "enderpearl_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_ENDER_PEARL.get(), 15.0D, 1.0D, 0.2D, false),
+        FIRE(FireJellyEntity::new, "fire_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Blocks.AIR, 12.0D, 3.0D, 0.2D, true),
+        GLASS(GlassJellyEntity::new, "glass_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_GLASS.get(), 5.0D, 0.5D, 0.2D, false),
+        GRASS(GrassJellyEntity::new, "grass_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Items.GRASS, 10.0D, 1.0D, 0.22D, false),
+        GRAVEL(GravelJellyEntity::new, "gravel_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_GRAVEL.get(), 12.0D, 1.2D, 0.15D, false),
+        HONEY(HoneyJellyEntity::new, "honey_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.JELLY_HONEY.get(), 10.0D, 0.2D, 0.15D, false),
+        ICE(IceJellyEntity::new, "ice_jelly", 0.5f, 0.5f, JellySwimBehavior.DOLPHIN, () -> ModBlocks.STICKY_ICE.get(), 12.0D, 1.0D, 0.2D, false),
+        LAPIS(LapisJellyEntity::new, "lapis_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_LAPIS_LAZULI.get(), 12.0D, 1.5D, 0.18D, false),
+        LAVA(LavaJellyEntity::new, "lava_jelly", 0.5f, 0.5f, JellySwimBehavior.WATER_LETHAL, () -> Blocks.AIR, 25.0D, 4.0D, 0.1D, true),
+        MAGNET(MagnetJellyEntity::new, "magnet_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> Blocks.AIR, 15.0D, 1.0D, 0.18D, false),
+        LOGOAK(LogOakJellyEntity::new, "logoak_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_LOG_OAK.get(), 15.0D, 1.5D, 0.15D, false),
+        OBSIDIAN(ObsidianJellyEntity::new, "obsidian_jelly", 0.5f, 0.5f, JellySwimBehavior.FLOATING, () -> ModBlocks.STICKY_OBSIDIAN.get(), 40.0D, 2.5D, 0.08D, true),
+        PRISMERINE(PrismerineJellyEntity::new, "prismerine_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_PRISMERINE_CRYSTALS.get(), 15.0D, 2.0D, 0.2D, false),
+        PUMPKIN(PumpkinJellyEntity::new, "pumpkin_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_PUMPKIN.get(), 12.0D, 1.0D, 0.18D, false),
+        RAWCOPPER(RawCopperJellyEntity::new, "rawcopper_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_COPPER.get(), 15.0D, 1.5D, 0.15D, false),
+        RAWGOLD(RawGoldJellyEntity::new, "rawgold_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_GOLD.get(), 15.0D, 2.0D, 0.15D, false),
+        RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_IRON.get(), 20.0D, 2.0D, 0.15D, false),
+        REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RED_MUSHROOM.get(), 10.0D, 1.0D, 0.2D, false),
+        REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_REDSTONE_DUST.get(), 10.0D, 1.2D, 0.2D, false),
         ROTTENFLESH(RottonFleshJellyEntity::new, "rotton_flesh_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_ROTTON_FLESH.get(), 15.0D, 2.0D, 0.2D, false),
-        SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f, JellySwimBehavior.WATER_DAMAGE, () -> ModBlocks.STICKY_SAND.get(), 10.0D, 0.5D, 0.25D, false),
-        RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_SAPPHIRE.get(), 25.0D, 2.5D, 0.2D, false),
-        STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_STONE.get(), 18.0D, 1.5D, 0.18D, false),
-        STRAWBERRY(StrawberryJellyEntity::new, "strawberry_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_STRAWBERRY.get(), 10.0D, 0.5D, 0.25D, false),
-        WATER(WaterJellyEntity::new, "water_jelly", 0.5f, 0.5f, JellySwimBehavior.FISH, () -> Items.SLIME_BALL, 10.0D, 1.0D, 0.35D, false);
+        SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f, JellySwimBehavior.WATER_DAMAGE, () -> ModBlocks.STICKY_SAND.get(), 10.0D, 0.5D, 0.2D, false),
+        RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_SAPPHIRE.get(), 25.0D, 2.5D, 0.15D, false),
+        STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_STONE.get(), 18.0D, 1.5D, 0.1D, false),
+        STRAWBERRY(StrawberryJellyEntity::new, "strawberry_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_STRAWBERRY.get(), 10.0D, 0.5D, 0.2D, false),
+        WATER(WaterJellyEntity::new, "water_jelly", 0.5f, 0.5f, JellySwimBehavior.FISH, () -> Blocks.WATER, 10.0D, 1.0D, 0.22D, false);
 
         public enum JellySwimBehavior {
             FISH, DOLPHIN, WATER_DAMAGE, WATER_LETHAL, FLOATING, SURFACE_SWIMMING, NONE
@@ -129,14 +129,12 @@ public class ModEntities {
 
     private static void initializeTransformations() {
         // Base Transformations
-        JellyType.DEFAULT.addTransformation(Items.MAGMA_CREAM, 1, JellyType.LAVA);
+        JellyType.DEFAULT.addTransformation(Items.MAGMA_CREAM, 8, JellyType.LAVA);
         JellyType.DEFAULT.addTransformation(Items.SAND, 32, JellyType.SAND);
         JellyType.DEFAULT.addTransformation(Items.DIRT, 32, JellyType.DIRT);
         JellyType.DEFAULT.addTransformation(Items.STONE, 32, JellyType.STONE);
         JellyType.DEFAULT.addTransformation(Items.OAK_LOG, 16, JellyType.LOGOAK);
         JellyType.DEFAULT.addTransformation(Items.REDSTONE, 16, JellyType.REDSTONEDUST);
-
-        // New Feeding Paths
         JellyType.DEFAULT.addTransformation(Items.BONE, 16, JellyType.BONE);
         JellyType.DEFAULT.addTransformation(Items.ROTTEN_FLESH, 32, JellyType.ROTTENFLESH);
         JellyType.DEFAULT.addTransformation(Items.PUMPKIN, 16, JellyType.PUMPKIN);
@@ -151,7 +149,8 @@ public class ModEntities {
         JellyType.STONE.addTransformation(Items.COAL, 4, JellyType.COAL);
 
         JellyType.DIRT.addTransformation(Items.GRAVEL, 32, JellyType.GRAVEL);
-        JellyType.GRASS.addTransformation(ModItems.STRAWBERRY.get(), 32, JellyType.STRAWBERRY);
+
+        JellyType.GRASS.addTransformation(ModItems.STRAWBERRY_SEEDS.get(), 32, JellyType.STRAWBERRY);
     }
     
     private static void initializeFoods() {

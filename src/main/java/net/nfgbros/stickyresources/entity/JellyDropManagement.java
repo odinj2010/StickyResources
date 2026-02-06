@@ -15,8 +15,11 @@ public class JellyDropManagement {
     public void dropJellyItem() {
         Level world = jelly.level();
         ModEntities.JellyType type = jelly.getJellyType();
-        ItemStack dropStack = new ItemStack(type.getDropItem());
+        net.minecraft.world.level.ItemLike item = type.getDropItem();
+        
+        if (item == net.minecraft.world.level.block.Blocks.AIR) return;
 
+        ItemStack dropStack = new ItemStack(item);
         if (!dropStack.isEmpty()) {
             ItemEntity itemEntity = new ItemEntity(world, jelly.getX(), jelly.getY(), jelly.getZ(), dropStack);
             world.addFreshEntity(itemEntity);

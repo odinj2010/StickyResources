@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.nfgbros.stickyresources.StickyResourcesConfig;
 import net.nfgbros.stickyresources.entity.ai.jelly.emotion.jellyemotions.*;
@@ -155,12 +156,20 @@ public class Emotions {
         // Alpha influence: nearby jellies are less likely to be afraid or angry
         boolean isCalmedByAlpha = alphaDynamics && !jelly.isAlpha() && jelly.getNearbyJellies().stream().anyMatch(JellyEntity::isAlpha);
 
-        List<LivingEntity> enemies = jelly.level().getEntitiesOfClass(LivingEntity.class, jelly.getBoundingBox().inflate(8.0), entity -> entity instanceof Enemy);
-        if (!enemies.isEmpty()) {
+        // Fear Trigger: Only from actual Enemies or if a player recently attacked
+        List<LivingEntity> threats = jelly.level().getEntitiesOfClass(LivingEntity.class, jelly.getBoundingBox().inflate(8.0), 
+            entity -> entity instanceof Enemy || (entity instanceof Player && jelly.getLastHurtByMob() == entity));
+            
+        if (!threats.isEmpty()) {
             if (!isCalmedByAlpha || jelly.getRandom().nextFloat() < 0.3f) {
                 jelly.setEmotion(Emotion.FEAR);
                 return;
             }
+        }
+
+        // If fear was active but no threats are nearby anymore, reset it sooner
+        if (currentEmotion == Emotion.FEAR && threats.isEmpty() && moodDuration > 100) {
+            moodDuration = 100; 
         }
 
         if (jelly.getHealth() < jelly.getMaxHealth() && jelly.getLastHurtByMob() != null) {

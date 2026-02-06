@@ -12,6 +12,7 @@ public class StickyResourcesConfig {
     public static ForgeConfigSpec.BooleanValue JELLY_AUTONOMOUS_BREEDING;
     public static ForgeConfigSpec.IntValue JELLY_WILD_BREED_CHANCE;
     public static ForgeConfigSpec.BooleanValue JELLY_ENVIRONMENTAL_TRANSFORMATIONS;
+    public static ForgeConfigSpec.BooleanValue JELLY_ENVIRONMENTAL_GRIEFING;
     public static ForgeConfigSpec.BooleanValue JELLY_PLAYER_TRANSFORMATIONS;
     public static ForgeConfigSpec.BooleanValue JELLY_EMOTION_TRIGGERS_ACTIVE;
     public static ForgeConfigSpec.BooleanValue JELLY_EMOTION_PARTICLES;
@@ -75,6 +76,7 @@ public class StickyResourcesConfig {
         JELLY_AUTONOMOUS_BREEDING = BUILDER.comment("Allow jellies to breed on their own in the wild. Default: false").define("jelly_autonomous_breeding", false);
         JELLY_WILD_BREED_CHANCE = BUILDER.comment("Chance per tick for a jelly to enter the 'Horny' state (1 in X). Default: 10200").defineInRange("jelly_wild_breed_chance", 10200, 1, 100000);
         JELLY_ENVIRONMENTAL_TRANSFORMATIONS = BUILDER.comment("Allow jellies to transform based on biome/blocks. Default: true").define("jelly_environmental_transformations", true);
+        JELLY_ENVIRONMENTAL_GRIEFING = BUILDER.comment("Allow jellies to change blocks in the world (e.g., Stone to Cobblestone, placing Lava). Default: true").define("jelly_environmental_griefing", true);
         JELLY_PLAYER_TRANSFORMATIONS = BUILDER.comment("Allow players to transform jellies by feeding them items. Default: true").define("jelly_player_transformations", true);
         BUILDER.pop();
 
@@ -87,12 +89,12 @@ public class StickyResourcesConfig {
         BUILDER.comment("Attribute Modifiers").push("attributes");
         JELLY_HEALTH_MULTIPLIER = BUILDER.comment("Multiplier for Jelly Max Health. Default: 1.0").defineInRange("jelly_health_multiplier", 1.0, 0.1, 100.0);
         JELLY_DAMAGE_MULTIPLIER = BUILDER.comment("Multiplier for Jelly Attack Damage. Default: 1.0").defineInRange("jelly_damage_multiplier", 1.0, 0.0, 100.0);
-        JELLY_SPEED_MULTIPLIER = BUILDER.comment("Multiplier for Jelly Movement Speed. Default: 1.0").defineInRange("jelly_speed_multiplier", 1.0, 0.1, 10.0);
+        JELLY_SPEED_MULTIPLIER = BUILDER.comment("Multiplier for Jelly Movement Speed. Default: 0.6").defineInRange("jelly_speed_multiplier", 0.6, 0.1, 10.0);
         BUILDER.pop();
 
         BUILDER.comment("Movement Settings").push("movement");
         JELLY_CAN_FLOAT = BUILDER.comment("Can Jellies float in water. Default: true").define("jelly_can_float", true);
-        JELLY_JUMP_VELOCITY = BUILDER.comment("How high Jellies jump. Default: 0.65").defineInRange("jelly_jump_velocity", 0.65, 0.1, 2.0);
+        JELLY_JUMP_VELOCITY = BUILDER.comment("How high Jellies jump. Default: 0.42").defineInRange("jelly_jump_velocity", 0.42, 0.1, 2.0);
         JELLY_FOLLOW_SPEED = BUILDER.comment("How fast Jellies move when following a player holding food. Default: 0.5").defineInRange("jelly_follow_speed", 0.5, 0.1, 5.0);
         JELLY_MATE_SPEED = BUILDER.comment("How fast Jellies move when heading towards their mate. Default: 0.6").defineInRange("jelly_mate_speed", 0.6, 0.1, 5.0);
         BUILDER.pop();

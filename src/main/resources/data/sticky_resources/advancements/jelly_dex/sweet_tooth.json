@@ -1,0 +1,22 @@
+{
+  "parent": "sticky_resources:jelly_dex/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:cake"
+    },
+    "title": {
+      "translate": "advancements.sticky_resources.jelly_dex.sweet_tooth.title"
+    },
+    "description": {
+      "translate": "advancements.sticky_resources.jelly_dex.sweet_tooth.description"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bred_cake": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

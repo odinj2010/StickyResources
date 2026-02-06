@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "sticky_resources:sticky_catalyst"
+    },
+    "title": {
+      "translate": "advancements.sticky_resources.jelly_dex.root.title"
+    },
+    "description": {
+      "translate": "advancements.sticky_resources.jelly_dex.root.description"
+    },
+    "background": "minecraft:textures/block/slime_block.png",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has_catalyst": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sticky_resources:sticky_catalyst"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_catalyst"
+    ]
+  ]
+}

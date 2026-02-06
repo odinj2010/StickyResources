@@ -17,7 +17,18 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class ElectricJellyEntity extends JellyEntity {
+    private final Set<BlockPos> poweredBlocks = new HashSet<>();
 
     public ElectricJellyEntity(EntityType<? extends JellyEntity> entityType, Level level) {
         super(entityType, level);
@@ -36,6 +47,9 @@ public class ElectricJellyEntity extends JellyEntity {
                         0.0D, 0.0D, 0.0D);
             }
         } else {
+            // High Voltage Redstone Activation
+            activateNearbyRedstone();
+
             // Discharge if wet
             if (this.isInWaterOrRain()) {
                 discharge(5.0D);
@@ -44,6 +58,79 @@ public class ElectricJellyEntity extends JellyEntity {
             // Charge nearby creepers
             chargeNearbyCreepers();
         }
+    }
+
+    @Override
+    public void remove(RemovalReason pReason) {
+        if (!this.level().isClientSide) {
+            for (BlockPos pos : poweredBlocks) {
+                revertBlock(pos);
+            }
+            poweredBlocks.clear();
+        }
+        super.remove(pReason);
+    }
+
+    private void activateNearbyRedstone() {
+        BlockPos pos = this.blockPosition();
+        int radius = 4; // Twice the reach of Redstone Jelly
+        Level level = this.level();
+        Set<BlockPos> nextPoweredBlocks = new HashSet<>();
+        
+        for (BlockPos targetPos : BlockPos.betweenClosed(pos.offset(-radius, -2, -radius), pos.offset(radius, 2, radius))) {
+            BlockState state = level.getBlockState(targetPos);
+            BlockPos immutablePos = targetPos.immutable();
+            
+            if (state.is(Blocks.REDSTONE_WIRE)) {
+                int currentPower = state.getValue(RedStoneWireBlock.POWER);
+                if (currentPower < 15 || poweredBlocks.contains(immutablePos)) {
+                    level.setBlock(immutablePos, state.setValue(RedStoneWireBlock.POWER, 15), 2);
+                    nextPoweredBlocks.add(immutablePos);
+                }
+            } 
+            else if (state.is(Blocks.REDSTONE_LAMP)) {
+                if (!state.getValue(RedstoneLampBlock.LIT) || poweredBlocks.contains(immutablePos)) {
+                    if (!level.hasNeighborSignal(immutablePos)) {
+                        level.setBlock(immutablePos, state.setValue(RedstoneLampBlock.LIT, true), 2);
+                        nextPoweredBlocks.add(immutablePos);
+                    }
+                }
+            }
+            else if (isRedstoneResponsive(state)) {
+                // High voltage forces more frequent updates
+                level.updateNeighborsAt(immutablePos, state.getBlock());
+            }
+        }
+
+        for (BlockPos oldPos : poweredBlocks) {
+            if (!nextPoweredBlocks.contains(oldPos)) {
+                revertBlock(oldPos);
+            }
+        }
+
+        poweredBlocks.clear();
+        poweredBlocks.addAll(nextPoweredBlocks);
+
+        if (!poweredBlocks.isEmpty() && this.tickCount % 5 == 0) {
+            this.playSound(SoundEvents.BEE_LOOP, 0.05f, 2.0f); // Low electrical hum
+        }
+    }
+
+    private void revertBlock(BlockPos pos) {
+        BlockState state = this.level().getBlockState(pos);
+        if (state.is(Blocks.REDSTONE_WIRE)) {
+            this.level().setBlock(pos, state.setValue(RedStoneWireBlock.POWER, 0), 3);
+        } else if (state.is(Blocks.REDSTONE_LAMP)) {
+            if (!this.level().hasNeighborSignal(pos)) {
+                this.level().setBlock(pos, state.setValue(RedstoneLampBlock.LIT, false), 3);
+            }
+        }
+    }
+
+    private boolean isRedstoneResponsive(BlockState state) {
+        return state.is(Blocks.TNT) || state.is(Blocks.IRON_DOOR) || state.is(Blocks.IRON_TRAPDOOR) || 
+               state.is(Blocks.PISTON) || state.is(Blocks.STICKY_PISTON) || state.is(Blocks.DROPPER) || 
+               state.is(Blocks.DISPENSER) || state.is(Blocks.HOPPER);
     }
 
     @Override
@@ -72,7 +159,13 @@ public class ElectricJellyEntity extends JellyEntity {
 
     private void discharge(double range) {
         List<LivingEntity> nearbyEntities = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(range),
-                entity -> entity != this && !(entity instanceof ElectricJellyEntity));
+                entity -> {
+                    if (entity == this || entity instanceof JellyEntity) return false;
+                    if (entity instanceof net.minecraft.world.entity.player.Player player) {
+                        return hasMetalArmor(player);
+                    }
+                    return true; // Target all other living entities (monsters, etc)
+                });
 
         if (!nearbyEntities.isEmpty()) {
              this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 0.5F, 2.0F);

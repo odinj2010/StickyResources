@@ -65,7 +65,6 @@ public class JellyFeedingAI {
                 jelly.setInLove(player);
                 jelly.spawnHeartParticles();
             } else {
-                // TODO: Heal or satisfy hunger
                 jelly.heal(2.0f);
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
 
 public class LavaJellyEntity extends JellyEntity {
 
@@ -98,18 +99,20 @@ public class LavaJellyEntity extends JellyEntity {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
-            BlockPos pos = this.getOnPos();
-            BlockState state = this.level().getBlockState(pos);
+            if (StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ENVIRONMENTAL_GRIEFING, true)) {
+                BlockPos pos = this.getOnPos();
+                BlockState state = this.level().getBlockState(pos);
 
-            if (state.is(Blocks.DIRT) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.COARSE_DIRT)
-                    || state.is(Blocks.SAND) || state.is(Blocks.GRAVEL)) {
-                this.level().setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
-                this.remove(RemovalReason.KILLED); // Remove the entity
-                return InteractionResult.SUCCESS;
-            } else if (state.is(Blocks.STONE) || state.is(Blocks.COBBLESTONE)) {
-                this.level().setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState());
-                this.remove(RemovalReason.KILLED); // Remove the entity
-                return InteractionResult.SUCCESS;
+                if (state.is(Blocks.DIRT) || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.COARSE_DIRT)
+                        || state.is(Blocks.SAND) || state.is(Blocks.GRAVEL)) {
+                    this.level().setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
+                    this.remove(RemovalReason.KILLED); // Remove the entity
+                    return InteractionResult.SUCCESS;
+                } else if (state.is(Blocks.STONE) || state.is(Blocks.COBBLESTONE)) {
+                    this.level().setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState());
+                    this.remove(RemovalReason.KILLED); // Remove the entity
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return super.mobInteract(player, hand);

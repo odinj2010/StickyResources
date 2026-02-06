@@ -84,6 +84,19 @@ public class JellyEntity extends Animal {
         this.setAlpha(pCompound.getBoolean("IsAlpha"));
     }
 
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (IS_ALPHA.equals(pKey)) {
+            this.refreshDimensions();
+        }
+        super.onSyncedDataUpdated(pKey);
+    }
+
+    @Override
+    public float getScale() {
+        return this.isAlpha() ? 1.25F : super.getScale();
+    }
+
     public ModEntities.JellyType getJellyType() {
         return ModEntities.JELLY_ENTITIES.entrySet().stream()
                 .filter(entry -> entry.getValue().get() == this.getType())
@@ -253,6 +266,12 @@ public class JellyEntity extends Animal {
         JellyEntity offspring = ModEntities.JELLY_ENTITIES.get(offspringType).get().create(level);
         if (offspring != null) {
             offspring.setBaby(true);
+            if (offspringType == ModEntities.JellyType.CAKE) {
+                Player player = level.getNearestPlayer(this, 10.0D);
+                if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                    triggerAdvancement(serverPlayer, "jelly_dex/sweet_tooth");
+                }
+            }
         }
         return offspring;
     }
@@ -261,7 +280,6 @@ public class JellyEntity extends Animal {
         // Elemental & Geological Hybrids
         if (match(t1, t2, ModEntities.JellyType.WATER, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.OBSIDIAN;
         if (match(t1, t2, ModEntities.JellyType.SAND, ModEntities.JellyType.LAVA)) return ModEntities.JellyType.GLASS;
-        if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.SAND)) return ModEntities.JellyType.COBBLESTONE;
         if (match(t1, t2, ModEntities.JellyType.STONE, ModEntities.JellyType.WATER)) return ModEntities.JellyType.DIRT;
         if (match(t1, t2, ModEntities.JellyType.DIRT, ModEntities.JellyType.WATER)) return ModEntities.JellyType.GRASS;
 
@@ -271,7 +289,6 @@ public class JellyEntity extends Animal {
         if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.GRASS)) return ModEntities.JellyType.EMERALD;
         if (match(t1, t2, ModEntities.JellyType.LAPIS, ModEntities.JellyType.RAWGOLD)) return ModEntities.JellyType.RAWSAPPHIRE;
         if (match(t1, t2, ModEntities.JellyType.DIAMOND, ModEntities.JellyType.OBSIDIAN)) return ModEntities.JellyType.AMETHYST;
-        if (match(t1, t2, ModEntities.JellyType.OBSIDIAN, ModEntities.JellyType.ENDERPEARL)) return ModEntities.JellyType.ENDERPEARL;
 
         // Biological & Sweet Hybrids
         if (match(t1, t2, ModEntities.JellyType.GRASS, ModEntities.JellyType.REDMUSHROOM)) return ModEntities.JellyType.COW;
@@ -299,6 +316,11 @@ public class JellyEntity extends Animal {
         
         if (!this.level().isClientSide) {
             handleEnvironmentalTransformations();
+            if (this.isAlpha() && this.tickCount % 40 == 0) {
+                applyAlphaAura();
+            }
+        } else {
+            spawnTypeParticles();
         }
 
         if (this.isBaby()) return;
@@ -309,14 +331,67 @@ public class JellyEntity extends Animal {
         }
     }
 
+    private void spawnTypeParticles() {
+        if (!StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_EMOTION_PARTICLES, true)) return;
+        if (this.isAlpha() || this.random.nextInt(15) == 0) {
+            ModEntities.JellyType type = this.getJellyType();
+            net.minecraft.core.particles.ParticleOptions particle = null;
+            
+            switch (type) {
+                case COAL, CHARCOAL -> particle = ParticleTypes.SMOKE;
+                case REDSTONEDUST -> particle = ParticleTypes.ELECTRIC_SPARK;
+                case ELECTRIC -> particle = ParticleTypes.ELECTRIC_SPARK;
+                case FIRE, LAVA -> particle = ParticleTypes.FLAME;
+                case AMETHYST -> particle = ParticleTypes.WITCH;
+                case WATER -> particle = ParticleTypes.RAIN;
+                case OBSIDIAN -> particle = ParticleTypes.PORTAL;
+                case EMERALD -> particle = ParticleTypes.HAPPY_VILLAGER;
+                case DIAMOND -> particle = ParticleTypes.SCRAPE;
+            }
+
+            if (particle != null) {
+                this.level().addParticle(particle, this.getX() + (random.nextDouble() - 0.5) * this.getBbWidth(), this.getY() + random.nextDouble() * this.getBbHeight(), this.getZ() + (random.nextDouble() - 0.5) * this.getBbWidth(), 0, 0, 0);
+            }
+        }
+    }
+
+    private void applyAlphaAura() {
+        if (!StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ALPHA_DYNAMICS, true)) return;
+        List<JellyEntity> nearby = this.getNearbyJellies();
+        for (JellyEntity other : nearby) {
+            if (other.getJellyType() == this.getJellyType()) {
+                other.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, 100, 0));
+                other.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 100, 0));
+            }
+        }
+    }
+
     @Override
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, net.minecraft.world.damagesource.DamageSource source) {
         if (!this.level().isClientSide && fallDistance > 5.0F && this.getJellyType() == ModEntities.JellyType.GRAVEL) {
             this.transformToJelly(ModEntities.JellyType.SAND);
             this.playSound(net.minecraft.sounds.SoundEvents.GRAVEL_BREAK, 1.0F, 1.0F);
+            
+            // Trigger advancement for the nearest player
+            Player player = this.level().getNearestPlayer(this, 10.0D);
+            if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                triggerAdvancement(serverPlayer, "jelly_dex/shattered_dreams");
+            }
             return false; 
         }
         return super.causeFallDamage(fallDistance, damageMultiplier, source);
+    }
+
+    public void triggerAdvancement(net.minecraft.server.level.ServerPlayer player, String advancementId) {
+        net.minecraft.advancements.Advancement advancement = player.server.getAdvancements().getAdvancement(new net.minecraft.resources.ResourceLocation(net.nfgbros.stickyresources.StickyResources.MOD_ID, advancementId));
+        if (advancement != null) {
+            net.minecraft.advancements.AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
+            if (!progress.isDone()) {
+                for (String criteria : progress.getRemainingCriteria()) {
+                    player.getAdvancements().award(advancement, criteria);
+                }
+            }
+        }
     }
 
     private void handleEnvironmentalTransformations() {
@@ -347,9 +422,11 @@ public class JellyEntity extends Animal {
                 submergedTicks = 0;
             }
         } else if (currentType == ModEntities.JellyType.STONE) {
-            if (this.level().isRainingAt(pos) || this.isInWater()) {
-                if (this.random.nextInt(200) == 0) {
-                    this.transformToJelly(ModEntities.JellyType.COBBLESTONE);
+            if (StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ENVIRONMENTAL_GRIEFING, true)) {
+                if (this.level().isRainingAt(pos) || this.isInWater()) {
+                    if (this.random.nextInt(200) == 0) {
+                        this.transformToJelly(ModEntities.JellyType.COBBLESTONE);
+                    }
                 }
             }
         } else if (currentType == ModEntities.JellyType.SAND) {
@@ -360,9 +437,11 @@ public class JellyEntity extends Animal {
                 }
             }
         } else if (currentType == ModEntities.JellyType.COBBLESTONE) {
-            if (blockBelow.is(Blocks.LAVA) || this.isInLava()) {
-                if (this.random.nextInt(200) == 0) {
-                    this.transformToJelly(ModEntities.JellyType.STONE);
+            if (StickyResourcesConfig.safeGet(StickyResourcesConfig.JELLY_ENVIRONMENTAL_GRIEFING, true)) {
+                if (blockBelow.is(Blocks.LAVA) || this.isInLava()) {
+                    if (this.random.nextInt(200) == 0) {
+                        this.transformToJelly(ModEntities.JellyType.STONE);
+                    }
                 }
             }
         }

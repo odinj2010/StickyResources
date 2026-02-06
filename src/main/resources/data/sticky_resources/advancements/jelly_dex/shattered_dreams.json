@@ -1,0 +1,22 @@
+{
+  "parent": "sticky_resources:jelly_dex/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:sand"
+    },
+    "title": {
+      "translate": "advancements.sticky_resources.jelly_dex.shattered_dreams.title"
+    },
+    "description": {
+      "translate": "advancements.sticky_resources.jelly_dex.shattered_dreams.description"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shattered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

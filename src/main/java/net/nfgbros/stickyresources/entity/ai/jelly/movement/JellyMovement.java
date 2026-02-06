@@ -74,7 +74,10 @@ public class JellyMovement {
 
     private boolean isBlockInFront() {
         BlockPos forward = jelly.blockPosition().relative(jelly.getDirection());
-        return !level.getBlockState(forward).isAir() || !level.getBlockState(forward.above()).isAir();
+        BlockState state = level.getBlockState(forward);
+        // Only jump if it's a full block or something high. 
+        // Slabs and layers should be stepped on naturally by vanilla step height if possible.
+        return state.isSolidRender(level, forward) && !state.getShape(level, forward).isEmpty();
     }
 
     private boolean isTryingToMove() {
@@ -91,8 +94,8 @@ public class JellyMovement {
             // Move faster in water
             navigation.setSpeedModifier(1.5);
         } else {
-            // Flop around on land
-             if (jelly.onGround() && random.nextInt(10) == 0) {
+            // Flop around on land - much slower
+             if (jelly.onGround() && random.nextInt(40) == 0) {
                  jelly.getJumpControl().jump();
              }
         }
@@ -128,7 +131,7 @@ public class JellyMovement {
         }
         
         // Randomly float up slightly
-        if (random.nextInt(40) == 0) {
+        if (random.nextInt(150) == 0) {
             jelly.setDeltaMovement(motion.add(0, 0.1, 0));
         }
     }
@@ -151,7 +154,7 @@ public class JellyMovement {
     private void defaultMovement() {
         // Standard ground movement is handled by vanilla AI, 
         // but we can add small hops here if we want a "slimy" feel
-        if (jelly.onGround() && isTryingToMove() && random.nextInt(60) == 0) {
+        if (jelly.onGround() && isTryingToMove() && random.nextInt(300) == 0) {
             jelly.getJumpControl().jump();
         }
     }
