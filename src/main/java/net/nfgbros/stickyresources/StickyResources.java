@@ -28,6 +28,7 @@ import net.nfgbros.stickyresources.entity.client.JellyRenderer;
 import net.nfgbros.stickyresources.item.ModCreativeModeTabs;
 import net.nfgbros.stickyresources.item.ModItems;
 import net.nfgbros.stickyresources.loot.ModLootModifiers;
+import net.nfgbros.stickyresources.recipe.ModRecipes;
 import net.nfgbros.stickyresources.screen.ModMenuTypes;
 import net.nfgbros.stickyresources.screen.GemPolishingStationScreen;
 import net.nfgbros.stickyresources.sound.ModSounds;
@@ -48,6 +49,7 @@ public class StickyResources {
         ModCreativeModeTabs.register(modEventBus); // Creative mode tabs
         ModItems.register(modEventBus); // Items
         ModBlocks.register(modEventBus); // Blocks
+        ModRecipes.register(modEventBus); // Recipes
         ModLootModifiers.register(modEventBus); // Loot modifiers
         ModVillagers.register(modEventBus); // Villagers
         ModSounds.register(modEventBus); // Sounds
@@ -104,7 +106,7 @@ public class StickyResources {
             event.accept(ModItems.STICKY_RAW_SAPPHIRE);
             event.accept(ModItems.STICKY_RED_MUSHROOM);
             event.accept(ModItems.STICKY_REDSTONE_DUST);
-            event.accept(ModItems.STICKY_ROTTON_FLESH);
+            event.accept(ModItems.STICKY_ROTTEN_FLESH);
             event.accept(ModItems.STICKY_STRAWBERRY);
 
             // Add more items as needed

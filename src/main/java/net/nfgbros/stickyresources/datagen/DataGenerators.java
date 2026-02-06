@@ -1,14 +1,22 @@
 package net.nfgbros.stickyresources.datagen;
 
-import net.nfgbros.stickyresources.StickyResources;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.worldgen.ModBiomeModifiers;
+import net.nfgbros.stickyresources.worldgen.ModConfiguredFeatures;
+import net.nfgbros.stickyresources.worldgen.ModPlacedFeatures;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = StickyResources.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -32,5 +40,12 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
         generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
+
+        generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider,
+                new RegistrySetBuilder()
+                        .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
+                        .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
+                        .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap),
+                Set.of(StickyResources.MOD_ID)));
     }
 }

@@ -32,19 +32,25 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ModTags.Items.STICKY_ITEMS)
                 .add(
                         ModItems.STICKY_AMETHYST.get(),
+                        ModItems.STICKY_BEEF.get(),
                         ModItems.STICKY_BONE_MEAL.get(),
+                        ModItems.JELLY_CAKE.get(),
                         ModItems.STICKY_CHARCOAL.get(),
                         ModItems.STICKY_COAL.get(),
                         ModItems.STICKY_DIAMOND.get(),
                         ModItems.STICKY_EMERALD.get(),
                         ModItems.STICKY_ENDER_PEARL.get(),
+                        ModItems.STICKY_GRASS.get(),
                         ModItems.STICKY_LAPIS_LAZULI.get(),
                         ModItems.STICKY_PRISMERINE_CRYSTALS.get(),
                         ModItems.STICKY_RAW_COPPER.get(),
                         ModItems.STICKY_RAW_GOLD.get(),
                         ModItems.STICKY_RAW_IRON.get(),
                         ModItems.STICKY_RAW_SAPPHIRE.get(),
-                        ModItems.STICKY_REDSTONE_DUST.get()
+                        ModItems.STICKY_RED_MUSHROOM.get(),
+                        ModItems.STICKY_REDSTONE_DUST.get(),
+                        ModItems.STICKY_ROTTEN_FLESH.get(),
+                        ModItems.STICKY_STRAWBERRY.get()
                 );
 
 

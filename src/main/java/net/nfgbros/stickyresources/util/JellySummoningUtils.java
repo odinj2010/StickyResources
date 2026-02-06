@@ -161,7 +161,11 @@ public class JellySummoningUtils {
         }
     }
 
-    private static class SummoningRequirement {
+    public static Map<ModEntities.JellyType, SummoningRequirement> getSummoningRequirements() {
+        return SUMMONING_REQUIREMENTS;
+    }
+
+    public static class SummoningRequirement {
         public Block topBlock;
         public Block baseBlock;
         public Item catalystItem;

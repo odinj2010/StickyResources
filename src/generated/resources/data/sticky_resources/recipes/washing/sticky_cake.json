@@ -1,0 +1,11 @@
+{
+  "type": "sticky_resources:washing",
+  "ingredients": [
+    {
+      "item": "sticky_resources:jelly_cake"
+    }
+  ],
+  "output": {
+    "item": "minecraft:cake"
+  }
+}

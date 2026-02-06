@@ -61,7 +61,7 @@ public class ModEntities {
         RAWIRON(RawIronJellyEntity::new, "rawiron_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_IRON.get(), 20.0D, 2.0D, 0.15D, false),
         REDMUSHROOM(RedMushroomJellyEntity::new, "redmushroom_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RED_MUSHROOM.get(), 10.0D, 1.0D, 0.2D, false),
         REDSTONEDUST(RedstoneDustJellyEntity::new, "redstonedust_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_REDSTONE_DUST.get(), 10.0D, 1.2D, 0.2D, false),
-        ROTTENFLESH(RottonFleshJellyEntity::new, "rotton_flesh_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_ROTTON_FLESH.get(), 15.0D, 2.0D, 0.2D, false),
+        ROTTENFLESH(RottenFleshJellyEntity::new, "rotten_flesh_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_ROTTEN_FLESH.get(), 15.0D, 2.0D, 0.2D, false),
         SAND(SandJellyEntity::new, "sand_jelly", 0.5f, 0.5f, JellySwimBehavior.WATER_DAMAGE, () -> ModBlocks.STICKY_SAND.get(), 10.0D, 0.5D, 0.2D, false),
         RAWSAPPHIRE(SapphireJellyEntity::new, "sapphire_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModItems.STICKY_RAW_SAPPHIRE.get(), 25.0D, 2.5D, 0.15D, false),
         STONE(StoneJellyEntity::new, "stone_jelly", 0.5f, 0.5f, JellySwimBehavior.NONE, () -> ModBlocks.STICKY_STONE.get(), 18.0D, 1.5D, 0.1D, false),
@@ -108,6 +108,10 @@ public class ModEntities {
             return Optional.ofNullable(transformations.get(item));
         }
 
+        public Map<Item, TransformationData> getTransformations() {
+            return transformations;
+        }
+
         public void addLoveFood(ItemLike item) { this.loveFoods.add(item.asItem()); }
         public boolean isLoveFood(ItemStack stack) { return this.loveFoods.contains(stack.getItem()); }
 
@@ -121,10 +125,24 @@ public class ModEntities {
     }
 
     public static final Map<JellyType, RegistryObject<EntityType<? extends JellyEntity>>> JELLY_ENTITIES = new EnumMap<>(JellyType.class);
+    private static final Map<EntityType<?>, ItemStack> SMELTING_INTERACTIONS = new HashMap<>();
 
     public static void initialize() {
         initializeTransformations();
         initializeFoods();
+        initializeSmeltingInteractions();
+    }
+
+    private static void initializeSmeltingInteractions() {
+        SMELTING_INTERACTIONS.put(JELLY_ENTITIES.get(JellyType.WATER).get(), new ItemStack(Blocks.COBBLESTONE));
+        SMELTING_INTERACTIONS.put(JELLY_ENTITIES.get(JellyType.SAND).get(), new ItemStack(Blocks.GLASS_PANE));
+        SMELTING_INTERACTIONS.put(JELLY_ENTITIES.get(JellyType.RAWIRON).get(), new ItemStack(Items.IRON_INGOT));
+        SMELTING_INTERACTIONS.put(JELLY_ENTITIES.get(JellyType.RAWCOPPER).get(), new ItemStack(Items.COPPER_INGOT));
+        SMELTING_INTERACTIONS.put(JELLY_ENTITIES.get(JellyType.RAWGOLD).get(), new ItemStack(Items.GOLD_INGOT));
+    }
+
+    public static ItemStack getSmeltingInteraction(EntityType<?> type) {
+        return SMELTING_INTERACTIONS.getOrDefault(type, ItemStack.EMPTY);
     }
 
     private static void initializeTransformations() {

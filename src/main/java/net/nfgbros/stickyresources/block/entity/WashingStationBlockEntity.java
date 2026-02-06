@@ -20,10 +20,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.nfgbros.stickyresources.recipe.ModRecipes;
 import net.nfgbros.stickyresources.recipe.WashingStationRecipe;
 import net.nfgbros.stickyresources.screen.GemPolishingStationMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class WashingStationBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(2);
@@ -135,26 +138,36 @@ public class WashingStationBlockEntity extends BlockEntity implements MenuProvid
     }
 
     private void craftItem() {
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
-        ItemStack output = WashingStationRecipe.getOutputForInput(input);
+        Optional<WashingStationRecipe> recipe = getCurrentRecipe();
 
-        if (!output.isEmpty()) {
+        if (recipe.isPresent()) {
+            ItemStack output = recipe.get().getResultItem(null);
             itemHandler.extractItem(INPUT_SLOT, 1, false);
             itemHandler.insertItem(OUTPUT_SLOT, output.copy(), false);
         }
     }
 
     private boolean hasRecipe() {
-        ItemStack input = itemHandler.getStackInSlot(INPUT_SLOT);
-        ItemStack output = WashingStationRecipe.getOutputForInput(input);
+        Optional<WashingStationRecipe> recipe = getCurrentRecipe();
 
-        if (output.isEmpty()) {
+        if (recipe.isEmpty()) {
             return false;
         }
+
+        ItemStack output = recipe.get().getResultItem(null);
 
         // Simulate insertion to see if it fits
         ItemStack remainder = itemHandler.insertItem(OUTPUT_SLOT, output.copy(), true);
         return remainder.isEmpty();
+    }
+
+    private Optional<WashingStationRecipe> getCurrentRecipe() {
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
+        for(int i = 0; i < this.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        }
+
+        return this.level.getRecipeManager().getRecipeFor(ModRecipes.WASHING_STATION_TYPE.get(), inventory, this.level);
     }
 
     private boolean hasProgressFinished() {

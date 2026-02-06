@@ -490,7 +490,20 @@ public class JellyEntity extends Animal {
         return this.level().getEntitiesOfClass(JellyEntity.class, this.getBoundingBox().inflate(10.0), entity -> entity != this);
     }
 
-    public JellyCustomAI getCommunicationAI() {
-        return this.customAI;
+        public JellyCustomAI getCommunicationAI() {
+
+            return this.customAI;
+
+        }
+
+    
+
+        public void forceDrop() {
+
+            this.dropManagement.dropJellyItem();
+
+        }
+
     }
-}
+
+    

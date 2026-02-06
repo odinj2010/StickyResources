@@ -1,0 +1,11 @@
+{
+  "type": "sticky_resources:washing",
+  "ingredients": [
+    {
+      "item": "sticky_resources:sticky_raw_copper"
+    }
+  ],
+  "output": {
+    "item": "minecraft:raw_copper"
+  }
+}

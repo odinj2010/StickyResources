@@ -1,0 +1,11 @@
+{
+  "type": "sticky_resources:washing",
+  "ingredients": [
+    {
+      "item": "sticky_resources:sticky_ender_pearl"
+    }
+  ],
+  "output": {
+    "item": "minecraft:ender_pearl"
+  }
+}

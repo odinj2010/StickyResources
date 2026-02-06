@@ -84,6 +84,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.STICKY_RAW_SAPPHIRE.get());
                         pOutput.accept(ModItems.STICKY_RED_MUSHROOM.get());
                         pOutput.accept(ModItems.STICKY_REDSTONE_DUST.get());
+                        pOutput.accept(ModItems.STICKY_ROTTEN_FLESH.get());
+                        pOutput.accept(ModItems.STICKY_GRASS.get());
+                        pOutput.accept(ModItems.STICKY_STRAWBERRY.get());
                     }).build()
     );
 

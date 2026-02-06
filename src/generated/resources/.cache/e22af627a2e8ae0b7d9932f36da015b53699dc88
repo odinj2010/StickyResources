@@ -1,5 +1,5 @@
-// 1.20.1	2025-03-18T23:50:25.3866129	Tags for minecraft:item mod id sticky_resources
+// 1.20.1	2026-02-05T21:54:46.0107946	Tags for minecraft:item mod id sticky_resources
 e522da4846c666f2876fd991745af4627ff6a62a data/minecraft/tags/items/creeper_drop_music_discs.json
 e522da4846c666f2876fd991745af4627ff6a62a data/minecraft/tags/items/music_discs.json
 cfa7386075f69c9ec60bcbae34ed473ad24266fa data/minecraft/tags/items/trimmable_armor.json
-ae8bc1cdba04f08d6fe53dd6b9c43646853544b3 data/sticky_resources/tags/items/sticky_items.json
+60fc562ec7c9493a5e8aee5f2e239c557ce0b774 data/sticky_resources/tags/items/sticky_items.json

@@ -118,6 +118,9 @@
   "item.sticky_resources.sticky_raw_sapphire": "Sticky Raw Sapphire",
   "item.sticky_resources.sticky_red_mushroom": "Sticky Red Mushroom",
   "item.sticky_resources.sticky_redstone_dust": "Sticky Redstone Dust",
+  "item.sticky_resources.sticky_strawberry": "Sticky Strawberry",
+  "item.sticky_resources.sticky_grass": "Sticky Grass",
+  "item.sticky_resources.sticky_rotten_flesh": "Sticky Rotten Flesh",
   "block.sticky_resources.sticky_sand": "Sticky Sand",
   "block.sticky_resources.sticky_stone": "Sticky Stone",
 
@@ -202,7 +205,8 @@
   "creativetab.sticky_resources_misc_tab": "Sticky Misc.",
   "creativetab.sticky_resources_sapphire_tab": "Sticky Sapphire",
 
-
+  "jei.sticky_resources.jelly_summoning": "Jelly Summoning",
+  "jei.sticky_resources.jelly_transformation": "Jelly Transformation",
 
   "item.sticky_resources.sticky_catalyst": "Heart of the Slime",
   "item.sticky_resources.sticky_catalyst.desc": "Jelly catalyst",

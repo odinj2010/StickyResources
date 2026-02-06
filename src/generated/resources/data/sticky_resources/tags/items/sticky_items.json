@@ -1,18 +1,24 @@
 {
   "values": [
     "sticky_resources:sticky_amethyst",
+    "sticky_resources:sticky_beef",
     "sticky_resources:sticky_bone_meal",
+    "sticky_resources:jelly_cake",
     "sticky_resources:sticky_charcoal",
     "sticky_resources:sticky_coal",
     "sticky_resources:sticky_diamond",
     "sticky_resources:sticky_emerald",
     "sticky_resources:sticky_ender_pearl",
+    "sticky_resources:sticky_grass",
     "sticky_resources:sticky_lapis_lazuli",
     "sticky_resources:sticky_prismerine_crystals",
     "sticky_resources:sticky_raw_copper",
     "sticky_resources:sticky_raw_gold",
     "sticky_resources:sticky_raw_iron",
     "sticky_resources:sticky_raw_sapphire",
-    "sticky_resources:sticky_redstone_dust"
+    "sticky_resources:sticky_red_mushroom",
+    "sticky_resources:sticky_redstone_dust",
+    "sticky_resources:sticky_rotten_flesh",
+    "sticky_resources:sticky_strawberry"
   ]
 }

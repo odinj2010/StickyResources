@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-22T18:00:36.6852814	StickyResources Item Models
+// 1.20.1	2026-02-05T21:54:46.0071404	StickyResources Item Models
 a163c9ce1e63e428f3fa804b66e491b455f18540 assets/sticky_resources/models/item/bar_brawl_music_disc.json
 28d058cfaab441e68e3b7da92477c584b20a0eb1 assets/sticky_resources/models/item/catmint.json
 1ea7c748a3d0eea78f2c4b76a4dc89d641c23afb assets/sticky_resources/models/item/corn.json
@@ -112,6 +112,7 @@ db189ee359a20e1d601a5b245e872453c327b8a5 assets/sticky_resources/models/item/sti
 12ee9247c1295a949c6922df4fef6f7e744ce0d2 assets/sticky_resources/models/item/sticky_diamond.json
 d74fe75c4512db33762833b8a0ce8ce4b7e6eae8 assets/sticky_resources/models/item/sticky_emerald.json
 db940185f65b05c6c41cf4a80aea8cece775f120 assets/sticky_resources/models/item/sticky_ender_pearl.json
+8e9f1e67ec7c69a5708f410bf523f2f9a5654198 assets/sticky_resources/models/item/sticky_grass.json
 ef6461df97d33ecedefdde5d095773cf983413dd assets/sticky_resources/models/item/sticky_lapis_lazuli.json
 4887d35ee9804f83af66f38f4680ba9557375e5d assets/sticky_resources/models/item/sticky_prismerine_crystals.json
 eb568832eea5402dfd6a0f1170c1b0efe42aad2e assets/sticky_resources/models/item/sticky_raw_copper.json
@@ -120,5 +121,7 @@ eb568832eea5402dfd6a0f1170c1b0efe42aad2e assets/sticky_resources/models/item/sti
 fd19b8a571c6a5f6753f52c6ba277594e6739d2b assets/sticky_resources/models/item/sticky_raw_sapphire.json
 8bc5f0a3937cf4515977daada99da1d9be5ba12f assets/sticky_resources/models/item/sticky_redstone_dust.json
 4cfb8c5332deed58414cb8a6a077d36b5a973d83 assets/sticky_resources/models/item/sticky_red_mushroom.json
+2bd7721942bc015ab37389545db2903d2b2d8d52 assets/sticky_resources/models/item/sticky_rotten_flesh.json
+b4d77acaf9b7b19e3f9c0cf6a399f812390e1fd9 assets/sticky_resources/models/item/sticky_strawberry.json
 a17ef0c4061910ff3d1167d90cb829026f32956e assets/sticky_resources/models/item/strawberry.json
 d07ee1dd49a316b083bc0cd1e1bc5ecde623cbc6 assets/sticky_resources/models/item/strawberry_seeds.json

@@ -98,7 +98,7 @@ public class ModTags {
                 return net.minecraft.world.item.Items.RED_MUSHROOM;
             } else if (item == ModItems.STICKY_REDSTONE_DUST.get()) {
                 return net.minecraft.world.item.Items.REDSTONE;
-            } else if (item == ModItems.STICKY_ROTTON_FLESH.get()) {
+            } else if (item == ModItems.STICKY_ROTTEN_FLESH.get()) {
                 return net.minecraft.world.item.Items.ROTTEN_FLESH;
             } else if (item == ModBlocks.STICKY_SAND.get().asItem()) {
                 return net.minecraft.world.level.block.Blocks.SAND.asItem();

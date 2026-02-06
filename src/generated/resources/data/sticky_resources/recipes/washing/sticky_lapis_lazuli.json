@@ -1,0 +1,11 @@
+{
+  "type": "sticky_resources:washing",
+  "ingredients": [
+    {
+      "item": "sticky_resources:sticky_lapis_lazuli"
+    }
+  ],
+  "output": {
+    "item": "minecraft:lapis_lazuli"
+  }
+}

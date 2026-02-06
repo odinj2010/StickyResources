@@ -1,18 +1,16 @@
 package net.nfgbros.stickyresources.item;
 
-import net.nfgbros.stickyresources.StickyResources;
-import net.nfgbros.stickyresources.StickyResourcesConfig;
-import net.nfgbros.stickyresources.block.ModBlocks;
-import net.nfgbros.stickyresources.entity.ModEntities;
-import net.nfgbros.stickyresources.item.custom.FuelItem;
-import net.nfgbros.stickyresources.item.custom.MetalDetectorItem;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import net.nfgbros.stickyresources.item.custom.StickyCatalystItem;
+import net.nfgbros.stickyresources.StickyResources;
+import net.nfgbros.stickyresources.StickyResourcesConfig;
+import net.nfgbros.stickyresources.block.ModBlocks;
+import net.nfgbros.stickyresources.entity.ModEntities;
+import net.nfgbros.stickyresources.item.custom.*;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -66,7 +64,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_REDSTONE_DUST = ITEMS.register("sticky_redstone_dust",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STICKY_ROTTON_FLESH = ITEMS.register("sticky_rotton_flesh",
+    public static final RegistryObject<Item> STICKY_ROTTEN_FLESH = ITEMS.register("sticky_rotten_flesh",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STICKY_STRAWBERRY = ITEMS.register("sticky_strawberry",
             () -> new Item(new Item.Properties()));
@@ -103,7 +101,7 @@ public class ModItems {
             () -> new HoeItem(ModToolTiers.SAPPHIRE, -3, 0.0F, new Item.Properties()));
 
     public static final RegistryObject<Item> SAPPHIRE_STAFF = ITEMS.register("sapphire_staff",
-            () -> new Item(new Item.Properties()));
+            () -> new SapphireStaffItem(new Item.Properties().durability(250)));
 
     // Sapphire Armor
     public static final RegistryObject<Item> SAPPHIRE_HELMET = ITEMS.register("sapphire_helmet",
